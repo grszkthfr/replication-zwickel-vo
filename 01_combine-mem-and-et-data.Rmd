@@ -7,7 +7,8 @@ output: html_notebook
 ```{r}
 rm(list=ls())
 
-library(tidyr)
+library(tidyverse)
+
 
 pathMEM <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
 pathET <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
@@ -50,8 +51,28 @@ for (vp in vpn) {
 et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg) 
   
 
-et.dfl <- gather(et.dfw, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
-
+et.dfl <- gather(et.dfw, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>% 
+  mutate(
+    key = as.character(key),
+    fixations =
+      as.factor(
+        ifelse(startsWith(key, "fix."), "fix",
+             ifelse(startsWith(key, "fixn."), "fixn",
+                    ifelse(startsWith(key, "fixlat."), "fixlat",NA)))),
+    region = 
+      as.factor(
+        ifelse(endsWith(key, ".face"), "face",
+               ifelse(endsWith(key, ".body"), "body",
+                      ifelse(endsWith(key, ".gaze"), "gaze",
+                             ifelse(endsWith(key, ".nongaze"), "nongaze", NA))))),
+    saccades = as.factor(
+      ifelse(endsWith(key, ".pgaze"), "pgaze",
+             ifelse(endsWith(key, ".fgaze"), "fgaze",
+                    ifelse(endsWith(key, ".bgaze"), "bgaze",
+                           ifelse(endsWith(key, ".pnongaze"), "pnongaze",
+                                  ifelse(endsWith(key, ".fnongaze"), "fnongaze",
+                                         ifelse(endsWith(key, ".bnongaze"), "bnongaze", NA)))))))) %>% 
+  arrange(code)
 
 rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
 ```
@@ -93,14 +114,6 @@ rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 
 # # Combinig eye tracking and memory data?!?!
 ```{r}
-
-# adding vp23 to dat_et
-vpja23 <-  c("vpja23", "free", 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9)
-
-TEST <- out_et
-
-TEST <-  rbind(TEST, vpja23, stringsAsFactors=T)
-
 
 
 
