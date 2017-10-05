@@ -3,11 +3,14 @@ title: "Analysis 'Projektarbeit 2017'"
 output: html_notebook
 ---
 
-# # Clearing work enviroment
+# # Clearing work enviroment, setting up libraries and constants
 ```{r}
 rm(list=ls())
 
 library(tidyr)
+
+path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
+savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/replication-zwickel-vo/Auswertung/"
 
 ```
 
@@ -15,9 +18,6 @@ library(tidyr)
 # # Reading eye tracking data in 
 ```{r}
 options(warn=0)  # 2=Turn warnings into errors / 0=default
-
-path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
-savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/analyse_jg/Auswertung/"
 
 # ALL DATA
 vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
@@ -52,15 +52,13 @@ et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg)
 et.dfl <- gather(et.df, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
 
 
-rm(list=erg, prot, bed, cleantime, nvalid, path, savepath, vp, vpn, erg)
+rm(list=erg, prot, bed, cleantime, nvalid, vp, vpn, erg)
 ```
 
 
 
 # # Reading memory data in
 ```{r}
-path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
-savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/analyse_jg/Auswertung/"
 
 # ALL DATA
 vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
