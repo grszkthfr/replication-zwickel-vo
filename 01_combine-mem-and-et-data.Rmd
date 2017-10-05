@@ -95,7 +95,7 @@ rm(list=gaze, nogaze, erg, prot, bed, path, savepath, vp, vpn, gaze)
 # # Combinig eye tracking and memory data?!?!
 ```{r}
 
-#adding vp23 to dat_et
+# adding vp23 to dat_et
 vpja23 <-  c("vpja23", "free", 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9)
 
 TEST <- out_et
