@@ -3,15 +3,15 @@ title: "Analysis 'Projektarbeit 2017'"
 output: html_notebook
 ---
 
-# # Clearing work enviroment, setting up libraries and constants
+# # Clearing work enviroment, setting libraries and constants
 ```{r}
 rm(list=ls())
 
 library(tidyr)
 
-path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
-savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/replication-zwickel-vo/Auswertung/"
-
+pathMEM <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
+pathET <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
+savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/replication-zwickel-vo/data/"
 ```
 
 
@@ -35,7 +35,7 @@ erg <- numeric(); nvalid <- numeric(); cleantime <- numeric()
 for (vp in vpn) {
   #  print(vp)
   
-  prot <- read.csv2(paste(path,vp,"_Fixations.csv",sep=""))
+  prot <- read.csv2(paste(pathET,vp,"_Fixations.csv",sep=""))
   
   # Restrict to trials with valid baseline?
   nvalid <- c(nvalid,sum(prot$blok==1))
@@ -49,10 +49,10 @@ for (vp in vpn) {
 et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg) 
   
 
-et.dfl <- gather(et.df, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
+et.dfl <- gather(et.dfw, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
 
 
-rm(list=erg, prot, bed, cleantime, nvalid, vp, vpn, erg)
+rm(list=erg, prot, bed, cleantime, nvalid, path, savepath, vp, vpn, erg)
 ```
 
 
@@ -73,7 +73,7 @@ erg <- numeric()
 for (vp in vpn) {
   # print(vp)
   
-  prot <- read.csv2(paste(path,vp,".csv",sep=""))
+  prot <- read.csv2(paste(pathMEM,vp,".csv",sep=""))
   
   # Item recalled
   gaze <- sum(prot$memgazedat)
@@ -82,8 +82,8 @@ for (vp in vpn) {
   erg <- rbind(erg,c(gaze,nogaze))
 }
 
-mem.df <- data.frame(code=vpn,bed,erg)               
-names(mem.df) <- c("code","bed","memgaze","memnogaze")
+mem.dfw <- data.frame(code=vpn,bed,erg)               
+names(mem.dfw) <- c("code","bed","memgaze","memnogaze")
 
 rm(list=gaze, nogaze, erg, prot, bed, path, savepath, vp, vpn, gaze)
 ```
