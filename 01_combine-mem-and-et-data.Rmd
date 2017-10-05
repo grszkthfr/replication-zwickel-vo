@@ -11,7 +11,7 @@ library(tidyr)
 
 pathMEM <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
 pathET <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
-savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/replication-zwickel-vo/data/"
+
 ```
 
 
@@ -53,7 +53,7 @@ et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg)
 et.dfl <- gather(et.dfw, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
 
 
-rm(list=erg, prot, bed, cleantime, nvalid, path, savepath, vp, vpn, erg)
+rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
 ```
 
 
@@ -86,7 +86,7 @@ for (vp in vpn) {
 mem.dfw <- data.frame(code=vpn,bed,erg)               
 names(mem.dfw) <- c("code","bed","memgaze","memnogaze")
 
-rm(list=gaze, nogaze, erg, prot, bed, path, savepath, vp, vpn, gaze)
+rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 ```
 
 
