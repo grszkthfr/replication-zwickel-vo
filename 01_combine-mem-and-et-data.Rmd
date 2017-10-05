@@ -1,0 +1,140 @@
+---
+title: "Analysis 'Projektarbeit 2017'"
+output: html_notebook
+---
+
+# # Clearing work enviroment
+```{r}
+rm(list=ls())
+
+library(tidyr)
+
+```
+
+
+# # Reading eye tracking data in 
+```{r}
+options(warn=0)  # 2=Turn warnings into errors / 0=default
+
+path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
+savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/analyse_jg/Auswertung/"
+
+# ALL DATA
+vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#bed <- rep(c("free","mem"),39)
+
+bed <- bed[!(vpn %in% "vpja23")]  # Daten fehlen
+vpn <- vpn[!(vpn %in% "vpja23")]  
+
+# Loop over subjects
+erg <- numeric(); nvalid <- numeric(); cleantime <- numeric()
+for (vp in vpn) {
+  #  print(vp)
+  
+  prot <- read.csv2(paste(path,vp,"_Fixations.csv",sep=""))
+  
+  # Restrict to trials with valid baseline?
+  nvalid <- c(nvalid,sum(prot$blok==1))
+  prot <- prot[prot$blok==1,]
+  
+  cleantime <- c(cleantime,mean(prot$cleantime))
+  
+  erg <- rbind(erg,apply(prot[,8:ncol(prot)],2,mean,na.rm=TRUE))
+}
+
+et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg) 
+  
+
+et.dfl <- gather(et.df, condition, measurement, cleantime:sac.bnongaze, factor_key=TRUE)
+
+
+rm(list=erg, prot, bed, cleantime, nvalid, path, savepath, vp, vpn, erg)
+```
+
+
+
+# # Reading memory data in
+```{r}
+path <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
+savepath <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/analyse_jg/Auswertung/"
+
+# ALL DATA
+vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#bed <- rep(c("free","mem"),39)
+
+# Loop over subjects
+erg <- numeric()
+for (vp in vpn) {
+  # print(vp)
+  
+  prot <- read.csv2(paste(path,vp,".csv",sep=""))
+  
+  # Item recalled
+  gaze <- sum(prot$memgazedat)
+  nogaze <- sum(prot$memnongazedat)
+  
+  erg <- rbind(erg,c(gaze,nogaze))
+}
+
+mem.df <- data.frame(code=vpn,bed,erg)               
+names(mem.df) <- c("code","bed","memgaze","memnogaze")
+
+rm(list=gaze, nogaze, erg, prot, bed, path, savepath, vp, vpn, gaze)
+```
+
+
+
+# # Combinig eye tracking and memory data?!?!
+```{r}
+
+#adding vp23 to dat_et
+vpja23 <-  c("vpja23", "free", 9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9)
+
+TEST <- out_et
+
+TEST <-  rbind(TEST, vpja23, stringsAsFactors=T)
+
+```
+
+
+
+# # Anova
+```{r}
+library("ez")
+
+anova <- ezANOVA(
+  data = et.dfl,
+  dv = measurement,
+  within =  condition,
+  wid = code,
+  between = group
+  )
+
+print(anova)
+
+
+```
+
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+
+
+
+
+
+
