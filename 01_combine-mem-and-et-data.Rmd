@@ -2,6 +2,7 @@
 title: "Analysis 'Projektarbeit 2017'"
 ---
 
+
 # # Clearing work enviroment, setting libraries and constants
 ```{r}
 rm(list=ls())
