@@ -1,6 +1,8 @@
 ---
 title: "Analysis 'Projektarbeit 2017'"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 # # Clearing work enviroment, setting libraries and constants
