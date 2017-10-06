@@ -1,8 +1,11 @@
 ---
 title: "Analysis 'Projektarbeit 2017'"
+<<<<<<< HEAD
 output:
   pdf_document: default
   html_notebook: default
+=======
+>>>>>>> 38cdc490b7ca6130b82c573c18f92d969345c368
 ---
 
 # # Clearing work enviroment, setting libraries and constants
