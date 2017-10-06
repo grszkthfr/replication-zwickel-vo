@@ -1,11 +1,5 @@
 ---
 title: "Analysis 'Projektarbeit 2017'"
-<<<<<<< HEAD
-output:
-  pdf_document: default
-  html_notebook: default
-=======
->>>>>>> 38cdc490b7ca6130b82c573c18f92d969345c368
 ---
 
 # # Clearing work enviroment, setting libraries and constants
@@ -14,9 +8,9 @@ rm(list=ls())
 
 library(tidyverse)
 
-
-pathMEM <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/Memory/"
-pathET <- "C:/Users/jog54yy/Documents/Projektarbeit_SS2017/Data/prot/"
+pathMEM <- "data/Memory/"
+pathET <- "data/prot/"
+pathFB <- "data/FB/"
 
 ```
 
@@ -115,6 +109,18 @@ names(mem.dfw) <- c("code","bed","memgaze","memnogaze")
 rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 ```
 
+
+
+# # Reading questionnaire data in
+```{r}
+
+fb.dfw <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv",sep="")) %>% 
+  transmute(
+    vp = as.factor(VP_Nr),
+    sex = as.factor(Demo_Sex),
+    age = Demo_Alter)
+
+```
 
 
 # # Combinig eye tracking and memory data?!?!
