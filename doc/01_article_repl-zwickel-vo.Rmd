@@ -56,17 +56,39 @@ set.seed(42)
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
-In this study participated 96 ( 
+In this study 96 observers (65 female and 29 male) between 18 and 55 years (M = 24.73, SD = 5.04) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburgs online subject pool or by blackboard. For participation observers recieved study credit or 5€.
 
-## Material
+## Stimuli and Apparatus
+The experimental stimuli consisted 26 different scenes with a single individual in the center looking at one of two objects of interests in the right or left half of the photography. The direction of the gaze cue and the place of the objects were balanced, creating 104 unique naturalistic scenes in the end. For each participant, a set was randomly generated from this pool containing each scene only once, resulting in 26 trials with exclusive scenes. Eye movements were recorded with an EyeLink1000
+tower system, sampling at 1000 Hz.
 
-## Procedure
+## Design & Procedure
+A two-level (free viewing/ explicit encoding) between subjects factor and a two-level (cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit. 
+
 
 ## Data analysis
+Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the pohtograph to determine gaze locations. Outlier detection. 
+
 We used `r cite_r("r-references.bib")` for all our analyses.
 
 
 # Results
+
+## Viewing behavior
+
+### Fixation duration
+The relative cumulative fixation duration is calculated as time spent on a given ROI divided by the time spent on the scene during presentation.  
+
+### Fixation number
+The number of fixations of a ROI during scene presentation was counted and divided by the total number of fixations during scene presentation, to calculate a measure of fixation proportion.
+
+
+### Saccades latency
+Saccade latency is for each ROI the mean out of all first saccades on that ROI after stimulus onset. The rm ANOVA showed an effect for  It shows, that head is fixated first within 600ms, followed by  
+
+### Leaving saccades
+
+## Memory task
 
 # Discussion
 

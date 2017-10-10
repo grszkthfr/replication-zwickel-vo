@@ -114,27 +114,42 @@ rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 # # Reading questionnaire data in
 ```{r}
 
-fb.dfw <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv",sep="")) %>% 
+demo.dfw <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep="")) %>% 
   transmute(
     vp = as.factor(VP_Nr),
     sex = as.factor(Demo_Sex),
     age = Demo_Alter)
 
+# #to do
+# # AQ-K
+# #hard and bad coded NA-finder and Replacer!!!
+# means_for_na_in_aqk <- unlist(map(tidy_df.que.w, mean, na.rm =T)[c(2:34)]) #set na.rm to false, to see which items have NAs
+# tidy_df.que.w$aqk2[is.na(tidy_df.que.w$aqk2)] <- round(means_for_na_in_aqk[2]) #two [] because it might be a list in a list?
+# tidy_df.que.w$aqk25[is.na(tidy_df.que.w$aqk25)] <- round(means_for_na_in_aqk[25])     
+# 
+# 
+# rawdat <- tidy_df.que.w[2:34]
+# # Items 1,3,5,6,7,9,10,11,14,16,17,18,20,22,23,24,26,28,31,32,33 umpolen (4-item).
+# rawdat[,c(1,3,5,6,7,9,10,11,14,16,17,18,20,22,23,24,26,28,31,32,33)] <- 5-rawdat[,c(1,3,5,6,7,9,10,11,14,16,17,18,20,22,23,24,26,28,31,32,33)]
+# # Items rekodieren (1/2 -> 1, 3/4 -> 0)
+# rawdat_recode <- matrix(as.numeric(rawdat[,1:ncol(rawdat)]<=2),nrow=nrow(rawdat))
+#  
+# tidy_df.que.w$aq_social <- apply(rawdat_recode[,c(1,7,8,10,11,13,14,20,24,28,31)],1,sum)#Soziale Interaktion und Spontaneitaet
+# tidy_df.que.w$aq_imagination <- apply(rawdat_recode[,c(3,5,6,9,16,17,18,22,23,26,32,33)],1,sum) #Fantasie und Vorstellungsvermoegen
+# tidy_df.que.w$aq_communication <- apply(rawdat_recode[,c(2,4,12,15,19,21,25,27,29,30)],1,sum) #Kommunikation und Reziprozitaet
+# tidy_df.que.w$aq_sumscore  <- apply(rawdat_recode,1,sum) #Gesamtsummenwert (AQ-K-Score) zwischen 0 und 33
+# 
+# rm(list="rawdat_recode","rawdat", "means_for_na_in_aqk")
+
+summary(demo.dfw$age)
+sd(demo.dfw$age)
+
+demo.dfw %>% 
+  group_by(sex) %>%
+  summarise(counts = length(sex))
+
+
 ```
-
-
-# # Combinig eye tracking and memory data?!?!
-```{r}
-
-
-
-```
-
-```{python}
-print 'Hello World!'
-```
-
-
 
 
 
@@ -193,9 +208,9 @@ legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
 ```{r}
 require("car")
 
-# Fixations Face + Body in Free Viewing vs. Explicit Encoding
+# Fixations Face + Body(?) in Free Viewing vs. Explicit Encoding
 ergtab <- numeric()
-for (st in seq(5,16,4)) {
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.body; fixn.face and ...
   msd <- c(mean(et.dfw[et.dfw$group=="free",st]),sd(et.dfw[et.dfw$group=="free",st]),
            mean(et.dfw[et.dfw$group=="mem",st]),sd(et.dfw[et.dfw$group=="mem",st]))
   teststat <- t.test(et.dfw[,st] ~ et.dfw$group)
@@ -204,20 +219,21 @@ for (st in seq(5,16,4)) {
 }
 
 colnames(ergtab) <- c("M(free)","SD(free)","M(mem)","SD(mem)","df","t","p")
+rownames(ergtab) <- c("fix.face","fixn.face","fixlat.face")
 print(ergtab)
 
 # ANOVA Fixations characteristics
-# 2 (Group) x 2 (Gaze) ANOVA
+## 2 (Group) x 2 (Gaze) ANOVA
 icond <- gl(2,1,labels=c("cued","uncued"))
 idata <- data.frame(icond)
 
-for (st in seq(7,16,4)) {
+for (st in seq(7,16,4)) { # # Variables 5:16, every 4th: fix.gace and fix.nogaze; fixn.gaze and ...
   carmod <- lm(as.matrix(et.dfw[,st:(st+1)]) ~ et.dfw$group)
   print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
 }
 
 # ANOVA Saccades
-# 2 (Group) x 2 (Gaze) ANOVA
+## 2 (Group) x 2 (Gaze) ANOVA
 for (st in 17:19) {
   carmod <- lm(as.matrix(et.dfw[,c(st,st+3)]) ~ et.dfw$group)
   print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
@@ -225,7 +241,82 @@ for (st in 17:19) {
 
 ```
 
+# # Memory by Matthias, nicht angepasst.
+```{r}
+########################################################################
+# Projekt: Joint Attention & Gaze Following
+# Projektarbeit Sommersemester 2017
+#
+# - Free Recall analysieren
 
+#options(warn=0)
+
+rm(list=ls())
+
+path <- "/Users/gamer/Documents/UKE/Lehre/2017_SS/Projektarbeit/Experiment/Data/Memory/"
+savepath <- "/Users/gamer/Documents/UKE/Lehre/2017_SS/Projektarbeit/Experiment/Auswertung/"
+
+# ALL DATA
+vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#bed <- rep(c("free","mem"),39)
+
+# Loop over subjects
+erg <- numeric()
+for (vp in vpn) {
+  print(vp)
+  
+  prot <- read.csv2(paste(path,vp,".csv",sep=""))
+
+  # Item recalled
+  gaze <- sum(prot$memgazedat)
+  nogaze <- sum(prot$memnongazedat)
+  
+  erg <- rbind(erg,c(gaze,nogaze))
+}
+
+out <- data.frame(code=vpn,bed,erg)               
+names(out) <- c("code","bed","memgaze","memnogaze")
+write.csv2(out,paste(savepath,"Memory.csv",sep=""),row.names=FALSE,quote=FALSE)
+
+####################################################
+# Plots
+x11()
+
+farben <- c("red","blue")
+
+# Fixation density
+m  <- cbind(apply(out[out$bed=="free",3:4],2,mean),
+            apply(out[out$bed=="mem",3:4],2,mean))
+se <- cbind(apply(out[out$bed=="free",3:4],2,sd)/sqrt(sum(out$bed=="free")),
+            apply(out[out$bed=="mem",3:4],2,sd)/sqrt(sum(out$bed=="mem")))
+
+
+x <- barplot(m,beside=TRUE,col=farben,ylim=c(0,10),xlab="",ylab="% of total fixation time")
+arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
+axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
+
+legend(min(x),10,c("Gazed at object","Non-gazed at object"),fill=farben,xjust=0,yjust=1)
+
+
+####################################################
+# ANOVAs
+require("car")
+require("afex")
+
+# Recalled items
+# 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
+imem <- gl(2,1,labels=c("cued","uncued"))
+idata <- data.frame(imem)
+
+# Car
+carmod <- lm(as.matrix(out[,3:4]) ~ out$bed)
+print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+
+```
 
 
 
