@@ -2,7 +2,7 @@
 title             : "Working title: Presence of persons in naturalistic scenes - A conceptual replication"
 shorttitle        : "Presence of persons in a naturalistic scene"
 
-author: 
+author:
   - name          : "Jonas Großekathöfer"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
@@ -24,7 +24,7 @@ author_note: |
 
 abstract: |
   Enter abstract here. Each new line herein must be indented, like this line.
-  
+
 keywords          : "keywords"
 wordcount         : "X"
 
@@ -86,11 +86,11 @@ The experimental stimuli consisted 26 different scenes with a single individual 
 tower system, sampling at 1000 Hz.
 
 ## Design & Procedure
-A two-level (instruktcion: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit. 
+A two-level (instruktcion: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit.
 
 
 ## Data analysis
-Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection. 
+Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
 
 We used `r cite_r("r-references.bib")` for all our analyses.
 
@@ -101,13 +101,18 @@ We used `r cite_r("r-references.bib")` for all our analyses.
 
 Priorization of the gazed-at object was measuerd in mulitple ways.
 
-### Fixation duration
-The relative cumulative fixation duration, as time spent on an Ooi divided by the time spent on the scene during presentation, revealed a bias towards the gazed-at object, which was fixated longer. This was suported by the corresponding ANOVA wich revealed a significant main effect for reference, `r fix.gaze$full_statistics$icond`. 
+### Fixation duration (H1)
+To investigate the first hypothisis the relative cumulative fixation duration is calculated as time duration on an Ooi divided by the time spent on the scene during presentation. It shows a bias towards the gazed-at object, which was fixated longer. This was suported by the corresponding ANOVA wich revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond, for condition` `r apa.fix.gaze$full_result$et_dfw_group which was unaffected by the two-way interaction condition` `r apa.fix.gaze$full_result$et_dfw_group_icond`.
+
+### Leaving saccades (H2)
+The second hypothisis predicts, that there are more saccades leaving from the head to the gazed-at object compared to the uncued. Furthermore it is claimed, that an interaction is increasing the difference between the conditions. An Anova supports the first claim, there is an significant main effect for reference, `r apa.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.sac.fgaze$full_result$et_dfw_group_icond`.
+
 
 ### Fixation latency
-Fixation latency is for each ROI the mean out of all first saccades on that ROI after stimulus onset. The rm ANOVA showed an effect for  It shows, that head is fixated first within 600ms, followed by  
+Fixation latency, for each OOI  the mean out of all first fixations on after stimulus onset, showed, that gazed-at OOI, `r apa.fixlat.gaze$full_result$icond` are looked at earlier. The same is true for OOI in the memory-condition, `r apa.fixlat.gaze$full_result$et_dfw_group`, but with out interaction, `r apa.fix.gaze$full_result$et_dfw_group_icond`.
 
-
+### Memory
+Observer remind OOI equally well, regardless of reference `r apa.mem$full_result$df_w_mem_bed`or instrucition `r apa.mem$full_result$imem`.
 
 
 #### Objects

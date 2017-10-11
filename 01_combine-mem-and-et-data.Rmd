@@ -2,11 +2,14 @@
 title: "Analysis 'Projektarbeit 2017'"
 ---
 
-# # Clearing work enviroment, setting libraries and constants
+## Clearing work enviroment, setting libraries and constants
 ```{r}
 rm(list=ls())
 
 library(tidyverse)
+library(papaja)
+library(car)
+library(afex)
 
 pathMEM <- "data/Memory/"
 pathET <- "data/prot/"
@@ -16,7 +19,7 @@ pathFB <- "data/FB/"
 
 
 
-# # Reading eye tracking data in 
+## Reading eye tracking data in
 ```{r}
 options(warn=0)  # 2=Turn warnings into errors / 0=default
 
@@ -35,22 +38,22 @@ vpn <- vpn[!(vpn %in% "vpja23")]
 erg <- numeric(); nvalid <- numeric(); cleantime <- numeric()
 for (vp in vpn) {
   #  print(vp)
-  
+
   prot <- read.csv2(paste(pathET,vp,"_Fixations.csv",sep=""))
-  
+
   # Restrict to trials with valid baseline?
   nvalid <- c(nvalid,sum(prot$blok==1))
   prot <- prot[prot$blok==1,]
-  
+
   cleantime <- c(cleantime,mean(prot$cleantime))
-  
+
   erg <- rbind(erg,apply(prot[,8:ncol(prot)],2,mean,na.rm=TRUE))
 }
 
-et.dfw <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg) 
-  
+df.w.et <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg)
 
-et.dfl <- gather(et.dfw, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>% 
+
+df.l.et <- gather(df.w.et, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>%
   mutate(
     key = as.character(key),
     fixations =
@@ -58,7 +61,7 @@ et.dfl <- gather(et.dfw, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>%
         ifelse(startsWith(key, "fix."), "fix",
              ifelse(startsWith(key, "fixn."), "fixn",
                     ifelse(startsWith(key, "fixlat."), "fixlat",NA)))),
-    region = 
+    region =
       as.factor(
         ifelse(endsWith(key, ".face"), "face",
                ifelse(endsWith(key, ".body"), "body",
@@ -70,7 +73,7 @@ et.dfl <- gather(et.dfw, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>%
                     ifelse(endsWith(key, ".bgaze"), "bgaze",
                            ifelse(endsWith(key, ".pnongaze"), "pnongaze",
                                   ifelse(endsWith(key, ".fnongaze"), "fnongaze",
-                                         ifelse(endsWith(key, ".bnongaze"), "bnongaze", NA)))))))) %>% 
+                                         ifelse(endsWith(key, ".bnongaze"), "bnongaze", NA)))))))) %>%
   arrange(code)
 
 rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
@@ -78,7 +81,7 @@ rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
 
 
 
-# # Reading memory data in
+## Reading memory data in
 ```{r}
 
 # ALL DATA
@@ -93,28 +96,28 @@ bed <- rep(c("free","mem"),47)
 erg <- numeric()
 for (vp in vpn) {
   # print(vp)
-  
+
   prot <- read.csv2(paste(pathMEM,vp,".csv",sep=""))
-  
+
   # Item recalled
   gaze <- sum(prot$memgazedat)
   nogaze <- sum(prot$memnongazedat)
-  
+
   erg <- rbind(erg,c(gaze,nogaze))
 }
 
-mem.dfw <- data.frame(code=vpn,bed,erg)               
-names(mem.dfw) <- c("code","bed","memgaze","memnogaze")
+df.w.mem <- data.frame(code=vpn,bed,erg)               
+names(df.w.mem) <- c("code","bed","memgaze","memnogaze")
 
 rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 ```
 
 
 
-# # Reading questionnaire data in
+## Reading questionnaire data in
 ```{r}
 
-demo.dfw <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep="")) %>% 
+df.w.demo <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep="")) %>%
   transmute(
     vp = as.factor(VP_Nr),
     sex = as.factor(Demo_Sex),
@@ -128,7 +131,7 @@ demo.dfw <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep=""
 
 
 
-# # Plots by Matthias 
+## Plots fixation and saccades by Matthias
 ```{r}
 ####################################################
 # Plots: Fixation data
@@ -139,13 +142,13 @@ farben <- c("green","red","blue","yellow")
 
 for (st in seq(5,16,4)) {
   # Fixation density
-  m  <- cbind(apply(et.dfw[et.dfw$group=="free",st:(st+3)],2,mean),
-              apply(et.dfw[et.dfw$group=="mem",st:(st+3)],2,mean))
-  se <- cbind(apply(et.dfw[et.dfw$group=="free",st:(st+3)],2,sd)/sqrt(sum(et.dfw$group=="free")),
-              apply(et.dfw[et.dfw$group=="mem",st:(st+3)],2,sd)/sqrt(sum(et.dfw$group=="mem")))
+  m  <- cbind(apply(df.w.et[df.w.et$group=="free",st:(st+3)],2,mean),
+              apply(df.w.et[df.w.et$group=="mem",st:(st+3)],2,mean))
+  se <- cbind(apply(df.w.et[df.w.et$group=="free",st:(st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
+              apply(df.w.et[df.w.et$group=="mem",st:(st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
 
   yrng <- c(0,max(m+se))
-  
+
   x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
   arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
   axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
@@ -159,19 +162,19 @@ ttxt <- c("Person","Face","Body")
 
 for (i in 1:3) {
   st <- (17:19)[i]
-  
+
   # Fixation density
-  m  <- cbind(apply(et.dfw[et.dfw$group=="free",c(st,st+3)],2,mean),
-              apply(et.dfw[et.dfw$group=="mem",c(st,st+3)],2,mean))
-  se <- cbind(apply(et.dfw[et.dfw$group=="free",c(st,st+3)],2,sd)/sqrt(sum(et.dfw$group=="free")),
-              apply(et.dfw[et.dfw$group=="mem",c(st,st+3)],2,sd)/sqrt(sum(et.dfw$group=="mem")))
-  
+  m  <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,mean),
+              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,mean))
+  se <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
+              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
+
   yrng <- c(0,max(m+se))
-  
+
   x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
   arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
   axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-  
+
   title(ttxt[i])
 }
 
@@ -181,17 +184,16 @@ rm(m, se, x, farben, i, st, ttxt, yrng)
 ```
 
 
-# # Anova by Matthias
-```{r}
-require("car")
 
+## t-tests by Matthias, apdaptet
+```{r}
 # Fixations Face in Free Viewing vs. Explicit Encoding
 ergtabface <- numeric()
 for (st in seq(5,16,4)) { # Variables 5:16, every 4th; free: fix.face and fixn.face; fixlat.face; and mem: ...
-  msd <- c(mean(et.dfw[et.dfw$group=="free",st]),sd(et.dfw[et.dfw$group=="free",st]),
-           mean(et.dfw[et.dfw$group=="mem",st]),sd(et.dfw[et.dfw$group=="mem",st]))
-  teststat <- t.test(et.dfw[,st] ~ et.dfw$group)
-  
+  msd <- c(mean(df.w.et[df.w.et$group=="free",st]),sd(df.w.et[df.w.et$group=="free",st]),
+           mean(df.w.et[df.w.et$group=="mem",st]),sd(df.w.et[df.w.et$group=="mem",st]))
+  teststat <- t.test(df.w.et[,st] ~ df.w.et$group)
+
   ergtabface <- rbind(ergtabface,c(msd,teststat$parameter,teststat$statistic,teststat$p.value))
 }
 
@@ -203,10 +205,10 @@ print(ergtabface)
 # Fixations Body in Free Viewing vs. Explicit Encoding
 ergtabbody <- numeric()
 for (st in seq(6,16,4)) { # Variables 5:16, every 4th; free: fix.face and fixn.face; fixlat.face; and mem: ...
-  msd <- c(mean(et.dfw[et.dfw$group=="free",st]),sd(et.dfw[et.dfw$group=="free",st]),
-           mean(et.dfw[et.dfw$group=="mem",st]),sd(et.dfw[et.dfw$group=="mem",st]))
-  teststat <- t.test(et.dfw[,st] ~ et.dfw$group)
-  
+  msd <- c(mean(df.w.et[df.w.et$group=="free",st]),sd(df.w.et[df.w.et$group=="free",st]),
+           mean(df.w.et[df.w.et$group=="mem",st]),sd(df.w.et[df.w.et$group=="mem",st]))
+  teststat <- t.test(df.w.et[,st] ~ df.w.et$group)
+
   ergtabbody <- rbind(ergtabbody,c(msd,teststat$parameter,teststat$statistic,teststat$p.value))
 }
 
@@ -218,121 +220,89 @@ rm(msd, teststat, st)
 
 ```
 
+
+## Anova fixations by Matthias, apdaptet
 ```{r}
 # ANOVA Fixations characteristics
 ## 2 (Group) x 2 (Gaze) ANOVA
 
-icond <- gl(2,1,labels=c("cued","uncued")) # within-factor 
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
 idata <- data.frame(icond)
 
-anovafixgaze <-  list()
+anova.fixgaze <-  list()
 
 for (st in seq(7,16,4)) { # Variables 5:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
-  carmod <- lm(as.matrix(et.dfw[,st:(st+1)]) ~ et.dfw$group)
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  anovafixgaze <- append(anovafixgaze, list(carmod))
+  anova.fixgaze <- append(anova.fixgaze, list(carmod))
   }
 
 print("fix.gaze")
-print(Anova(anovafixgaze[[1]], idata=idata, idesign=~icond, type="III"))
-fix.gaze <- apa_print(Anova(anovafixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+apa.fix.gaze <- apa_print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
 
 print("fixn.gaze")
-print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
-fixn.gaze <- apa_print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+apa.fixn.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
 
 
 print("fixlat.gaze")
-print(Anova(anovafixgaze[[3]], idata=idata, idesign=~icond, type="III"))
-fixlat.gaze <- apa_print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+print(Anova(anova.fixgaze[[3]], idata=idata, idesign=~icond, type="III"))
+apa.fixlat.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
 
-et.dfw %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
-
-et.dfw %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+df.w.et %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
 
 rm(carmod, idata, icond, st)
 
 ```
 
+
+## Anova saccades by Matthias, apdaptet
 ```{r}
 # ANOVA Saccades
 ## 2 (Group) x 2 (Gaze) ANOVA
-anovasacgaze <-  list()
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+anova.sacgaze <-  list()
 
 for (st in 17:19) {
-  carmod <- lm(as.matrix(et.dfw[,c(st,st+3)]) ~ et.dfw$group)
+  carmod <- lm(as.matrix(df.w.et[,c(st,st+3)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  anovasacgaze <- append(anovasacgaze, list(carmod))
+  anova.sacgaze <- append(anova.sacgaze, list(carmod))
   }
 
 print("pgaze")
-print(Anova(anovasacgaze[[1]], idata=idata, idesign=~icond, type="III"))
-et.dfw %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze))
-
-print("pgaze")
-print(Anova(anovasacgaze[[2]], idata=idata, idesign=~icond, type="III"))
-et.dfw %>% group_by(group) %>% summarise(mean(sac.fgaze), mean(sac.fnongaze))
+print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
+apa.sac.pgaze <- apa_print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
 
 print("fgaze")
-print(Anova(anovasacgaze[[3]], idata=idata, idesign=~icond, type="III"))
-et.dfw %>% group_by(group) %>% summarise(mean(sac.bgaze), mean(sac.bnongaze))
+print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
+apa.sac.fgaze <- apa_print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
 
-rm(carmod, teststat, idata, icond, msd, st)
+print("bgaze")
+print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
+apa.sac.bgaze <- apa_print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
+
+df.w.et %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+
+rm(carmod, idata, icond, st)
 ```
 
-
-# # Memory by Matthias, nicht angepasst.
+## Plots memory by Matthias
 ```{r}
-########################################################################
-# Projekt: Joint Attention & Gaze Following
-# Projektarbeit Sommersemester 2017
-#
-# - Free Recall analysieren
-
-#options(warn=0)
-
-rm(list=ls())
-
-path <- "/Users/gamer/Documents/UKE/Lehre/2017_SS/Projektarbeit/Experiment/Data/Memory/"
-savepath <- "/Users/gamer/Documents/UKE/Lehre/2017_SS/Projektarbeit/Experiment/Auswertung/"
-
-# ALL DATA
-vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
-bed <- rep(c("free","mem"),47)
-
-# ORIGINALLY ACQUIRED DATA
-#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
-#bed <- rep(c("free","mem"),39)
-
-# Loop over subjects
-erg <- numeric()
-for (vp in vpn) {
-  print(vp)
-  
-  prot <- read.csv2(paste(path,vp,".csv",sep=""))
-
-  # Item recalled
-  gaze <- sum(prot$memgazedat)
-  nogaze <- sum(prot$memnongazedat)
-  
-  erg <- rbind(erg,c(gaze,nogaze))
-}
-
-out <- data.frame(code=vpn,bed,erg)               
-names(out) <- c("code","bed","memgaze","memnogaze")
-write.csv2(out,paste(savepath,"Memory.csv",sep=""),row.names=FALSE,quote=FALSE)
-
-####################################################
 # Plots
 x11()
 
 farben <- c("red","blue")
 
 # Fixation density
-m  <- cbind(apply(out[out$bed=="free",3:4],2,mean),
-            apply(out[out$bed=="mem",3:4],2,mean))
-se <- cbind(apply(out[out$bed=="free",3:4],2,sd)/sqrt(sum(out$bed=="free")),
-            apply(out[out$bed=="mem",3:4],2,sd)/sqrt(sum(out$bed=="mem")))
+m  <- cbind(apply(df.w.mem[df.w.mem$bed=="free",3:4],2,mean),
+            apply(df.w.mem[df.w.mem$bed=="mem",3:4],2,mean))
+se <- cbind(apply(df.w.mem[df.w.mem$bed=="free",3:4],2,sd)/sqrt(sum(df.w.mem$bed=="free")),
+            apply(df.w.mem[df.w.mem$bed=="mem",3:4],2,sd)/sqrt(sum(df.w.mem$bed=="mem")))
 
 
 x <- barplot(m,beside=TRUE,col=farben,ylim=c(0,10),xlab="",ylab="% of total fixation time")
@@ -341,11 +311,12 @@ axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
 
 legend(min(x),10,c("Gazed at object","Non-gazed at object"),fill=farben,xjust=0,yjust=1)
 
+```
 
-####################################################
+
+## Anova memory by Matthias, adapted
+```{r}
 # ANOVAs
-require("car")
-require("afex")
 
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
@@ -353,9 +324,18 @@ imem <- gl(2,1,labels=c("cued","uncued"))
 idata <- data.frame(imem)
 
 # Car
-carmod <- lm(as.matrix(out[,3:4]) ~ out$bed)
-print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
+#print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+anova.mem <- carmod
 
+print("memory")
+print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
+apa.mem <- apa_print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
+
+df.w.mem %>% summarise(mean(memgaze), mean(memnogaze))
+df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), mean(memnogaze))
+
+rm(imem, idata, carmod)
 ```
 
 
@@ -364,10 +344,3 @@ print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
-
-
-
-
-
-
-
