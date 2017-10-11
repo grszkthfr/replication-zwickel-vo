@@ -52,6 +52,29 @@ set.seed(42)
 
 # Introduction
 
+1) Replikationsstudie
+2) Top-Down Modulationm/Anfälligket
+	1. & Konsequenzen
+3) Nur soziale Komponente
+
+## Hypothesess
+
+### H1:
+Betrachtungsdauer auf das gecuete Objekt ist länger als die Betrachtungsdauer auf das ungecuete Objekt. Der Unterschied in der Betrachtungsdauer zwischen gecuetem und ungecuetem Objekt ist in der Erinnerungsbedingung geringer als in der „free-viewing“-Bedingung.
+--> Fixation duration: Haupteffekt icond[*],Interaktion[ ]
+
+### H2:
+Es gehen mehr Sakkaden vom Kopf zum gecueten Objekt als zum ungecueten. Dieser Unterschied ist in der „free-viewing“-Bedingung größer als in der Erinnerungsbedingung.
+--> sac fgaze: haupteffekt icond[***], Interaktion [ ]
+
+
+### H3:
+In der „free-viewing“-Bedingung werden gecuete Objekte besser erinnert als ungecuete Objekte.
+
+### H4:
+Je höher der Score auf der Soziale Kompetenz Skala desto höher der relative Betrachtungsdauer der gecueten Objekte im Vergleich zu den ungecueten.
+
+
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
@@ -63,11 +86,11 @@ The experimental stimuli consisted 26 different scenes with a single individual 
 tower system, sampling at 1000 Hz.
 
 ## Design & Procedure
-A two-level (free viewing/ explicit encoding) between subjects factor and a two-level (cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit. 
+A two-level (instruktcion: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit. 
 
 
 ## Data analysis
-Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the pohtograph to determine gaze locations. Outlier detection. 
+Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection. 
 
 We used `r cite_r("r-references.bib")` for all our analyses.
 
@@ -76,17 +99,32 @@ We used `r cite_r("r-references.bib")` for all our analyses.
 
 ## Viewing behavior
 
+Priorization of the gazed-at object was measuerd in mulitple ways.
+
 ### Fixation duration
-The relative cumulative fixation duration is calculated as time spent on a given ROI divided by the time spent on the scene during presentation.  
+The relative cumulative fixation duration, as time spent on an Ooi divided by the time spent on the scene during presentation, revealed a bias towards the gazed-at object, which was fixated longer. This was suported by the corresponding ANOVA wich revealed a significant main effect for reference, `r fix.gaze$full_statistics$icond`. 
+
+### Fixation latency
+Fixation latency is for each ROI the mean out of all first saccades on that ROI after stimulus onset. The rm ANOVA showed an effect for  It shows, that head is fixated first within 600ms, followed by  
+
+
+
+
+#### Objects
 
 ### Fixation number
 The number of fixations of a ROI during scene presentation was counted and divided by the total number of fixations during scene presentation, to calculate a measure of fixation proportion.
 
+#### Objects
 
-### Saccades latency
-Saccade latency is for each ROI the mean out of all first saccades on that ROI after stimulus onset. The rm ANOVA showed an effect for  It shows, that head is fixated first within 600ms, followed by  
+
+
+
 
 ### Leaving saccades
+
+#### Head (vs. Body (t-test))
+Fixation patterns for the individual between the two groups differ only for faces. Overall, there is no difference in the viewing pattern for the bodys (all T < .25). For the faces especially the latency of first fixations differs (t,p). In the free recoding condition fixations are 242 ms earlier compared to the explicit encoding condition. Fixation duration and number of fixation does not differ between conditions.  
 
 ## Memory task
 

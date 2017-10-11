@@ -176,6 +176,8 @@ for (i in 1:3) {
 }
 
 legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
+
+rm(m, se, x, farben, i, st, ttxt, yrng)
 ```
 
 
@@ -183,38 +185,101 @@ legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
 ```{r}
 require("car")
 
-# Fixations Face + Body(?) in Free Viewing vs. Explicit Encoding
-ergtab <- numeric()
-for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.body; fixn.face and ...
+# Fixations Face in Free Viewing vs. Explicit Encoding
+ergtabface <- numeric()
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th; free: fix.face and fixn.face; fixlat.face; and mem: ...
   msd <- c(mean(et.dfw[et.dfw$group=="free",st]),sd(et.dfw[et.dfw$group=="free",st]),
            mean(et.dfw[et.dfw$group=="mem",st]),sd(et.dfw[et.dfw$group=="mem",st]))
   teststat <- t.test(et.dfw[,st] ~ et.dfw$group)
   
-  ergtab <- rbind(ergtab,c(msd,teststat$parameter,teststat$statistic,teststat$p.value))
+  ergtabface <- rbind(ergtabface,c(msd,teststat$parameter,teststat$statistic,teststat$p.value))
 }
 
-colnames(ergtab) <- c("M(free)","SD(free)","M(mem)","SD(mem)","df","t","p")
-rownames(ergtab) <- c("fix.face","fixn.face","fixlat.face")
-print(ergtab)
+colnames(ergtabface) <- c("M(free)","SD(free)","M(mem)","SD(mem)","df","t","p")
+rownames(ergtabface) <- c("fix.face","fixn.face","fixlat.face")
+print(ergtabface)
 
-# ANOVA Fixations characteristics
-## 2 (Group) x 2 (Gaze) ANOVA
-icond <- gl(2,1,labels=c("cued","uncued"))
-idata <- data.frame(icond)
 
-for (st in seq(7,16,4)) { # # Variables 5:16, every 4th: fix.gace and fix.nogaze; fixn.gaze and ...
-  carmod <- lm(as.matrix(et.dfw[,st:(st+1)]) ~ et.dfw$group)
-  print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+# Fixations Body in Free Viewing vs. Explicit Encoding
+ergtabbody <- numeric()
+for (st in seq(6,16,4)) { # Variables 5:16, every 4th; free: fix.face and fixn.face; fixlat.face; and mem: ...
+  msd <- c(mean(et.dfw[et.dfw$group=="free",st]),sd(et.dfw[et.dfw$group=="free",st]),
+           mean(et.dfw[et.dfw$group=="mem",st]),sd(et.dfw[et.dfw$group=="mem",st]))
+  teststat <- t.test(et.dfw[,st] ~ et.dfw$group)
+  
+  ergtabbody <- rbind(ergtabbody,c(msd,teststat$parameter,teststat$statistic,teststat$p.value))
 }
 
-# ANOVA Saccades
-## 2 (Group) x 2 (Gaze) ANOVA
-for (st in 17:19) {
-  carmod <- lm(as.matrix(et.dfw[,c(st,st+3)]) ~ et.dfw$group)
-  print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-}
+colnames(ergtabbody) <- c("M(free)","SD(free)","M(mem)","SD(mem)","df","t","p")
+rownames(ergtabbody) <- c("fix.body","fixn.body","fixlat.body")
+print(ergtabbody)
+
+rm(msd, teststat, st)
 
 ```
+
+```{r}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor 
+idata <- data.frame(icond)
+
+anovafixgaze <-  list()
+
+for (st in seq(7,16,4)) { # Variables 5:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
+  carmod <- lm(as.matrix(et.dfw[,st:(st+1)]) ~ et.dfw$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  anovafixgaze <- append(anovafixgaze, list(carmod))
+  }
+
+print("fix.gaze")
+print(Anova(anovafixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+fix.gaze <- apa_print(Anova(anovafixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+
+print("fixn.gaze")
+print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+fixn.gaze <- apa_print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+
+
+print("fixlat.gaze")
+print(Anova(anovafixgaze[[3]], idata=idata, idesign=~icond, type="III"))
+fixlat.gaze <- apa_print(Anova(anovafixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+
+et.dfw %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+
+et.dfw %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+
+rm(carmod, idata, icond, st)
+
+```
+
+```{r}
+# ANOVA Saccades
+## 2 (Group) x 2 (Gaze) ANOVA
+anovasacgaze <-  list()
+
+for (st in 17:19) {
+  carmod <- lm(as.matrix(et.dfw[,c(st,st+3)]) ~ et.dfw$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  anovasacgaze <- append(anovasacgaze, list(carmod))
+  }
+
+print("pgaze")
+print(Anova(anovasacgaze[[1]], idata=idata, idesign=~icond, type="III"))
+et.dfw %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze))
+
+print("pgaze")
+print(Anova(anovasacgaze[[2]], idata=idata, idesign=~icond, type="III"))
+et.dfw %>% group_by(group) %>% summarise(mean(sac.fgaze), mean(sac.fnongaze))
+
+print("fgaze")
+print(Anova(anovasacgaze[[3]], idata=idata, idesign=~icond, type="III"))
+et.dfw %>% group_by(group) %>% summarise(mean(sac.bgaze), mean(sac.bnongaze))
+
+rm(carmod, teststat, idata, icond, msd, st)
+```
+
 
 # # Memory by Matthias, nicht angepasst.
 ```{r}
