@@ -216,7 +216,7 @@ colnames(ergtabbody) <- c("M(free)","SD(free)","M(mem)","SD(mem)","df","t","p")
 rownames(ergtabbody) <- c("fix.body","fixn.body","fixlat.body")
 print(ergtabbody)
 
-rm(msd, teststat, st)
+#rm(msd, teststat, st)
 
 ```
 
@@ -311,6 +311,7 @@ axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
 
 legend(min(x),10,c("Gazed at object","Non-gazed at object"),fill=farben,xjust=0,yjust=1)
 
+rm(m, se, x, farben)
 ```
 
 

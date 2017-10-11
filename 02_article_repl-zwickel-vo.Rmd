@@ -43,11 +43,124 @@ output            : papaja::apa6_pdf
 
 ```{r load_packages, include = FALSE}
 library("papaja")
+library("tidyverse")
+library("car")
+library("afex")
 ```
 
-```{r analysis_preferences}
-# Seed for random number generation
-set.seed(42)
+```{r paths}
+
+rm(list=ls())
+
+pathMEM <- "data/Memory/"
+pathET <- "data/prot/"
+pathFB <- "data/FB/"
+
+```
+
+```{r Reading eye tracking data in, warning=FALSE, message=FALSE}
+options(warn=0)  # 2=Turn warnings into errors / 0=default
+
+# ALL DATA
+vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#bed <- rep(c("free","mem"),39)
+
+bed <- bed[!(vpn %in% "vpja23")]  # Daten fehlen
+vpn <- vpn[!(vpn %in% "vpja23")]  
+
+# Loop over subjects
+erg <- numeric(); nvalid <- numeric(); cleantime <- numeric()
+for (vp in vpn) {
+  #  print(vp)
+
+  prot <- read.csv2(paste(pathET,vp,"_Fixations.csv",sep=""))
+
+  # Restrict to trials with valid baseline?
+  nvalid <- c(nvalid,sum(prot$blok==1))
+  prot <- prot[prot$blok==1,]
+
+  cleantime <- c(cleantime,mean(prot$cleantime))
+
+  erg <- rbind(erg,apply(prot[,8:ncol(prot)],2,mean,na.rm=TRUE))
+}
+
+df.w.et <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg)
+
+
+df.l.et <- gather(df.w.et, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>%
+  mutate(
+    key = as.character(key),
+    fixations =
+      as.factor(
+        ifelse(startsWith(key, "fix."), "fix",
+             ifelse(startsWith(key, "fixn."), "fixn",
+                    ifelse(startsWith(key, "fixlat."), "fixlat",NA)))),
+    region =
+      as.factor(
+        ifelse(endsWith(key, ".face"), "face",
+               ifelse(endsWith(key, ".body"), "body",
+                      ifelse(endsWith(key, ".gaze"), "gaze",
+                             ifelse(endsWith(key, ".nongaze"), "nongaze", NA))))),
+    saccades = as.factor(
+      ifelse(endsWith(key, ".pgaze"), "pgaze",
+             ifelse(endsWith(key, ".fgaze"), "fgaze",
+                    ifelse(endsWith(key, ".bgaze"), "bgaze",
+                           ifelse(endsWith(key, ".pnongaze"), "pnongaze",
+                                  ifelse(endsWith(key, ".fnongaze"), "fnongaze",
+                                         ifelse(endsWith(key, ".bnongaze"), "bnongaze", NA)))))))) %>%
+  arrange(code)
+
+rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
+```
+
+
+```{r Reading memory data in, warning=FALSE, message=FALSE}
+
+# ALL DATA
+vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#bed <- rep(c("free","mem"),39)
+
+# Loop over subjects
+erg <- numeric()
+for (vp in vpn) {
+  # print(vp)
+
+  prot <- read.csv2(paste(pathMEM,vp,".csv",sep=""))
+
+  # Item recalled
+  gaze <- sum(prot$memgazedat)
+  nogaze <- sum(prot$memnongazedat)
+
+  erg <- rbind(erg,c(gaze,nogaze))
+}
+
+df.w.mem <- data.frame(code=vpn,bed,erg)               
+names(df.w.mem) <- c("code","bed","memgaze","memnogaze")
+
+rm(gaze, nogaze, erg, prot, bed, vp, vpn)
+```
+
+
+```{r Reading questionnaire data in, warning=FALSE, message=FALSE}
+
+df.w.demo <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep="")) %>%
+  transmute(
+    vp = as.factor(VP_Nr),
+    sex = as.factor(Demo_Sex),
+    age = Demo_Alter,
+    aq_social = ifelse((5-AQK_1) < 3, 1, 0) + ifelse((5-AQK_7) < 3, 1, 0) + ifelse(AQK_8 < 3, 1, 0) + ifelse((5-AQK_10) < 3, 1, 0) + ifelse((5-AQK_11) < 3, 1, 0) + ifelse(AQK_13 < 3, 1, 0) + ifelse((5-AQK_14) < 3, 1, 0) + ifelse((5-AQK_20) < 3, 1, 0) + ifelse((5-AQK_24) < 3, 1, 0) + ifelse((5-AQK_28) < 3, 1, 0) + ifelse((5-AQK_31) < 3, 1, 0), # 5- 'item' for reversed items, then if 1/2 -> 1, 3/4 -> 0  
+    aq_imagination = ifelse((5-AQK_3) < 3, 1, 0) + ifelse((5-AQK_5) < 3, 1, 0) + ifelse((5-AQK_6) < 3, 1, 0) + ifelse((5-AQK_9) < 3, 1, 0) + ifelse((5-AQK_16) < 3, 1, 0) + ifelse((5-AQK_17) < 3, 1, 0) + ifelse((5-AQK_18) < 3, 1, 0) + ifelse((5-AQK_22) < 3, 1, 0) + ifelse((5-AQK_23) < 3, 1, 0) + ifelse((5-AQK_26) < 3, 1, 0) + ifelse((5-AQK_32) < 3, 1, 0) + ifelse((5-AQK_33) < 3, 1, 0),
+    aq_communication = ifelse(AQK_2 < 3, 1, 0) + ifelse(AQK_4 < 3, 1, 0) + ifelse(AQK_12 < 3, 1, 0) + ifelse(AQK_15 < 3, 1, 0) + ifelse(AQK_19 < 3, 1, 0) + ifelse(AQK_21 < 3, 1, 0) + ifelse(AQK_25 < 3, 1, 0) + ifelse(AQK_27 < 3, 1, 0) + ifelse(AQK_29 < 3, 1, 0) + ifelse(AQK_30 < 3, 1, 0),
+    aq_sumscore = ifelse((5-AQK_1) < 3, 1, 0) + ifelse(AQK_2 < 3, 1, 0) + ifelse((5-AQK_3) < 3, 1, 0) + ifelse(AQK_4 < 3, 1, 0) + ifelse((5-AQK_5) < 3, 1, 0) + ifelse((5-AQK_6) < 3, 1, 0) + ifelse((5-AQK_7) < 3, 1, 0) + ifelse(AQK_8 < 3, 1, 0) + ifelse((5-AQK_9) < 3, 1, 0) + ifelse((5-AQK_10) < 3, 1, 0) + ifelse((5-AQK_11) < 3, 1, 0) + ifelse(AQK_12 < 3, 1, 0) + ifelse(AQK_13 < 3, 1, 0) + ifelse((5-AQK_14) < 3, 1, 0) + ifelse(AQK_15 < 3, 1, 0) + ifelse((5-AQK_16) < 3, 1, 0) + ifelse((5-AQK_17) < 3, 1, 0) + ifelse((5-AQK_18) < 3, 1, 0) + ifelse(AQK_19 < 3, 1, 0) + ifelse((5-AQK_20) < 3, 1, 0) + ifelse(AQK_21 < 3, 1, 0) + ifelse((5-AQK_22) < 3, 1, 0) + ifelse((5-AQK_23) < 3, 1, 0) + ifelse((5-AQK_24) < 3, 1, 0) + ifelse(AQK_25 < 3, 1, 0) + ifelse((5-AQK_26) < 3, 1, 0) + ifelse(AQK_27 < 3, 1, 0) + ifelse((5-AQK_28) < 3, 1, 0) + ifelse(AQK_29 < 3, 1, 0) + ifelse(AQK_30 < 3, 1, 0) + ifelse((5-AQK_31) < 3, 1, 0) + ifelse((5-AQK_32) < 3, 1, 0) + ifelse((5-AQK_33) < 3, 1, 0))
+
 ```
 
 # Introduction
@@ -86,52 +199,132 @@ The experimental stimuli consisted 26 different scenes with a single individual 
 tower system, sampling at 1000 Hz.
 
 ## Design & Procedure
-A two-level (instruktcion: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit.
+A two-level (instruction: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit.
 
 
 ## Data analysis
 Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
 
-We used `r cite_r("r-references.bib")` for all our analyses.
+We used r cite_r("r-references.bib") for all our analyses.
 
 
 # Results
 
-## Viewing behavior
+Priorizations of the ROIs in the scene were measuerd in mulitple ways. 
 
-Priorization of the gazed-at object was measuerd in mulitple ways.
+## Objects of interests
 
 ### Fixation duration (H1)
-To investigate the first hypothisis the relative cumulative fixation duration is calculated as time duration on an Ooi divided by the time spent on the scene during presentation. It shows a bias towards the gazed-at object, which was fixated longer. This was suported by the corresponding ANOVA wich revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond, for condition` `r apa.fix.gaze$full_result$et_dfw_group which was unaffected by the two-way interaction condition` `r apa.fix.gaze$full_result$et_dfw_group_icond`.
+```{r Anova fixations, warning=FALSE, message=FALSE}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Gaze) ANOVA
 
-### Leaving saccades (H2)
-The second hypothisis predicts, that there are more saccades leaving from the head to the gazed-at object compared to the uncued. Furthermore it is claimed, that an interaction is increasing the difference between the conditions. An Anova supports the first claim, there is an significant main effect for reference, `r apa.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.sac.fgaze$full_result$et_dfw_group_icond`.
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
 
+anova.fixgaze <-  list()
+
+for (st in seq(7,16,4)) { # Variables 5:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  anova.fixgaze <- append(anova.fixgaze, list(carmod))
+  }
+
+#print("fix.gaze")
+#print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+apa.fix.gaze <- apa_print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
+
+#print("fixn.gaze")
+#print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+apa.fixn.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+
+
+#print("fixlat.gaze")
+#print(Anova(anova.fixgaze[[3]], idata=idata, idesign=~icond, type="III"))
+apa.fixlat.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
+
+#df.w.et %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+#df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+
+rm(carmod, idata, icond, st)
+
+```
+The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure). The corresponding ANOVA revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond` and for condition `r apa.fix.gaze$full_result$df_w_et_group` which were unaffected by the two-way interaction, `r apa.fix.gaze$full_result$df_w_et_group_icond`.
 
 ### Fixation latency
-Fixation latency, for each OOI  the mean out of all first fixations on after stimulus onset, showed, that gazed-at OOI, `r apa.fixlat.gaze$full_result$icond` are looked at earlier. The same is true for OOI in the memory-condition, `r apa.fixlat.gaze$full_result$et_dfw_group`, but with out interaction, `r apa.fix.gaze$full_result$et_dfw_group_icond`.
-
-### Memory
-Observer remind OOI equally well, regardless of reference `r apa.mem$full_result$df_w_mem_bed`or instrucition `r apa.mem$full_result$imem`.
-
-
-#### Objects
+An additional measurement of priorisation is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. It showed, an object is fixated earlier when it is gazed-at or when the observer was in the explicit encoding condition. Both is confirmed by an ANOVA: for reference `r apa.fixlat.gaze$full_result$icond` and condition, `r apa.fixlat.gaze$full_result$df_w_et_group`, but again there was no interaction, `r apa.fixlat.gaze$full_result$df_w_et_group_icond`.
 
 ### Fixation number
-The number of fixations of a ROI during scene presentation was counted and divided by the total number of fixations during scene presentation, to calculate a measure of fixation proportion.
+As a third measurement of priorisation, fixation number is the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation. They show, that OOI were fixated more often when gazed-at `r apa.fixn.gaze$full_result$icond`, and that objects were more often fixated in the explicit encoding condition`r apa.fixn.gaze$full_result$df_w_mem`. And again there is no interaction, `r apa.fixn.gaze$full_result$df_w_et_group_icond`
+ 
 
-#### Objects
+### Leaving saccades (H2)
+
+```{r Anova saccades, warning=FALSE, message=FALSE}
+# ANOVA Saccades
+## 2 (Group) x 2 (Gaze) ANOVA
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+anova.sacgaze <-  list()
+
+for (st in 17:19) {
+  carmod <- lm(as.matrix(df.w.et[,c(st,st+3)]) ~ df.w.et$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  anova.sacgaze <- append(anova.sacgaze, list(carmod))
+  }
+
+#print("pgaze")
+#print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
+apa.sac.pgaze <- apa_print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
+
+#print("fgaze")
+#print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
+apa.sac.fgaze <- apa_print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
+
+#print("bgaze")
+#print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
+apa.sac.bgaze <- apa_print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
+
+#df.w.et %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+#df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+
+rm(carmod, idata, icond, st)
+```
+The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences. An Anova supports the first claim. There is an significant main effect for reference, `r apa.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.sac.fgaze$full_result$df_w_et_group_icond`.
 
 
+## Memory (H3)
+
+```{r Anova memory, warning=FALSE, message=FALSE}
+# Recalled items
+# 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
+imem <- gl(2,1,labels=c("cued","uncued"))
+idata <- data.frame(imem)
+
+# Car
+carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
+#print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+anova.mem <- carmod
+
+#print("memory")
+#print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
+apa.mem <- apa_print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
+
+#df.w.mem %>% summarise(mean(memgaze), mean(memnogaze))
+#df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), mean(memnogaze))
+
+rm(imem, idata, carmod)
+```
+
+Observers reminded OOI equally well, regardless of reference `r apa.mem$full_result$df_w_mem_bed`or instrucition `r apa.mem$full_result$imem`.
 
 
+## Head and body
+A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to acount for priorisation, but in this case only t-test were calculated, because there were no specific hypotheses to account for the instructions.
 
-### Leaving saccades
-
-#### Head (vs. Body (t-test))
 Fixation patterns for the individual between the two groups differ only for faces. Overall, there is no difference in the viewing pattern for the bodys (all T < .25). For the faces especially the latency of first fixations differs (t,p). In the free recoding condition fixations are 242 ms earlier compared to the explicit encoding condition. Fixation duration and number of fixation does not differ between conditions.  
 
-## Memory task
 
 # Discussion
 
