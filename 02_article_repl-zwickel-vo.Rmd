@@ -59,9 +59,7 @@ pathFB <- "data/FB/"
 ```
 
 ```{r Reading eye tracking data in, warning=FALSE, message=FALSE}
-options(warn=0)  # 2=Turn warnings into errors / 0=default
-
-# ALL DATA
+# ALL EYE TRACKING DATA
 vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
 bed <- rep(c("free","mem"),47)
 
@@ -119,8 +117,7 @@ rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
 
 
 ```{r Reading memory data in, warning=FALSE, message=FALSE}
-
-# ALL DATA
+# ALL MEMORY DATA
 vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
 bed <- rep(c("free","mem"),47)
 
@@ -205,7 +202,7 @@ A two-level (instruction: free viewing/ explicit encoding) between subjects fact
 ## Data analysis
 Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
 
-We used r cite_r("r-references.bib") for all our analyses.
+We used `r cite_r("r-references.bib")` for all our analyses.
 
 
 # Results
