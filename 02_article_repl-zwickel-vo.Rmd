@@ -248,30 +248,17 @@ As a measuere of priorisation fixation duration, fixation number, fixation laten
 icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
 idata <- data.frame(icond)
 
-anova.fixgaze <-  list()
-
 for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
   carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  anova.fixgaze <- append(anova.fixgaze, list(carmod))
+  #anova.fixgaze <- append(anova.fixgaze, list(carmod))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-print("fix.gaze")
-print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
-apa.fix.gaze <- apa_print(Anova(anova.fixgaze[[1]], idata=idata, idesign=~icond, type="III"))
-
-print("fixn.gaze")
-print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
-apa.fixn.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
-
-
-print("fixlat.gaze")
-print(Anova(anova.fixgaze[[3]], idata=idata, idesign=~icond, type="III"))
-apa.fixlat.gaze <- apa_print(Anova(anova.fixgaze[[2]], idata=idata, idesign=~icond, type="III"))
-
-df.w.et %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
-df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
-
+means.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+means.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+ 
 rm(carmod, idata, icond, st)
 
 ```
@@ -290,31 +277,20 @@ As a third measurement of priorisation, fixation number, as the count of fixatio
 ```{r Anova saccades, warning=FALSE, message=FALSE}
 # ANOVA Saccades
 ## 2 (Group) x 2 (Gaze) ANOVA
+
 icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
 idata <- data.frame(icond)
 
-anova.sacgaze <-  list()
-
 for (st in 17:19) {
-  carmod <- lm(as.matrix(df.w.et[,c(st,st+3)]) ~ df.w.et$group)
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  anova.sacgaze <- append(anova.sacgaze, list(carmod))
+  #anova.fixgaze <- append(anova.fixgaze, list(carmod))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-#print("pgaze")
-#print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
-apa.sac.pgaze <- apa_print(Anova(anova.sacgaze[[1]], idata=idata, idesign=~icond, type="III"))
-
-#print("fgaze")
-#print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
-apa.sac.fgaze <- apa_print(Anova(anova.sacgaze[[2]], idata=idata, idesign=~icond, type="III"))
-
-#print("bgaze")
-#print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
-apa.sac.bgaze <- apa_print(Anova(anova.sacgaze[[3]], idata=idata, idesign=~icond, type="III"))
-
-#df.w.et %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
-#df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+mean.sac <- df.w.et %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+mean.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
 
 rm(carmod, idata, icond, st)
 ```
@@ -327,6 +303,7 @@ The second hypothesis predicts, that there are more saccades leaving from the he
 ```{r Anova memory, warning=FALSE, message=FALSE}
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
+
 imem <- gl(2,1,labels=c("cued","uncued"))
 idata <- data.frame(imem)
 
@@ -334,15 +311,12 @@ idata <- data.frame(imem)
 carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
 #print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
 anova.mem <- carmod
-
-#print("memory")
-#print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
 apa.mem <- apa_print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
 
-#df.w.mem %>% summarise(mean(memgaze), mean(memnogaze))
-#df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), mean(memnogaze))
+mean.mem <- df.w.mem %>% summarise(mean(memgaze), mean(memnogaze))
+mean.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), mean(memnogaze))
 
-rm(imem, idata, carmod)
+#rm(imem, idata, carmod)
 ```
 There were no differences in the memory performance. Observers recalled OOI equally well, regardless of reference `r apa.mem$full_result$df_w_mem_bed` or instrucition `r apa.mem$full_result$imem`.
 
@@ -361,26 +335,15 @@ idata <- data.frame(icond)
 anova.fixface <-  list()
 
 for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
-  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  anova.fixface <- append(anova.fixface, list(carmod))
+  #anova.fixgaze <- append(anova.fixgaze, list(carmod))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-print("fix.face")
-print(Anova(anova.fixface[[1]], idata=idata, idesign=~icond, type="III"))
-apa.fix.face <- apa_print(Anova(anova.fixface[[1]], idata=idata, idesign=~icond, type="III"))
-
-print("fixn.face")
-print(Anova(anova.fixface[[2]], idata=idata, idesign=~icond, type="III"))
-apa.fixn.face <- apa_print(Anova(anova.fixface[[2]], idata=idata, idesign=~icond, type="III"))
-
-
-print("fixlat.face")
-print(Anova(anova.fixface[[3]], idata=idata, idesign=~icond, type="III"))
-apa.fixlat.face <- apa_print(Anova(anova.fixface[[2]], idata=idata, idesign=~icond, type="III"))
-
-df.w.et %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
-df.w.et %>% group_by(group) %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
+mean.fixsoc <- df.w.et %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
+mean.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
 
 rm(carmod, idata, icond, st)
 
