@@ -301,12 +301,11 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 
 rm(imem, idata, carmod)
 ```
-The free-recall test showed, that observers with explicit encoding remembered on average 2 items more then observers from the other group. In an Anova this effect was significant, `r apa.mem$full_result$df_w_mem_bed`. No effect is found for referencing an OOI, it did not influence memory performance `r apa.mem$full_result$imem`. There was also no interaction, `r apa.mem$full_result$df_w_mem_bed_imem`.
-
+The free-recall test showed, that unsurprisingly observers with explicit encoding remembered on average 2 items more then observers from the other group. An Anova proved this effect as statistically significant, `r apa.mem$full_result$df_w_mem_bed`. Referencing an OOI did not influence memory performance, `r apa.mem$full_result$imem`. There was also no interaction, `r apa.mem$full_result$df_w_mem_bed_imem`.
 
 
 ## Social attention
-A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to acount for priorisation, 
+A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to acount for priorisation. 
 
 ```{r Anova fixations social, warning = FALSE, message = FALSE}
 # ANOVA Fixations characteristics
@@ -328,9 +327,12 @@ dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), s
 rm(carmod, idata, icond, st)
 
 ```
-Priorisation of the faces can also be shown by the before mentioned measurements.
-Faces are fixated longer then the body, `r apa.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.fix.face$full_result$df_w_et_group_icond`.
+Analysis for the social attention part containd again Anovas for the differen dependent variabels indicating priorisation.
+The first measurement shows, that faces were fixated longer then the body  (Table X), `r apa.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.fix.face$full_result$df_w_et_group_icond`.
 The same pattern can be seen for fixation number, where there is a strong effect for region, with more fixations on the face, `r apa.fixn.face$full_result$icond` and no difference between the instructions, `r apa.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.fixn.face$full_result$df_w_et_group_icond`.
+Latencies of fixation differed also remarkly between head and body, but only for region `r apa.fixlat$full_result$icond`. There was neither an effect for interstruction, `r aps.fixlat$full_result$df_w_et_group` nor was their an interaction, `r apa.fixlat$full_result&df_w_et_group_icond`.
+
+
 
 # Discussion
 
