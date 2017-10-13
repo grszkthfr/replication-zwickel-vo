@@ -174,8 +174,7 @@ df.w.demo <- read_csv2(paste0(pathFB,"Projektarbeit_Dateneingabemaske.csv")) %>%
 3) Nur soziale Komponente
 
 
-
-## Hypothesis (new)
+## Hypothesis
 
 ### joint attention/gaze following
 The first attempt of this study is to replicate [@Zwickel2010] findings.
@@ -197,7 +196,6 @@ As naturalistic scences are used, the basic effects of social attention are expe
 
 #### H5
 Due to the instruction of the free-recall test the viewing behavior should also change for social stimuli. As a consequnece it is assumed that the effect for the head as the central social stimuli in the scene is prioritised over all other ROI. 
-
 
 
 # Methods
@@ -226,6 +224,7 @@ Priorizations of the ROIs in the scene were measuerd in mulitple ways.
 ## Joint attention/ gaze following
 
 As a measuere of priorisation fixation duration, fixation number, fixation latency, as well as leaving saccades are used.
+
 ### Fixations
 ```{r Anova fixations joint, warning = FALSE, message = FALSE}
 # ANOVA Fixations characteristics
@@ -249,14 +248,14 @@ rm(carmod, idata, icond, st)
 ```
 
 #### Fixation duration (H1n, H2n)
-The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure). As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond` and for condition `r apa.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.fix.gaze$full_result$df_w_et_group_icond`. HIER NE TABELLE `r apa_table(dscr.fixjoi, caption = "AAAAAAAAAA")` BIS HIER.
+The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond` and for condition `r apa.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.fix.gaze$full_result$df_w_et_group_icond`.
 
 
 #### Fixation latency (H1n, H2n)
-An additional measurement of priorisation is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. It showed, an object is fixated earlier when it is gazed-at (or when the observer was in the explicit encoding condition) and is confirmed by an ANOVA: for reference `r apa.fixlat.gaze$full_result$icond` (and condition, `r apa.fixlat.gaze$full_result$df_w_et_group`), this time with a trend for an interaction, `r apa.fixlat.gaze$full_result$df_w_et_group_icond`.
+An additional measurement of priorisation is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. In line with [@Zwickel2010], an object is fixated earlier when it is gazed-at. But also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.fixlat.gaze$full_result$icond` and condition, `r apa.fixlat.gaze$full_result$df_w_et_group`). For fixation latency with a trend(?) for an interaction, `r apa.fixlat.gaze$full_result$df_w_et_group_icond`.
 
 #### Fixation number (H1n, H2n)
-As a third measurement of priorisation, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when gazed-at `r apa.fixn.gaze$full_result$icond`(, and that objects were more often fixated in the explicit encoding condition`r apa.fixn.gaze$full_result$df_w_mem`). And again against prediction there was no interaction, `r apa.fixn.gaze$full_result$df_w_et_group_icond`
+As a third measurement of priorisation, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when gazed-at `r apa.fixn.gaze$full_result$icond`, again in line with [@Zwickel2010]. Objects were also more often fixated in the explicit encoding condition`r apa.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.fixn.gaze$full_result$df_w_et_group_icond`.
  
 
 ### Saccades
@@ -302,7 +301,7 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 
 rm(imem, idata, carmod)
 ```
-There were no differences in the memory performance dependent of reference. Observers recalled OOI better in the instruction condition, `r apa.mem$full_result$df_w_mem_bed` but reference did not influence memory performance `r apa.mem$full_result$imem`.
+The free-recall test showed, that observers with explicit encoding remembered on average 2 items more then observers from the other group. In an Anova this effect was significant, `r apa.mem$full_result$df_w_mem_bed`. No effect is found for referencing an OOI, it did not influence memory performance `r apa.mem$full_result$imem`. There was also no interaction, `r apa.mem$full_result$df_w_mem_bed_imem`.
 
 
 
