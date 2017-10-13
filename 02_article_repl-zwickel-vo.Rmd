@@ -173,22 +173,7 @@ df.w.demo <- read_csv2(paste0(pathFB,"Projektarbeit_Dateneingabemaske.csv")) %>%
 	1. & Konsequenzen
 3) Nur soziale Komponente
 
-## Hypotheses (old)
 
-### H1:
-Betrachtungsdauer auf das gecuete Objekt ist länger als die Betrachtungsdauer auf das ungecuete Objekt. Der Unterschied in der Betrachtungsdauer zwischen gecuetem und ungecuetem Objekt ist in der Erinnerungsbedingung geringer als in der „free-viewing“-Bedingung.
---> Fixation duration: Haupteffekt icond[*],Interaktion[ ]
-
-### H2:
-Es gehen mehr Sakkaden vom Kopf zum gecueten Objekt als zum ungecueten. Dieser Unterschied ist in der „free-viewing“-Bedingung größer als in der Erinnerungsbedingung.
---> sac fgaze: haupteffekt icond[***], Interaktion [ ]
-
-
-### H3:
-In der „free-viewing“-Bedingung werden gecuete Objekte besser erinnert als ungecuete Objekte.
-
-### H4:
-Je höher der Score auf der Soziale Kompetenz Skala desto höher der relative Betrachtungsdauer der gecueten Objekte im Vergleich zu den ungecueten.
 
 ## Hypothesis (new)
 
