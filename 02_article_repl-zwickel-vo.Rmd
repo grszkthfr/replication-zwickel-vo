@@ -65,11 +65,11 @@ pathFB <- "data/FB/"
 ```{r Reading eye tracking data in, warning = FALSE, message = FALSE}
 
 # ALL EYE TRACKING DATA
-vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+vpn <- paste0("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96))
 bed <- rep(c("free","mem"),47)
 
 # ORIGINALLY ACQUIRED DATA
-#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#vpn <- paste0("vpja",ifelse(c(1:78)<10,"0",""),c(1:78))
 #bed <- rep(c("free","mem"),39)
 
 bed <- bed[!(vpn %in% "vpja23")]  # Daten fehlen
@@ -80,7 +80,7 @@ erg <- numeric(); nvalid <- numeric(); cleantime <- numeric()
 for (vp in vpn) {
   #  print(vp)
 
-  prot <- read.csv2(paste(pathET,vp,"_Fixations.csv",sep=""))
+  prot <- read.csv2(paste0(pathET,vp,"_Fixations.csv"))
 
   # Restrict to trials with valid baseline?
   nvalid <- c(nvalid,sum(prot$blok==1))
@@ -124,11 +124,11 @@ rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
 ```{r Reading memory data in, warning = FALSE, message = FALSE}
 
 # ALL MEMORY DATA
-vpn <- paste("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96),sep="")
+vpn <- paste0("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96))
 bed <- rep(c("free","mem"),47)
 
 # ORIGINALLY ACQUIRED DATA
-#vpn <- paste("vpja",ifelse(c(1:78)<10,"0",""),c(1:78),sep="")
+#vpn <- pasteo("vpja",ifelse(c(1:78)<10,"0",""),c(1:78))
 #bed <- rep(c("free","mem"),39)
 
 # Loop over subjects
@@ -136,7 +136,7 @@ erg <- numeric()
 for (vp in vpn) {
   # print(vp)
 
-  prot <- read.csv2(paste(pathMEM,vp,".csv",sep=""))
+  prot <- read.csv2(paste0(pathMEM,vp,".csv"))
 
   # Item recalled
   gaze <- sum(prot$memgazedat)
@@ -154,7 +154,7 @@ rm(gaze, nogaze, erg, prot, bed, vp, vpn)
 
 ```{r Reading questionnaire data in, warning = FALSE, message = FALSE}
 
-df.w.demo <- read_csv2(paste(pathFB,"Projektarbeit_Dateneingabemaske.csv", sep="")) %>%
+df.w.demo <- read_csv2(paste0(pathFB,"Projektarbeit_Dateneingabemaske.csv")) %>%
   transmute(
     vp = as.factor(VP_Nr),
     sex = as.factor(Demo_Sex),
@@ -194,22 +194,23 @@ Je höher der Score auf der Soziale Kompetenz Skala desto höher der relative Be
 
 ### joint attention/gaze following
 The first attempt of this study is to replicate [@Zwickel2010] findings.
-#### H1n
-Consequently, as in [@Zwickel2010], a priorisation for the gazed-at OOI is predicted. This  wpriorisation can be measuered in multipleays. First there should be an early fixation bias towards the gazed-at object. During the presentation time, the total time that the gazed-at object is fixated should be prolonged, with more fixations, as well. For saccades it is expected, that saccades leaving from the head are more likely to move to the gazed-at object, in contrast to the not-gazed-at object. (Maineffect icond, Anova)
 
-#### H2n
-New, compared to [@Zwickel2010]'s study, is the instruction condtion. For gaze-following it is expected that the priorisation for the gazed-at object will significantly decrease for subjects in explicit-encoding group, due to the explicit processing of the scene. For saccades it is also expected that the under H1n stated effect decreases. (1st: Interaction group:icond)
+#### H1
+Consequently, as in [@Zwickel2010], a priorisation for the gazed-at OOI is predicted. This  priorisation can be measuered in multiple ways. First there should be an early fixation bias towards the gazed-at object. During presentation time, the total time that the gazed-at object is fixated should be prolonged, with more fixations as well. For saccades it is expected, that saccades leaving from the head are more likely to move to the gazed-at object, in contrast to the not-gazed-at object. (Maineffect icond, Anova)
+
+#### H2
+New, compared to [@Zwickel2010]'s study, is the instruction condtion. For gaze-following it is expected that the exclusive priorisation for the gazed-at object will decrease for subjects in explicit-encoding group, due to the explicit processing of the scene. This means smaller differences in the fixation measurements are expected. For leaving saccades it is also expected that the under H1n stated effect decreases. (1st: Interaction group:icond)
 (?!Hypothese zu Gruppen, dass expplicit mehr focus auf Gegensätnde richtet, da anweisung? (Maineffect group)
 
-#### H3n
-Also new is the follow-up memory test for the OOI. First it is assumed, that subjects where the memory test was announced will recall more items, because they process the scenes more thorough. Aditionally it is expected, that gazed-at objects are better recalled in a free-recall test then not-gazed at objects. This should be especially true for the free-viewing condition, as they should provide a genuine viewing behavior.
+#### H3
+Also new is the follow-up memory test for the OOI. First it is assumed, that subjects with announced memory test will recall more items, because they process the scenes more thorough. Aditionally it is expected, that in the free-recall condition gazed-at objects are better recalled then not-gazed at objects. 
 
 ### social attention
 
 #### H4n
 As naturalistic scences are used, the basic effects of social attention are expected. This means, that the head will be priorized over the body. This priorisation can be measuered, in multiple ways. And again, it is expected, that first fixation fell earlier on the head, that it is fixated longer and more often then the body. Additionally it is also expected, that the fixations occure earlier, then on the gazed-at object, because the gaze-cue needs to be processed in advance. Aditionally, the head should also be fixated earlier and more often then the body.
 
-#### H5n
+#### H5
 Due to the instruction of the free-recall test the viewing behavior should also change for social stimuli. As a consequnece it is assumed that the effect for the head as the central social stimuli in the scene is prioritised over all other ROI. 
 
 
@@ -255,15 +256,16 @@ for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; 
   assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-means.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
-means.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), mean(fix.nongaze), mean(fixn.gaze), mean(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze))
+dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
  
 rm(carmod, idata, icond, st)
 
 ```
 
 #### Fixation duration (H1n, H2n)
-The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure). As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond` and for condition `r apa.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.fix.gaze$full_result$df_w_et_group_icond`.
+The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure). As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.fix.gaze$full_result$icond` and for condition `r apa.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.fix.gaze$full_result$df_w_et_group_icond`. HIER NE TABELLE `r apa_table(dscr.fixjoi, caption = "AAAAAAAAAA")` BIS HIER.
+
 
 #### Fixation latency (H1n, H2n)
 An additional measurement of priorisation is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. It showed, an object is fixated earlier when it is gazed-at (or when the observer was in the explicit encoding condition) and is confirmed by an ANOVA: for reference `r apa.fixlat.gaze$full_result$icond` (and condition, `r apa.fixlat.gaze$full_result$df_w_et_group`), this time with a trend for an interaction, `r apa.fixlat.gaze$full_result$df_w_et_group_icond`.
@@ -287,15 +289,14 @@ for (st in 17:19) {
   assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-mean.sac <- df.w.et %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
-mean.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), mean(sac.pnongaze), mean(sac.fgaze), mean(sac.fnongaze), mean(sac.bgaze), mean(sac.bnongaze))
+dscr.sac <- df.w.et %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
+dscr.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
 
 rm(carmod, idata, icond, st)
 ```
 
 #### Leaving saccades (H1n, H2n)
-The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences. An Anova supports the first claim. There is an significant main effect for reference, `r apa.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.sac.fgaze$full_result$df_w_et_group_icond`.
-
+The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viwing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.sac.fgaze$full_result$df_w_et_group_icond`.
 
 ### Memory (H3n)
 ```{r Anova memory, warning=FALSE, message=FALSE}
@@ -308,15 +309,15 @@ idata <- data.frame(imem)
 # Car
 carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
 #print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
-anova.mem <- carmod
-apa.mem <- apa_print(Anova(anova.mem, idata=idata, idesign=~imem, type="III"))
+anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
+apa.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
 
-mean.mem <- df.w.mem %>% summarise(mean(memgaze), mean(memnogaze))
-mean.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), mean(memnogaze))
+dscr.mem <- df.w.mem %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
+dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
 
-#rm(imem, idata, carmod)
+rm(imem, idata, carmod)
 ```
-There were no differences in the memory performance. Observers recalled OOI equally well, regardless of reference `r apa.mem$full_result$df_w_mem_bed` or instrucition `r apa.mem$full_result$imem`.
+There were no differences in the memory performance dependent of reference. Observers recalled OOI better in the instruction condition, `r apa.mem$full_result$df_w_mem_bed` but reference did not influence memory performance `r apa.mem$full_result$imem`.
 
 
 
@@ -330,8 +331,6 @@ A similar pattern to the OOI can be seen when comparing the head with the body r
 icond <- gl(2,1,labels=c("head","body")) # within-factor
 idata <- data.frame(icond)
 
-anova.fixface <-  list()
-
 for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
     carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
@@ -339,8 +338,8 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
   assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
   }
 
-mean.fixsoc <- df.w.et %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
-mean.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), mean(fix.body), mean(fixn.face), mean(fixn.body), mean(fixlat.face), mean(fixlat.body))
+dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
+dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
 
 rm(carmod, idata, icond, st)
 
