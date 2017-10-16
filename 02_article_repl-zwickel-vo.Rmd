@@ -237,13 +237,13 @@ for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; 
   carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
 dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
 dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
  
-rm(carmod, idata, icond, st)
+#rm(carmod, idata, icond, st)
 
 ```
 
@@ -270,7 +270,7 @@ for (st in 17:19) {
   carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))))
   }
 
 dscr.sac <- df.w.et %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
@@ -294,12 +294,12 @@ idata <- data.frame(imem)
 carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
 #print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
 anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
-apa.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+apa.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III"), correction="GG", mse = FALSE)))
 
 dscr.mem <- df.w.mem %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
 dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
 
-rm(imem, idata, carmod)
+#rm(imem, idata, carmod)
 ```
 The free-recall test showed, that unsurprisingly observers with explicit encoding remembered on average 2 items more then observers from the other group. An Anova proved this effect as statistically significant, `r apa.mem$full_result$df_w_mem_bed`. Referencing an OOI did not influence memory performance, `r apa.mem$full_result$imem`. There was also no interaction, `r apa.mem$full_result$df_w_mem_bed_imem`.
 
@@ -318,7 +318,7 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
     carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III")))
+  assign(paste0("apa.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))))
   }
 
 dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
