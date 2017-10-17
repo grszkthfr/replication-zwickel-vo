@@ -335,7 +335,7 @@ The same pattern can be seen for fixation number, where there is a strong effect
 Latencies of fixation differed also remarkly between head and body, but only for region `r apa.fixlat$full_result$icond`. There was neither an effect for interstruction, `r aps.fixlat$full_result$df_w_et_group` nor was their an interaction, `r apa.fixlat$full_result&df_w_et_group_icond`.
 
 ### H5
-```{r}
+```{r t-test face fixations}
 # Fixations Face in Free Viewing vs. Explicit Encoding
 for (st in seq(5,16,4)) {
   msd <- c(mean(df.w.et[df.w.et$group=="free",st]),sd(df.w.et[df.w.et$group=="free",st]),
@@ -352,7 +352,7 @@ rm(msd, teststat, st)
 
 ```
 
-To test the hypothesis whether faces are differently processed 
+A t-test between face fixation for the different groups provides information whether faces are differently processed dependent on the insturction observers get. Only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face`. And fixation number did not differ, `r apa.ttest.fixn.face`.   
 
 # Discussion
 
