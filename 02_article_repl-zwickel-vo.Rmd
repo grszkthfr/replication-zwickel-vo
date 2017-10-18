@@ -346,15 +346,20 @@ The same pattern can be seen for fixation number, where there is a strong effect
 Latencies of fixation differed also remarkly between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for interstruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
 ### Free-viewing vs explicit-encoding face fixations (H5)
-```{r t-test face fixations}
-
+```{r plots free vs mem face fixations}
 # plots
 
-plot.fix.free_vs_mem <- df.l.et %>% ggboxplot(x = "fixations", y = "value",
+AAplot.face.free_vs_mem <- df.l.et %>%
+  filter(fixations=="fix" & region=="face") %>%
+  ggboxplot(x = "fixations", y = "value",
                 color = "group", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
-                add = "jitter", shape = "group")
-plot.fix.free_vs_mem
+                add = "jitter", shape = "group") +
+  stat_compare_means()
+AAplot.face.free_vs_mem
 
+```
+
+```{r t-test face fixations}
 
 # Fixations Face in Free Viewing vs. Explicit Encoding
 for (st in seq(5,16,4)) {
