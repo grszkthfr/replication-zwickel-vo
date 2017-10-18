@@ -338,7 +338,7 @@ dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), s
 rm(carmod, idata, icond, st)
 
 ```
-Analysis for the social attention part contained again Anovas for the differen dependent variabels indicating priorisation.
+Analysis for the social attention part contained again Anovas for the different dependent variabels indicating priorisation.
 
 ### Face vs body fixation (H4)
 The first measurement shows, that faces were fixated longer then the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
@@ -349,13 +349,13 @@ Latencies of fixation differed also remarkly between head and body, but only for
 ```{r plots free vs mem face fixations}
 # plots
 
-AAplot.face.free_vs_mem <- df.l.et %>%
+plot.face.free_vs_mem <- df.l.et %>%
   filter(fixations=="fix" & region=="face") %>%
   ggboxplot(x = "fixations", y = "value",
                 color = "group", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
                 add = "jitter", shape = "group") +
   stat_compare_means()
-AAplot.face.free_vs_mem
+plot.face.free_vs_mem
 
 ```
 
