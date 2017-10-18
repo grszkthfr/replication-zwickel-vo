@@ -49,6 +49,7 @@ library("papaja")
 library("tidyverse")
 library("car")
 library("afex")
+library("ggpubr")
 
 ```
 
@@ -72,7 +73,7 @@ bed <- rep(c("free","mem"),47)
 #vpn <- paste0("vpja",ifelse(c(1:78)<10,"0",""),c(1:78))
 #bed <- rep(c("free","mem"),39)
 
-bed <- bed[!(vpn %in% "vpja23")]  # Daten fehlen
+bed <- bed[!(vpn %in% "vpja23")]  # missing data
 vpn <- vpn[!(vpn %in% "vpja23")]  
 
 # Loop over subjects
@@ -101,20 +102,20 @@ df.l.et <- gather(df.w.et, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %
       as.factor(
         ifelse(startsWith(key, "fix."), "fix",
              ifelse(startsWith(key, "fixn."), "fixn",
-                    ifelse(startsWith(key, "fixlat."), "fixlat",NA)))),
+                    ifelse(startsWith(key, "fixlat."), "fixlat",
+                           ifelse(startsWith(key, "sac."), "sac", NA))))),
     region =
       as.factor(
         ifelse(endsWith(key, ".face"), "face",
                ifelse(endsWith(key, ".body"), "body",
                       ifelse(endsWith(key, ".gaze"), "gaze",
-                             ifelse(endsWith(key, ".nongaze"), "nongaze", NA))))),
-    saccades = as.factor(
-      ifelse(endsWith(key, ".pgaze"), "pgaze",
-             ifelse(endsWith(key, ".fgaze"), "fgaze",
-                    ifelse(endsWith(key, ".bgaze"), "bgaze",
-                           ifelse(endsWith(key, ".pnongaze"), "pnongaze",
-                                  ifelse(endsWith(key, ".fnongaze"), "fnongaze",
-                                         ifelse(endsWith(key, ".bnongaze"), "bnongaze", NA)))))))) %>%
+                             ifelse(endsWith(key, ".nongaze"), "nongaze",
+                                    ifelse(endsWith(key, ".pgaze"), "pgaze",
+                                           ifelse(endsWith(key, ".fgaze"), "fgaze",
+                                                  ifelse(endsWith(key, ".bgaze"), "bgaze",
+                                                         ifelse(endsWith(key, ".pnongaze"), "pnongaze",
+                                                                ifelse(endsWith(key, ".fnongaze"), "fnongaze",
+                                                                       ifelse(endsWith(key, ".bnongaze"), "bnongaze",NA)))))))))))) %>%
   arrange(code)
 
 rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
@@ -213,13 +214,13 @@ A two-level (instruction: free viewing/ explicit encoding) between subjects fact
 
 
 ## Data analysis
-Regions-of-Interest were hand-drawn around the relevant objects and the individual in the center. Aditionally the ROI were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
+Regions-of-Interest were hand-drawn around the relevant objects and the face and body of the individual in the center. These ROIs were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
 
 We used `r cite_r("r-references.bib")` for all our analyses.
 
 
 # Results
-Priorizations of the ROIs in the scene were measuerd in mulitple ways. 
+Priorizations of the ROIs in the scene were measuerd in mulitple ways. One observer was excluded due to missing data.
 
 ## Joint attention/ gaze following
 
@@ -227,6 +228,14 @@ As a measuere of priorisation fixation duration, fixation number, fixation laten
 
 ### Fixations
 ```{r Anova fixations joint, warning = FALSE, message = FALSE}
+
+# plots
+
+
+# descriptives
+dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+
 # ANOVA Fixations characteristics
 ## 2 (Group) x 2 (Gaze) ANOVA
 
@@ -240,8 +249,10 @@ for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; 
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
-dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
-dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+
+
+
+
  
 #rm(carmod, idata, icond, st)
 
@@ -329,13 +340,22 @@ rm(carmod, idata, icond, st)
 ```
 Analysis for the social attention part contained again Anovas for the differen dependent variabels indicating priorisation.
 
-### Face vs Body Fixation (H4)
+### Face vs body fixation (H4)
 The first measurement shows, that faces were fixated longer then the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
 The same pattern can be seen for fixation number, where there is a strong effect for region, with more fixations on the face, `r apa.anova.fixn.face$full_result$icond` and no difference between the instructions, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
 Latencies of fixation differed also remarkly between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for interstruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
-###  H5
+### Free-viewing vs explicit-encoding face fixations (H5)
 ```{r t-test face fixations}
+
+# plots
+
+plot.fix.free_vs_mem <- df.l.et %>% ggboxplot(x = "fixations", y = "value",
+                color = "group", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
+                add = "jitter", shape = "group")
+plot.fix.free_vs_mem
+
+
 # Fixations Face in Free Viewing vs. Explicit Encoding
 for (st in seq(5,16,4)) {
   msd <- c(mean(df.w.et[df.w.et$group=="free",st]),sd(df.w.et[df.w.et$group=="free",st]),
