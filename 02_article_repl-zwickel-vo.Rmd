@@ -30,7 +30,7 @@ wordcount         : "X"
 
 bibliography      : 
   - "r-references.bib"
-  #- "repl-zwickel-2017.bib"
+  - "repl-zwickel-2017.bib"
 
 figsintext        : no
 figurelist        : no
@@ -169,7 +169,24 @@ df.w.demo <- read_csv2(paste0(pathFB,"Projektarbeit_Dateneingabemaske.csv")) %>%
 
 # Introduction
 
+Humans relie on the information other humans provide. This does not only holds for the explicit conversations but also to implicit alginment of attention to objects. These alingment of attention can sometimes be observed by otheres by processing the direction of the body, head and most importantly the eyes. For the eyes this momentum is called gaze following.
+
+Multiple studies show, that observed congruent gaze cues resluts in an processing benefit for that location. So showed @Driver1999 and @Friesen1998 that... they have in come that they were all highly controlled laboratory studies
+
+## social attention
+An superior and more applicabale framework of this research proviedes the research to social attention [for a review see @Frischen2007a]. To social attention is reffered, when observer are confronted with social stimuli, multiple studies show a strong advantage for these stimuli. The process wehre human aling their visual attention to an object or place fixated by another indivuduum is called joint attention. joint attention was, like a lot of gaze cuing research showen often in an controlled labororatory setting to work.
+## zwickel description
+@Zwickel2010 showed that these effects are also valid for more naturalistic scenes. In an free-viewing paradigm they presented their subjects computer rendered scenes for multiple seconds. The scences contained a referencing object, either a human or an oriented loudspeaker, and two objects from which one was referenced. They showed that even without an specific task subjects spontaneously priorize the attentional focus of the shown subject, but did not reacted to the orientation of the loudspeaker. In line with predicitions by the social attention, the most priorized region was stil the head of the shown individual, but the referenced obejct was fixated remarkably earlier compared with the not referenced object. Underlining the social component of this effect, this was only valid for the person in the scene and did not hold for loudspeaker. Unfortunaltly @Zwickel2010 only had a small sample (n=16) and therefore only little power. As power becomes more important these days, in this study we tried to replicate their finding and overcome this short coming. 
+
+## comparison to our study
+However, this is an conceptual replication. It is aimed at replicating the main findings of @Zwickel2010, and extend in other aspects. One concern from the @Zwickel2010 study comes from, the used computer generated stimuli. To be even closer  as @Zwickel2010 to a naturalistic stimuli, photographies are chosen over computer rendered scene. As often, by being more naturalistic experimental control is reduced. The consequences are hold to an minimum by producing stimuli the same way (each scene 4 times, with the individual looking twice to the left and right top each object). But still, in real photographs small changes are unavoidable. Whereas @Zwickel2010 only rotate the figure in the scene, another photography was taken. As consequence, for example the body orientation is not perfectly controlled anymore and might differ slightly between photographies.
+Aditionally it is also investigated whether top-down modulations affects these joint and social attention effects in naturalistic scenes. So half of subjects are told that there is an memory task afterwards. The other half of subjects is compareable to @Zwickel2010 social-conditon. The condition with the loudspeaker is not replicated. So in this study the focuses only on the social component of @Zwickel2010, and extends it by top-down modulation. 
+
+
+
+Motivation:
 1) Replikationsstudie
+ mit mehr power!
 2) Top-Down Modulation/Anfälligket
 	1. & Konsequenzen
 3) Nur soziale Komponente
