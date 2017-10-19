@@ -227,16 +227,22 @@ Priorizations of the ROIs in the scene were measuerd in mulitple ways. One obser
 As a measuere of priorisation fixation duration, fixation number, fixation latency, as well as leaving saccades are used.
 
 ### Fixations
-```{r Anova fixations joint, warning = FALSE, message = FALSE}
+```{r TO-DO: Plots fixations joint, warining = FALSE, message = FALSE}
 
-# plots
+```
 
+```{r Descriptives fixations joint, warining = FALSE, message = FALSE}
 
-# descriptives
+# Descriptives for fixation chacracteristics for joint attention
+
 dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
 dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
 
-# ANOVA Fixations characteristics
+```
+
+```{r Anova fixations joint, warning = FALSE, message = FALSE}
+
+# ANOVA Fixations characteristics for joint attention
 ## 2 (Group) x 2 (Gaze) ANOVA
 
 icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
@@ -249,12 +255,7 @@ for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; 
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
-
-
-
-
- 
-#rm(carmod, idata, icond, st)
+rm(carmod, idata, icond, st)
 
 ```
 
@@ -318,6 +319,18 @@ The free-recall test showed, that unsurprisingly observers with explicit encodin
 ## Social attention
 A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to acount for priorisation. 
 
+```{r TO-DO: Plots fixations social, warining = FALSE, message = FALSE}
+
+```
+
+```{r Descriptives fixations social, warining = FALSE, message = FALSE}
+
+# Descriptives for fixation chacracteristics for social attention
+
+dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
+dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
+```
+
 ```{r Anova fixations social, warning = FALSE, message = FALSE}
 # ANOVA Fixations characteristics
 ## 2 (Group) x 2 (Face/Body) ANOVA
@@ -332,8 +345,6 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
-dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
-dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
 
 rm(carmod, idata, icond, st)
 
@@ -346,7 +357,8 @@ The same pattern can be seen for fixation number, where there is a strong effect
 Latencies of fixation differed also remarkly between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for interstruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
 ### Free-viewing vs explicit-encoding face fixations (H5)
-```{r plots free vs mem face fixations}
+```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
+
 # plots
 
 plot.face.free_vs_mem <- df.l.et %>%
@@ -359,9 +371,10 @@ plot.face.free_vs_mem
 
 ```
 
-```{r t-test face fixations}
+```{r T-test face fixations, warning = FALSE, message = FALSE}
 
 # Fixations Face in Free Viewing vs. Explicit Encoding
+
 for (st in seq(5,16,4)) {
   msd <- c(mean(df.w.et[df.w.et$group=="free",st]),sd(df.w.et[df.w.et$group=="free",st]),
            mean(df.w.et[df.w.et$group=="mem",st]),sd(df.w.et[df.w.et$group=="mem",st]))
