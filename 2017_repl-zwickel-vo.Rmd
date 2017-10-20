@@ -30,7 +30,7 @@ wordcount         : "X"
 
 bibliography      : 
   - "r-references.bib"
-  - "repl-zwickel-2017.bib"
+  - "2017-repl-zwickel-vo.bib"
 
 figsintext        : no
 figurelist        : no
