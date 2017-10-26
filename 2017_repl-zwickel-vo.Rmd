@@ -30,7 +30,7 @@ wordcount         : "X"
 
 bibliography      : 
   - "r-references.bib"
-  - "2017-repl-zwickel-vo.bib"
+  - "C:/Users/jog54yy/Documents/meine-bibliothek/meine-bibliothek.bib"
 
 figsintext        : no
 figurelist        : no
@@ -170,70 +170,48 @@ df.w.demo <- read_csv2(paste0(pathFB,"Projektarbeit_Dateneingabemaske.csv")) %>%
 # Introduction
 
 ##Einleitungs(ab)satz
-Humans relie on the information other humans provide. This does not only holds for the explicit conversations but also to implicit alginment of attention to objects. These alingment of attention can sometimes be observed by otheres by processing the direction of the body [@Lawson2016], head and most importantly the gaze, and can be referred as joint attention [for an detailed overview see: @Frischen2007a]. **IMPORTANCE GAZE? BABYS, ECTS?!?!?!**
+Humans in their social environment rely on the information other humans provide. This does not only holds for reading explicit signals, as in conversations, but also to implicit signals, as in gaze, and is followed-up by a new alignment of attention to the referred objects. These alignment of attention can be induced by the direction of the body [@Lawson2016], head and most importantly the gaze, and can be referred as joint attention [for an detailed overview see: @Frischen2007a].
 
 ## gaze cuing --> joint attenion & social attention
-Multiple studies show that perceived gaze cues lead to a reflexive attentional shift, which result in an processing benefit for that location [@Friesen1998, @Driver1999, @Langton2000b, for a very recent study see @Langton2017]. Even though gaze cues are cruical for joint attention, it is critizized that among others these studies use isolated heads or even cartoon heads as gaze cues, and therefore lack ecological validity [for an overview: @Risko2012].
-The relevance/sensibility/focus to ecologically valid stimuli is a core aspect of social attention research, which provides/is often presented/thought of as an bigger framework for gaze cueing [@Itier2009]. The research describes social interactions with special focus to similarities and differences of different types of social stimuli [@Risko2012]. The types range from real human interactions [for example: @Laidlaw2011, @Freeth2013a] to highly controlled laboratory settings with isolated faces as stimuli [for example: @Friesen1998, @Langton2000b]. The main finding of this research line is, that some research findings realted to social stimuli do not extend to the real world [@Jarick2015, for an overview see: @Risko2016]. 
+The most used paradigm to investigate these attentional shifts is the so called gaze-cueing paradigm first [@Friesen1998, @Driver1999]. Multiple studies show that perceived gaze cues lead to a reflexive attentional shift, which results in an processing benefit for that location [@Friesen1998, @Driver1999, @Langton2000b, for a very recent study see @Langton2017]. Even though gaze cues are crucial for joint attention, it is criticized that among others these studies use isolated heads or even cartoon heads as gaze cues, and therefore lack ecological validity [for an overview: @Risko2012]. For example, in an recent study @Hayward2017 did not find reliable links between classical laboratory gaze cueing tasks and a real social engage.
+The relevance/sensibility/focus to ecologically valid stimuli is a core aspect of social attention research, which provides/is often presented/thought of as an bigger framework for gaze cueing [@Itier2009]. The research describes social interactions and focuses often to similarities and differences of different types of social stimuli [@Risko2012]. The types range from real human interactions [for example: @Laidlaw2011, @Freeth2013a] to highly controlled laboratory settings with isolated faces as stimuli [for example: @Langton2017]. The main finding of this research line is, that some research findings related to social stimuli do not extend to the real world [@Jarick2015, @Hayward2017, for an overview see: @Risko2016]. 
 
 ## social attention
-To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with more naturalistic stimuli. In a free-viewing paradigm they presented their subjects scenes for multiple seconds. The scences contained a referencing object, either a person or an oriented loudspeaker, and two objects from which one was referenced. They showed that even without an specific task subjects spontaneously priorize the attentional focus of the shown person, but did not reacted to the orientation of the loudspeaker. In line with predicitions by the social attention, the most priorized region was stil the head of the shown individual, but the referenced obejct was fixated remarkably earlier compared with the not referenced object. @Zwickel2010 gave evidence that joint attention as consequence of the gaze cue is spontaneous and relevant in more naturalistic situations. 
+To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with more naturalistic stimuli. In a free-viewing paradigm they presented their subjects scenes for multiple seconds. The scenes contained a referencing object, either a person or an oriented loudspeaker, and two objects from which one was referenced. They showed that even without an specific task subjects spontaneously prioritize the attentional focus of the shown person, but did not reacted to the orientation of the loudspeaker. In line with predictions by the social attention, the most prioritized region was still the head of the shown individual, but the referenced object was fixated remarkably earlier and more often compared with the not referenced object. After all, @Zwickel2010 gave evidence that joint attention as consequence of the gaze cue is spontaneous and relevant in more naturalistic situations. 
 
 ##research motivation
-However, this conceptual replication of @Zwickel2010 aims at answering multiple research questions regarding joint and social attention. First, for joint attention, it is expected to replicate the main effects of a persons presence on the viewer discribed by @Zwickel2010. It is therefore hypothetized that the gaze of the person in the scene leads to priorisation for the gazed-at/referenced object of interest (OOI). The priorisation can be seen in earlier, more and longer fixations. In line with @Zwickel2010 it is also expected, that saccades leaving from the head are more likely to move to the gazed-at object.
-
-Extending this line of research the consequences for latter cognitive proceseses, specifically memory effects, are examind in this study. Therefore half of the observers got the information that an memory test is following the experimental part. This instruction was thought to influence the viewing behavior. However, it is expected that the main effects would be still be visible even with explicit encoding. Effects should be visible for the social attention part and also for the joint attention part of this study. The
-
-
-, and extend in other aspects. One concern from the @Zwickel2010 study comes from, the used computer generated stimuli. To be even closer  as @Zwickel2010 to a naturalistic stimuli, photographies are chosen over computer rendered scene. As often, by being more naturalistic experimental control is reduced. The consequences are hold to an minimum by producing stimuli the same way (each scene 4 times, with the individual looking twice to the left and right top each object). But still, in real photographs small changes are unavoidable. Whereas @Zwickel2010 only rotate the figure in the scene, another photography was taken. As consequence, for example the body orientation is not perfectly controlled anymore and might differ slightly between photographies.
-Aditionally it is also investigated whether top-down modulations affects these joint and social attention effects in naturalistic scenes. So half of subjects are told that there is an memory task afterwards. The other half of subjects is compareable to @Zwickel2010 social-conditon. The condition with the loudspeaker is not replicated. So in this study the focuses only on the social component of @Zwickel2010, and extends it by top-down modulation. 
-
-
-
-Motivation:
-1) Replikationsstudie
- mit mehr power!
-2) Top-Down Modulation/Anfälligket
-	1. & Konsequenzen
-3) Nur soziale Komponente
-
+However, this conceptual replication of @Zwickel2010 aims at answering multiple research questions regarding joint and social attention, including the replication of Zwickel and Võ's [-@Zwickel2010] findings and extending this line of research. 
+However, @Zwickel2010 had very little power in their study, with n = 16 participants, and used computer generated stimuli. Here, more naturalistic stimuli and a bigger sample size is used. For more naturalistic stimuli real photographs are chosen over computer rendered scenes. As often, by being more naturalistic experimental control is reduced. The consequences are hold to a minimum by producing stimuli the same way (each scene four times, with the individual looking twice to the left and right top each object). Nevertheless, in real photographs small changes are unavoidable. Whereas @Zwickel2010 only rotate the figure in the scene, here another photography was taken. As consequence, for example, the body orientation is not perfectly controlled anymore and might differ slightly between photographs even within scenes. With higher power and more naturalistic stimuli this study will underline @Zwickel2010 findings and tackle the two mentioned flaws. However, in this study we presume that the effect showed by @Zwickel2010 is genuine for social stimuli, therefore there is no non-social condition comparable to the loudspeaker-condition.
+In fact, this line of research is being extended. First, the influence of top-down modulations on joint and social attention in naturalistic scenes is investigated. Earlier research showed, that social attention is influenced by multiple factors for example social status [@Foulsham2010] or expectations [@Perez-Osorio2015] of the observer. These studies have in common that they manipulate implicitly the context. 
+This is in contrast to this study, where a very explicit manipulation is used. Additionally, consequences for latter cognitive processes, here memory effects, are examined. Therefore half of the observers received the information that a memory test is following before the experimental part (top-down modulation). The other half of the observers did not receive any top-down modulation, just like @Zwickel2010, but did the memory task unannounced after the experimental part.
+As @Zwickel2010 showed, persons in scene influence the viewing behavior of observers spontaneously. Here the instruction was thought to influence the viewing behavior, in that sense, that spontaneous viewing behavior will be reduced. It is important to mention, that it is not expected that the influence of the presence of the person would vanish due to top-down modulation, but it is supposed to be be weaker. Effects should be visible regardless for the social attention part and also for the joint attention part of this study.
 
 ## Hypothesis
+*alter bauteil* First, for joint attention, it is presumed to replicate the main effects of a persons presence on the observer described by @Zwickel2010. It is therefore hypothesized that the gaze of the person in the scene leads to prioritization for the gazed-at/referenced object. The prioritization can be seen in earlier, more and longer fixations. In line with @Zwickel2010 it is also expected, that saccades leaving from the head are more likely to move to the gazed-at object.
 
 ### joint attention/gaze following
-The first attempt of this study is to replicate [@Zwickel2010] findings.
-
-#### H1
-Consequently, as in @Zwickel2010, a priorisation for the gazed-at OOI is predicted. This  priorisation can be measuered in multiple ways. First there should be an early fixation bias towards the gazed-at object. During presentation time, the total time that the gazed-at object is fixated should be prolonged, with more fixations as well. For saccades it is expected, that saccades leaving from the head are more likely to move to the gazed-at object, in contrast to the not-gazed-at object. (Maineffect icond, Anova)
-
-#### H2
-New, compared to @Zwickel2010's study, is the instruction condtion. For gaze-following it is expected that the exclusive priorisation for the gazed-at object will decrease for subjects in explicit-encoding group, due to the explicit processing of the scene. This means smaller differences in the fixation measurements are expected. For leaving saccades it is also expected that the under H1n stated effect decreases. (1st: Interaction group:icond)
-(?!Hypothese zu Gruppen, dass expplicit mehr focus auf Gegensätnde richtet, da anweisung? (Maineffect group)
-
-#### H3
-Also new is the follow-up memory test for the OOI. First it is assumed, that subjects with announced memory test will recall more items, because they process the scenes more thorough. Aditionally it is expected, that in the free-recall condition gazed-at objects are better recalled then not-gazed at objects. 
+The foundation of this study is to replicate the findings by [@Zwickel2010].
+*H1*. Consequently, a prioritization for the gazed-at objects is predicted. In line with @Zwickel2010, this  prioritization can be measured in multiple ways. First there should be an early fixation bias towards the gazed-at object. During presentation time, the total time that the gazed-at object is fixated should be prolonged, with more fixations as well. For saccades it is expected, that saccades leaving from the head are more likely to move to the gazed-at object, in contrast to the not-gazed-at object. *(Main effect icond, Anova)*
+*H2*. New, compared to @Zwickel2010's study, is the instruction condition. For gaze-following it is expected that the exclusive prioritization for the gazed-at object will decrease for subjects in explicit-encoding group, due to the explicit processing of the scene. This means smaller differences in the fixation measurements are expected. For leaving saccades it is also expected that the under H1n stated effect decreases. *(1st: Interaction group:icond)*
+_(?!Hypothese zu Gruppen, dass explicit mehr focus auf Gegensätnde richtet, da anweisung? (Maineffect group)_
+*H3*. Also new is the follow-up memory test for the two potentially gazed-at objects. First it is assumed, that subjects with announced memory test will recall more items, because they process the scenes more thorough. Additionally it is expected, that in the free-recall condition gazed-at objects are better recalled then not-gazed at objects. 
 
 ### social attention
-
-#### H4
-As naturalistic scences are used, the basic effects of social attention are expected. This means, that the head will be priorized over the body. This priorisation can be measuered, in multiple ways. And again, it is expected, that first fixation fell earlier on the head, that it is fixated longer and more often then the body. Additionally it is also expected, that the fixations occure earlier, then on the gazed-at object, because the gaze-cue needs to be processed in advance. Aditionally, the head should also be fixated earlier and more often then the body.
-
-#### H5
-Due to the instruction of the memory test, and the assumed change in processing the picture, the viewing behavior should change for social stimuli. Due to explicit encoding, it is expected that the head looses some of its importance. As a consequence, the head should be prioritized stronger in the free-viewing group compared to the explicit-encoding group. Therefor it should be fixated longer, faster and more often. 
-
+*H4*. As naturalistic scenes are used, the basic effects of social attention are expected. This means, that the head will be prioritized over the body. This prioritization can be measured, in multiple ways. And again, it is expected, that first fixation fell earlier on the head, that it is fixated longer and more often then the body. Additionally it is also expected, that the fixations occur earlier, then on the gazed-at object, because the gaze-cue needs to be processed in advance.
+*H5*. Due to the instruction of the memory test, and the assumed change in processing the picture, the viewing behavior should change for social stimuli. Due to explicit encoding, it is expected that the head looses some of its importance. As a consequence, the head should be prioritized stronger in the free-viewing group compared to the explicit-encoding group. Therefor it should be fixated longer, faster and more often. 
 
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
-In this study 96 observers (65 female and 29 male) between 18 and 55 years (M = 24.73, SD = 5.04) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburgs online subject pool or by blackboard. For participation observers recieved study credit or 5€.
+In this study `r length(df.w.demo$vp)` observers (`r length(df.w.demo$sex[df.w.demo$sex==1])` female and `r length(df.w.demo$sex[df.w.demo$sex!=1])` male) between `r min(df.w.demo$age)` and `r max(df.w.demo$age)` years (M = `r round(mean(df.w.demo$age, 2))`, SD = `r round(sd(df.w.demo$age),2)`) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburgs online subject pool or by blackboard. For participation observers received study credit or 5€. One observer was excluded due to missing data.
 
 ## Stimuli and Apparatus
 The experimental stimuli consisted 26 different scenes with a single individual in the center looking at one of two objects of interests in the right or left half of the photography. The direction of the gaze cue and the place of the objects were balanced, creating 104 unique naturalistic scenes in the end. For each participant, a set was randomly generated from this pool containing each scene only once, resulting in 26 trials with exclusive scenes. Eye movements were recorded with an EyeLink1000
 tower system, sampling at 1000 Hz.
 
 ## Design & Procedure
-A two-level (instruction: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was callibrated for each observer. Observers were then told either that there is a foolow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Intertrial intervall was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants recieved their credit.
+A two-level (instruction: free viewing/ explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was calibrated for each observer. Observers were then told either that there is a follow-up memory test or nothing. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Inter trial interval was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz) and were asked to recall as many items as possible in a free recall memory-test. Afterwards participants received their credit.
 
 
 ## Data analysis
@@ -243,11 +221,11 @@ We used `r cite_r("r-references.bib")` for all our analyses.
 
 
 # Results
-Priorizations of the ROIs in the scene were measuerd in mulitple ways. One observer was excluded due to missing data.
+Prioritization of the ROIs in the scene were measured in multiple ways. 
 
 ## Joint attention/ gaze following
 
-As a measuere of priorisation fixation duration, fixation number, fixation latency, as well as leaving saccades are used.
+As a measure of prioritization fixation duration, fixation number, fixation latency, as well as leaving saccades are used.
 
 ### Fixations
 ```{r TO-DO: Plots fixations joint, warining = FALSE, message = FALSE}
@@ -287,10 +265,10 @@ The relative cumulative fixation duration is calculated as time duration on an O
 
 
 #### Fixation latency (H1, H2)
-An additional measurement of priorisation is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. In line with [@Zwickel2010], an object is fixated earlier when it is gazed-at. But also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). For fixation latency with a trend(?) for an interaction, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
+An additional measurement of prioritization is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. In line with [@Zwickel2010], an object is fixated earlier when it is gazed-at. But also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). For fixation latency with a trend(?) for an interaction, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
 
 #### Fixation number (H1, H2)
-As a third measurement of priorisation, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when gazed-at `r apa.anova.fixn.gaze$full_result$icond`, again in line with [@Zwickel2010]. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
+As a third measurement of prioritization, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when gazed-at `r apa.anova.fixn.gaze$full_result$icond`, again in line with [@Zwickel2010]. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
  
 
 ### Saccades
@@ -315,7 +293,7 @@ rm(carmod, idata, icond, st)
 ```
 
 #### Leaving saccades (H1, H2)
-The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viwing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
+The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
 ### Memory (H3)
 ```{r Anova memory, warning=FALSE, message=FALSE}
@@ -340,7 +318,7 @@ The free-recall test showed, that unsurprisingly observers with explicit encodin
 
 
 ## Social attention
-A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to acount for priorisation. 
+A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to account for prioritization. 
 
 ```{r TO-DO: Plots fixations social, warining = FALSE, message = FALSE}
 
@@ -372,12 +350,12 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
 rm(carmod, idata, icond, st)
 
 ```
-Analysis for the social attention part contained again Anovas for the different dependent variabels indicating priorisation.
+Analysis for the social attention part contained again Anovas for the different dependent variables indicating prioritization.
 
 ### Face vs body fixation (H4)
 The first measurement shows, that faces were fixated longer then the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
 The same pattern can be seen for fixation number, where there is a strong effect for region, with more fixations on the face, `r apa.anova.fixn.face$full_result$icond` and no difference between the instructions, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
-Latencies of fixation differed also remarkly between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for interstruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
+Latencies of fixation differed also remarkably between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for instruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
 ### Free-viewing vs explicit-encoding face fixations (H5)
 ```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
@@ -413,7 +391,7 @@ rm(msd, teststat, st)
 
 ```
 
-A t-test between face fixation for the different groups provides information whether faces are differently processed dependent on the insturction observers get. Only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result`. And fixation number did not differ, `r apa.ttest.fixn.face$full_result`.   
+A t-test between face fixation for the different groups provides information whether faces are differently processed dependent on the instruction observers get. Only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result`. And fixation number did not differ, `r apa.ttest.fixn.face$full_result`.   
 
 # Discussion
 
