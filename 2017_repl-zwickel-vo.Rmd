@@ -251,6 +251,7 @@ idata <- data.frame(icond)
 
 for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
   carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,st:(st+1)]))
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
@@ -272,6 +273,37 @@ As a third measurement of prioritization, fixation number, as the count of fixat
  
 
 ### Saccades
+
+```{r plots saccade}
+
+# Plots: Saccade data
+farben <- c("blue","yellow")
+ttxt <- c("Person","Face","Body")
+
+for (i in 1:3) {
+  st <- (17:19)[i]
+
+  # Fixation density
+  m  <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,mean),
+              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,mean))
+  se <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
+              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
+
+  yrng <- c(0,max(m+se))
+
+  x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
+  arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
+  axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
+
+  title(ttxt[i])
+}
+
+legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
+
+rm(m, se, yrng, x, st, farben, ttxt, i)
+
+```
+
 ```{r Anova saccades, warning=FALSE, message=FALSE}
 # ANOVA Saccades
 ## 2 (Group) x 2 (Gaze) ANOVA
@@ -280,22 +312,25 @@ icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
 idata <- data.frame(icond)
 
 for (st in 17:19) {
-  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,c(st,(st+3))]))
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
 dscr.sac <- df.w.et %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
+
 dscr.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
 
 rm(carmod, idata, icond, st)
 ```
 
 #### Leaving saccades (H1, H2)
-The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, but no confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
+The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, and also for group,  `r apa.anova.sac.fgaze$full_results$df_w_et_group`. No confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
 ### Memory (H3)
+
 ```{r Anova memory, warning=FALSE, message=FALSE}
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
@@ -305,6 +340,7 @@ idata <- data.frame(imem)
 
 # Car
 carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
+# print(colnames(df.w.mem[c(3,4)]))
 #print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
 anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
 apa.anova.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III"), correction="GG", mse = FALSE)
