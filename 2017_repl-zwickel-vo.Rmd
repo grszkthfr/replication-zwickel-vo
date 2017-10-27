@@ -26,7 +26,7 @@ abstract: |
   Enter abstract here. Each new line herein must be indented, like this line.
 
 keywords          : "keywords"
-wordcount         : "X"
+wordcount         : "?wordcountaddin"
 
 bibliography      : 
   - "r-references.bib"
@@ -40,7 +40,10 @@ lineno            : yes
 
 lang              : "english"
 class             : "man"
-output            : papaja::apa6_pdf
+output            :
+  papaja::apa6_pdf:
+    keep_tex: FALSE
+                      
 ---
 
 ```{r load_packages, include = FALSE}
@@ -217,7 +220,7 @@ A two-level (instruction: free viewing/ explicit encoding) between subjects fact
 ## Data analysis
 Regions-of-Interest were hand-drawn around the relevant objects and the face and body of the individual in the center. These ROIs were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. Outlier detection.
 
-We used `r cite_r("r-references.bib")` for all our analyses.
+`r cite_r("r-references.bib")` is used for all analyses.
 
 
 # Results
@@ -431,6 +434,8 @@ A t-test between face fixation for the different groups provides information whe
 
 # Discussion
 
+The main attempt to replicate @Zwickel2010 's findings was successful. A strong preference for the gaze-at object can be seen in a lower latency until first fixation, longer fixation duration and more frequent fixations, just like @Zwickel2010 demonstrated in their study. This finding puts more evidence on the idea that the viewing behavior is heavily but spontaneously influenced by persons in a scene.
+This research is extended by the given study by an explicit task concerning the given scene.
 
 \newpage
 
