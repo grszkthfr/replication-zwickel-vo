@@ -30,7 +30,7 @@ wordcount         : "X"
 
 bibliography      : 
   - "r-references.bib"
-  - "C:/Users/jog54yy/Documents/meine-bibliothek/meine-bibliothek.bib"
+  - "2017_repl-zwickel-vo.bib"
 
 figsintext        : no
 figurelist        : no
