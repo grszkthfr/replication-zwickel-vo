@@ -40,7 +40,7 @@ lineno            : yes
 
 lang              : "english"
 class             : "man"
-output            : papaja::apa6_word
+output            : papaja::apa6_pdf
 ---
 
 ```{r load_packages, include = FALSE}
