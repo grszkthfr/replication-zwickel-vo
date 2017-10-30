@@ -41,8 +41,8 @@ lineno            : yes
 lang              : "english"
 class             : "man"
 output            :
-  papaja::apa6_pdf:
-    keep_tex: FALSE
+  papaja::apa6_word:
+    #keep_tex: FALSE
                       
 ---
 
