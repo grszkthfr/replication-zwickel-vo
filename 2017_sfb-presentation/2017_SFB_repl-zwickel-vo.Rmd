@@ -30,9 +30,9 @@ library("ggpubr")
 
 rm(list=ls())
 
-pathMEM <- "../data/Memory/"
-pathET <- "../data/prot/"
-pathFB <- "../data/FB/"
+pathMEM <- "../01_data/Memory/"
+pathET <- "../01_data/prot/"
+pathFB <- "../01_data/FB/"
 
 ```
 
@@ -275,7 +275,9 @@ Humans in their social environment rely on the information other humans provide.
 - explicit signals like in conversations
 - **implicit signals like in gaze following**
 
-
+Specifically, if an individual looks into a specific direction, this might be read as a signal
+- redirects the observers attention towards the referred object or location.
+- joint attention
 
 ---
 
