@@ -82,7 +82,6 @@ pathFB <- "../data/FB/"
 
 ```
 
-
 ```{r Reading eye tracking data in, warning = FALSE, message = FALSE}
 
 # ALL EYE TRACKING DATA
