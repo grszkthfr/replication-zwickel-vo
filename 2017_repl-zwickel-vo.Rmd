@@ -344,6 +344,10 @@ The second hypothesis predicts, that there are more saccades leaving from the he
 
 ### Memory (H3)
 
+```{r plots memory}
+
+```
+
 ```{r Anova memory, warning=FALSE, message=FALSE}
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
