@@ -30,7 +30,7 @@ wordcount         : "?wordcountaddin"
 
 bibliography      : 
   - "r-references.bib"
-  - "2017_repl-zwickel-vo.bib"
+  - "../2017_repl-zwickel-vo.bib"
 
 figsintext        : no
 figurelist        : no
@@ -60,9 +60,9 @@ library("ggpubr")
 
 rm(list=ls())
 
-pathMEM <- "data/Memory/"
-pathET <- "data/prot/"
-pathFB <- "data/FB/"
+pathMEM <- "../data/Memory/"
+pathET <- "../data/prot/"
+pathFB <- "../data/FB/"
 
 ```
 
