@@ -2,7 +2,7 @@
 title: "Presence of persons in naturalistic scenes and consequences - A conceptual replication"
 subtitle: "SFB-Meeting"
 author: "Jonas Großekathöfer, Kristina Suchotzki & Matthias Gamer"
-date: "2017/11/13"
+date: "13/11/2017"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -11,6 +11,8 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+
+class: center, middle
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -294,7 +296,6 @@ plot.fix.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fix"), 
 
 ```{r plots fixn rpl-zwckl, include=FALSE}
 
-
 plot.fixn.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
@@ -462,7 +463,12 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 
-to-do (für euch :-) )
+# Grundlagen
+
+# Die Replikation
+
+# Diskussion
+
 
 ---
 
@@ -494,9 +500,9 @@ Specifically, if an individual looks into a specific direction, this might be re
 
 ---
 
-## Gaze cuing
+## Gaze cueing
 
-Most used paradigm to investigate these attentional shifts is the gaze-cuing paradigm (Frischen et al., 2007)
+Most used paradigm to investigate these attentional shifts is the gaze-cueing paradigm (Frischen et al., 2007)
     
   - perceived gaze cues lead to a reflexive attentional shift
     
@@ -506,7 +512,7 @@ Most used paradigm to investigate these attentional shifts is the gaze-cuing par
 
 --
         
-Researches must be sensible to these differences when generalizing laboratory findings (Risko et al, 2012)
+Researches must be sensible to these differences when generalizing laboratory findings, especially for social attention (Risko et al., 2012).
 
 ---
 
@@ -514,7 +520,7 @@ Researches must be sensible to these differences when generalizing laboratory fi
 
 --
 
-To account for the ecological validity of gaze cues Zwickel and Võ (2010) conducted a joint attention study with a more naturalistic scenario
+To account for the ecological validity of gaze cues Zwickel and Võ (2010) conducted a joint attention study with a more naturalistic scenario.
 
 ---
 
@@ -531,7 +537,7 @@ background-size: 100%
 
 --
 
-This conceptual replication of Zwickel and Võ (2010) aims at answering multiple research questions regarding joint and social attention
+This conceptual replication of Zwickel and Võ (2010) aims at answering multiple research questions regarding joint and social attention:
 
 --
 
@@ -562,13 +568,13 @@ background-size: 94%
 
 ---
 
-## 1) Vergleich mit Zwickel and Võ (2010)
+## 1. Vergleich mit Zwickel und Võ (2010)
 
-## 2) Unterschiede durch Instruktion
+## 2. Unterschiede durch Instruktion
 
 ---
 
-## 1. the replication of Zwickel and Võ (2010) findings
+## 1. Vergleich mit Zwickel und Võ (2010)
 
 --
 
@@ -589,19 +595,22 @@ Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br/><br/
 
 .pull-left[
 
-##### Replication:
+##### Replikation:
 
 ```{r comparison saccades repl, echo=FALSE}
+
 plot.sac.rpl
+
 ```
 
 ]
 
 .pull-right[
 
-##### Zwickel and Võ (2010):
+##### Zwickel und Võ (2010):
 
 ```{r comparison saccades zwickel, echo=FALSE}
+
 plot.sac.zwckl
 
 ```
@@ -616,7 +625,7 @@ Dauer von Stimulus-onset bis erste Fixation (in ms)<br/><br/><br/>
 
 .pull-left[
 
-##### Replication:
+##### Replikation:
 
 ```{r comparison fixlat repl, echo=FALSE}
 
@@ -628,7 +637,7 @@ plot.fixlat.rpl
 
 .pull-right[
 
-##### Zwickel and Võ (2010):
+##### Zwickel und Võ (2010):
 
 ```{r comparison fixlat zwickel, echo=FALSE}
 
@@ -646,7 +655,7 @@ Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene 
 
 .pull-left[
 
-##### Replication:
+##### Replikation:
 
 ```{r comparison fix repl, echo=FALSE}
 
@@ -658,7 +667,7 @@ plot.fix.rpl
 
 .pull-right[
 
-##### Zwickel and Võ (2010):
+##### Zwickel und Võ (2010):
 
 ```{r comparison fix zwickel, echo=FALSE}
 
@@ -677,7 +686,7 @@ plot.fix.zwckl
 Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
 <br><br>
 
-##### Replication:
+##### Replikation:
 
 ```{r comparison fixn repl, echo=FALSE}
 
@@ -691,7 +700,7 @@ plot.fixn.rpl
 
 "[...] size-normalized by multiplying them with the total area of the scene divided by the area of the object"
 
-##### Zwickel and Võ (2010):
+##### Zwickel und Võ (2010):
 
 ```{r comparison fixn zwickel, echo=FALSE}
 
@@ -703,7 +712,7 @@ plot.fixn.zwckl
 
 ---
 
-## 2. extending this line of research
+## 2. Erweiterte Forschungsfrage
 
 - Einfluss der Person top-down modulierbar?
 
@@ -736,7 +745,9 @@ Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br><br>
 .pull-left[
 
 ```{r comparison saccades free, echo=FALSE}
+
 plot.sac.freemem
+
 ```
 
 ]
@@ -816,7 +827,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
+*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 
@@ -868,7 +879,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
+*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 
@@ -922,7 +933,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
+*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 class: inverse, center, middle
@@ -935,7 +946,7 @@ class: inverse, center, middle
 
 - erfolgreiche Replikation
 
-  - Alle Effekte der Person-Bedingung von Zwickel and Võ (2010) wurden repliziert
+  - Alle Effekte der Person-Bedingung von Zwickel und Võ (2010) wurden repliziert
   
 --
   
