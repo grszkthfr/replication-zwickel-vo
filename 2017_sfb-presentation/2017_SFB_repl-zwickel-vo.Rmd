@@ -154,45 +154,6 @@ dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), s
 
 ```
 
-```{r Anova fixations joint, warning = FALSE, message = FALSE, include=FALSE}
-
-# ANOVA Fixations characteristics for joint attention
-## 2 (Group) x 2 (Gaze) ANOVA
-
-icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
-idata <- data.frame(icond)
-
-for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
-  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
-  #print(colnames(df.w.et[,st:(st+1)]))
-  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
-  }
-
-rm(carmod, idata, icond, st)
-
-```
-
-```{r Anova fixations social, warning = FALSE, message = FALSE, echo= FALSE}
-# ANOVA Fixations characteristics
-## 2 (Group) x 2 (Face/Body) ANOVA
-
-icond <- gl(2,1,labels=c("head","body")) # within-factor
-idata <- data.frame(icond)
-
-for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
-    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
-  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
-  }
-
-
-rm(carmod, idata, icond, st)
-
-```
-
 ```{r descriptives saccade, include=FALSE}
 # dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
 #                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
@@ -442,6 +403,45 @@ rm(carmod, idata, icond, st)
 
 ```
 
+```{r Anova fixations joint, warning = FALSE, message = FALSE, include=FALSE}
+
+# ANOVA Fixations characteristics for joint attention
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,st:(st+1)]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
+  }
+
+rm(carmod, idata, icond, st)
+
+```
+
+```{r Anova fixations social, warning = FALSE, message = FALSE, echo= FALSE}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Face/Body) ANOVA
+
+icond <- gl(2,1,labels=c("head","body")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
+    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
+  }
+
+
+rm(carmod, idata, icond, st)
+
+```
+
 ```{r Anova memory, warning=FALSE, message=FALSE, include=FALSE}
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
@@ -462,7 +462,7 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 
-h
+to-do (für euch :-) )
 
 ---
 
@@ -577,7 +577,7 @@ Vergleich der Bedingungen *free-encoding* mit Bedingung *Person*
 --
 
 - Abhängige Variablen
-    - Sakkaden (Kopf -> Objekt)
+    - Sakkaden (Kopf → Objekt)
     - Fixationlatenz (gaze vs. non-gaze Object)
     - Fixationsdauer (gaze vs. non-gaze Object)
     - Fixationsanzahl (gaze vs. non-gaze Object)
@@ -585,7 +585,7 @@ Vergleich der Bedingungen *free-encoding* mit Bedingung *Person*
 
 #### Sakkaden
 
-Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)<br/><br/><br/>
+Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br/><br/><br/>
 
 .pull-left[
 
@@ -710,17 +710,28 @@ plot.fixn.zwckl
   - Unterschiede joint attention vs. social attention?
     
         - *joint attention:* Einfluss auf das Blickverhalten bezüglich der Objekte (gaze vs. non-gaze)?
+        
         - *social attention:* Einfluss auf das Blickverhalten bezüglich der Person (Kopf vs. Körper)?
 
 - Konsequenzen für nachfolgende kognitive Prozesse?
 
   - Einfluss auf die Gedächtnisleistung?
+  
+  
+--
+      - Spoiler:
+      
+          - Effekt nur für *free vs. mem* <font size="-1">[ `r apa.anova.mem$full_result$df_w_mem_bed `]</font>
+          
+          - kein Effekt für *gazed* <font size="-1">[ `r apa.anova.mem$full_result$imem `]</font>
+          
+          - keine Interaktion <font size="-1">[ `r apa.anova.mem$full_result$df_w_mem_bed_imem `]</font>
 
 ---
 
 #### Sakkaden
 
-Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)
+Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br><br>
 
 .pull-left[
 
@@ -751,13 +762,13 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* CDEFGHIJK!
+*Fazit:* Verstärkt Sakkaden vom Kopf zu den Objekten, wenn explizites Encoding der Szene & wenn Objekt gecued wird!
 
 ---
 
 #### Fixationslatenz
 
-Dauer von Stimulus-onset bis erste Fixation (in ms) 
+Dauer von Stimulus-onset bis erste Fixation (in ms)<br><br>
 
 .pull-left[
 
@@ -805,7 +816,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
+*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 
@@ -857,13 +868,13 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
+*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 
 #### Fixationsanzahl
 
-Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
+Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)<br><br>
 
 .pull-left[
 
@@ -911,9 +922,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
-
----
+*Fazit:* Top-Down-Modulation keinen Einfluss auf social attention; aber auf joint attention.
 
 ---
 class: inverse, center, middle
@@ -926,12 +935,32 @@ class: inverse, center, middle
 
 - erfolgreiche Replikation
 
-  - Alle Effekte von Zwickel wurden repliziert
+  - Alle Effekte der Person-Bedingung von Zwickel and Võ (2010) wurden repliziert
   
 --
+  
+  - insgesamt stärkere und klarere Effekte (idR kleinere *SE*, und größere *ΔM*'s)
+      - zurückzuführen auf naturalistischere Szenen! (?)
+      
+      - Quantifizierbar?
 
-  - zusätzlich: signifikanter Effekt für Fixationsanzahl
-      - Einfluss natürlicher Szene?!
+--
 
-- 
+- Einfluss der Top-Down-Modulation
+
+
+--
+  - kaum auf genuin soziale Reize (Kopf, Körper) → kein Einfluss auf *social attention* 
+    
+--
+
+  - aber deutlich auf künstliche soziale Reize (falls Objekt gecued wird) → Einfluss auf *joint attention*
+    
+---
+
+class: inverse, center, middle
+
+# Vielen Dank für Eure Aufmerksamkeit!
+
+# :-)
       
