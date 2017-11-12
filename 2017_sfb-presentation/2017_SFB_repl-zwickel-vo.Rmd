@@ -174,6 +174,25 @@ rm(carmod, idata, icond, st)
 
 ```
 
+```{r Anova fixations social, warning = FALSE, message = FALSE, echo= FALSE}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Face/Body) ANOVA
+
+icond <- gl(2,1,labels=c("head","body")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
+    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
+  }
+
+
+rm(carmod, idata, icond, st)
+
+```
+
 ```{r descriptives saccade, include=FALSE}
 # dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
 #                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
@@ -229,6 +248,7 @@ dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn","
 
 plot.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free"), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
     ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
@@ -241,6 +261,7 @@ plot.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f" & group
 
 plot.sac.zwckl <- ggplot(subset(dscr.sac.zwckl, stat == "mean"), aes(x = gazed, y=measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.sac.zwckl, stat == "mean")$measure - subset(dscr.sac.zwckl, stat == "se")$measure,
     ymax=subset(dscr.sac.zwckl, stat == "mean")$measure + subset(dscr.sac.zwckl, stat == "se")$measure),
@@ -256,6 +277,7 @@ plot.sac.zwckl <- ggplot(subset(dscr.sac.zwckl, stat == "mean"), aes(x = gazed, 
 
 plot.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
@@ -268,6 +290,7 @@ plot.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" 
 
 plot.fixlat.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat"), aes(x = gazed, y=measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure,
     ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure),
@@ -283,6 +306,7 @@ plot.fixlat.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixl
 
 plot.fix.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
@@ -295,6 +319,7 @@ plot.fix.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & grou
 
 plot.fix.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fix"), aes(x = gazed, y=measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure,
     ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure),
@@ -311,6 +336,7 @@ plot.fix.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fix"), 
 
 plot.fixn.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
@@ -323,6 +349,7 @@ plot.fixn.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gr
 
 plot.fixn.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn"), aes(x = gazed, y=measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure,
     ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure),
@@ -339,6 +366,7 @@ plot.fixn.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")
 
 plot.sac.freemem <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
   geom_errorbar(aes(
     ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
     ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
@@ -434,49 +462,59 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 
-- Grundlagen
-- Research Motivation
-- Hypothesen
-- Ergebnisse
-- Diskussion
-
+h
 
 ---
+
 class: inverse, center, middle
 
 # Grundlagen
 
-
-
 ---
 
-Humans in their social environment rely on the information other humans provide.
-- explicit signals like in conversations
-- implicit signals like in gaze following
-
----
+## Relevance 
 
 Humans in their social environment rely on the information other humans provide.
+
+--
+
 - explicit signals like in conversations
+
+--
+
 - **implicit signals like in gaze following**
 
+--
+
 Specifically, if an individual looks into a specific direction, this might be read as a signal
-- redirects the observers attention towards the referred object or location.
-- refered to as joint attention
-- lack ecological validity
+
+- redirects the observers attention towards the referred object or location
+
+  - refered to as joint attention
 
 ---
 
-- most used paradigm to investigate these attentional shifts is the so called gaze-cueing paradigm
-    - perceived gaze cues lead to a reflexive attentional shift
-    - but lack ecological validity
-        - recent study @Hayward2017 did not find reliable links between classical laboratory gaze cueing tasks and a real social engage
+## Gaze cuing
+
+Most used paradigm to investigate these attentional shifts is the gaze-cuing paradigm (Frischen et al., 2007)
+    
+  - perceived gaze cues lead to a reflexive attentional shift
+    
+  - but lack ecological validity
+      
+      - recent study did not find reliable links between classical laboratory gaze cueing tasks and real social engage (Hayward et al., 2017)
+
+--
         
-researches must be sensible to these differences when generalizing laboratory findings
+Researches must be sensible to these differences when generalizing laboratory findings (Risko et al, 2012)
 
 ---
 
-To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with a more naturalistic scenario.
+## Naturalistic scenarios
+
+--
+
+To account for the ecological validity of gaze cues Zwickel and Võ (2010) conducted a joint attention study with a more naturalistic scenario
 
 ---
 
@@ -485,18 +523,28 @@ background-size: 100%
 
 ---
 
-# Ergebnisse Zwickel 
+## Critique
 
-nur ganz kurz und ausführlicher nach "unseren" Ergebnissen und Interpretation
+- computer generated grayscaled stimuli, in contrast to their motivation to provide a naturalistic setup
 
----
+- very little power in their study (n = 16)
 
-# Critique
+--
 
-However, this conceptual replication of @Zwickel2010 aims at answering multiple research questions regarding joint and social attention, including the replication of Zwickel and Võ's [-@Zwickel2010] findings and extending this line of research.  
-- very little power in their study
-- computer generated stimuli in contrast to their motivation to provide a naturalistic setup
+This conceptual replication of Zwickel and Võ (2010) aims at answering multiple research questions regarding joint and social attention
 
+--
+
+1. the replication of Zwickel and Võ (2010) findings
+
+--
+
+2. extending this line of research
+  
+  - influence of top-down modulations on joint and social attention in naturalistic scenes
+  
+  - consequences for subsequent cognitive processes, here memory effects
+  
 ---
 class: inverse, center, middle
 
@@ -507,32 +555,42 @@ class: inverse, center, middle
 background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli.png)
 background-size: 94%
 
+--
+
+background-image: url(2017_SFB_repl-zwickel-vo_files/design.png)
+background-size: 94%
+
 ---
 
-# unsere Ergebnisse und Interpretation
-
-## 1) Vergleich mit Zwickel
+## 1) Vergleich mit Zwickel and Võ (2010)
 
 ## 2) Unterschiede durch Instruktion
+
 ---
 
-## 1) Vergleich mit Zwickel
-Vergleich für Bed. Free mit Bed. person
-- Grafiken für:
-    - kopf->gazed
-        - sakkaden
-        - fixationlaten(FL-fixlat)
-        - fixationsdauer(TP-fix)
-        - fixationsanzahl(FF-fixn)
+## 1. the replication of Zwickel and Võ (2010) findings
+
+--
+
+Vergleich der Bedingungen *free-encoding* mit Bedingung *Person*
+
+--
+
+- Abhängige Variablen
+    - Sakkaden (Kopf -> Objekt)
+    - Fixationlatenz (gaze vs. non-gaze Object)
+    - Fixationsdauer (gaze vs. non-gaze Object)
+    - Fixationsanzahl (gaze vs. non-gaze Object)
 ---
 
-### Sakkaden vom Kopf zu den Objekten
+#### Sakkaden
 
-Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)
+Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)<br/><br/><br/>
 
 .pull-left[
 
-#### Replication:
+##### Replication:
+
 ```{r comparison saccades repl, echo=FALSE}
 plot.sac.rpl
 ```
@@ -541,7 +599,8 @@ plot.sac.rpl
 
 .pull-right[
 
-#### Zwickel:
+##### Zwickel and Võ (2010):
+
 ```{r comparison saccades zwickel, echo=FALSE}
 plot.sac.zwckl
 
@@ -551,23 +610,28 @@ plot.sac.zwckl
 
 ---
 
-### Fixationslatenz
+#### Fixationslatenz
 
-Dauer von Stimulus-onset bis erste Fixation (in ms)
+Dauer von Stimulus-onset bis erste Fixation (in ms)<br/><br/><br/>
 
 .pull-left[
 
-#### Replication:
+##### Replication:
+
 ```{r comparison fixlat repl, echo=FALSE}
+
 plot.fixlat.rpl
+
 ```
 
 ]
 
 .pull-right[
 
-#### Zwickel:
+##### Zwickel and Võ (2010):
+
 ```{r comparison fixlat zwickel, echo=FALSE}
+
 plot.fixlat.zwckl
 
 ```
@@ -576,44 +640,49 @@ plot.fixlat.zwckl
 
 ---
 
-### Fixationsdauer
+#### Fixationsdauer
 
-Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)
+Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)<br/><br/>
 
 .pull-left[
 
-#### Replication:
+##### Replication:
+
 ```{r comparison fix repl, echo=FALSE}
+
 plot.fix.rpl
+
 ```
 
 ]
 
 .pull-right[
 
-#### Zwickel:
+##### Zwickel and Võ (2010):
+
 ```{r comparison fix zwickel, echo=FALSE}
+
 plot.fix.zwckl
 
 ```
 
 ]
 
-
 ---
 
-### Fixationsanzahl
+#### Fixationsanzahl
 
 .pull-left[
 
 Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
-    
-    
-     
+<br><br>
 
-#### Replication:
+##### Replication:
+
 ```{r comparison fixn repl, echo=FALSE}
+
 plot.fixn.rpl
+
 ```
 
 ]
@@ -622,27 +691,34 @@ plot.fixn.rpl
 
 "[...] size-normalized by multiplying them with the total area of the scene divided by the area of the object"
 
-#### Zwickel:
+##### Zwickel and Võ (2010):
+
 ```{r comparison fixn zwickel, echo=FALSE}
+
 plot.fixn.zwckl
+
 ```
 
 ]
 
+---
+
+## 2. extending this line of research
+
+- Einfluss der Person top-down modulierbar?
+
+  - Unterschiede joint attention vs. social attention?
+    
+        - *joint attention:* Einfluss auf das Blickverhalten bezüglich der Objekte (gaze vs. non-gaze)?
+        - *social attention:* Einfluss auf das Blickverhalten bezüglich der Person (Kopf vs. Körper)?
+
+- Konsequenzen für nachfolgende kognitive Prozesse?
+
+  - Einfluss auf die Gedächtnisleistung?
 
 ---
 
-## 2) Unterschiede durch Instruktion
-
-
-### Einfluss der Person top-down modulierbar?
-
-
-### Konsequenzen für nachfolgende kognitive Prozesse?
-
----
-
-#### Sakkaden vom Kopf zu den Objekten
+#### Sakkaden
 
 Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)
 
@@ -658,36 +734,37 @@ plot.sac.freemem
 
 .pull-right[
 
-##### Objekte:
+##### joint attention:
 
-free vs. mem:
-
+_free vs. mem:_<br>
 `r apa.anova.sac.fgaze$full_result$df_w_et_group `
 
-gaze vs. nongaze:
-
+_ROIs:_<br>
 `r apa.anova.sac.fgaze$full_result$icond `
 
-interaction:
-
+_interaction:_<br>
 `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond `
 
 ]
 
 --
 
+______________
+
 *Fazit:* CDEFGHIJK!
 
 ---
 
-#### Fixationlatenz
+#### Fixationslatenz
 
 Dauer von Stimulus-onset bis erste Fixation (in ms) 
 
 .pull-left[
 
 ```{r comparison fixlat free, echo=FALSE}
+
 plot.fixlat.freemem
+
 ```
 
 ]
@@ -696,25 +773,39 @@ plot.fixlat.freemem
 
 .pull-right[
 
-##### Objekte:
+.pull-left[
 
-free vs. mem:
-
+##### joint attention:
+_free vs. mem:_<br>
 `r apa.anova.fixlat.gaze$full_result$df_w_et_group `
 
-gaze vs. nongaze:
-
+_ROIs:_<br>
 `r apa.anova.fixlat.gaze$full_result$icond `
 
-interaction:
-
+_interaction:_<br>
 `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fixlat.face$full_result$df_w_et_group `
+<br><br><br>
+`r apa.anova.fixlat.face$full_result$icond `
+<br><br><br>
+`r apa.anova.fixlat.face$full_result$df_w_et_group_icond `
+
+]
 
 ]
 
 --
 
-*Fazit:* CDEFGHIJK!
+______________
+
+*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
 
 ---
 
@@ -734,25 +825,39 @@ plot.fix.freemem
 
 .pull-right[
 
-##### Objekte:
+.pull-left[
 
-free vs. mem:
-
+##### joint attention:
+_free vs. mem:_<br>
 `r apa.anova.fix.gaze$full_result$df_w_et_group `
 
-gaze vs. nongaze:
-
+_ROIs:_<br>
 `r apa.anova.fix.gaze$full_result$icond `
 
-interaction:
-
+_interaction:_<br>
 `r apa.anova.fix.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fix.face$full_result$df_w_et_group `
+<br><br><br>
+`r apa.anova.fix.face$full_result$icond `
+<br><br><br>
+`r apa.anova.fix.face$full_result$df_w_et_group_icond `
+
+]
 
 ]
 
 --
 
-*Fazit:* CDEFGHIJK!
+______________
+
+*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
 
 ---
 
@@ -763,7 +868,9 @@ Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
 .pull-left[
 
 ```{r comparison fixn free, echo=FALSE}
+
 plot.fixn.freemem
+
 ```
 
 ]
@@ -772,28 +879,59 @@ plot.fixn.freemem
 
 .pull-right[
 
-##### Objekte:
+.pull-left[
 
-free vs. mem:
-
+##### joint attention:
+_free vs. mem:_<br>
 `r apa.anova.fixn.gaze$full_result$df_w_et_group `
 
-gaze vs. nongaze:
-
+_ROIs:_<br>
 `r apa.anova.fixn.gaze$full_result$icond `
 
-interaction:
-
+_interaction:_<br>
 `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fixn.face$full_result$df_w_et_group `
+<br><br><br>
+`r apa.anova.fixn.face$full_result$icond `
+<br><br><br>
+`r apa.anova.fixn.face$full_result$df_w_et_group_icond `
+
+]
 
 ]
 
 --
 
-*Fazit:* CDEFGHIJK!
+______________
+
+*Fazit:* CDEFGHIJK asökljfdh asöksahfd södahf ödfkhö skdfh ökasjdhf saökjdhf ösdah fhödksajh föaksdjhf sajkdhf asjkdhf ajsökdfh asjökdfh öasdjk hföskdj!
 
 ---
 
 ---
+class: inverse, center, middle
 
-# Conclusion
+# Diskussion
+
+---
+
+## Schlussfolgerung
+
+- erfolgreiche Replikation
+
+  - Alle Effekte von Zwickel wurden repliziert
+  
+--
+
+  - zusätzlich: signifikanter Effekt für Fixationsanzahl
+      - Einfluss natürlicher Szene?!
+
+- 
+      
