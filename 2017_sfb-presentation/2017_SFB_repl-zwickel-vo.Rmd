@@ -2,7 +2,7 @@
 title: "Presence of persons in naturalistic scenes and consequences - A conceptual replication"
 subtitle: "SFB-Meeting"
 author: "Jonas Großekathöfer, Kristina Suchotzki & Matthias Gamer"
-date: "2016/12/12"
+date: "2017/11/13"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -22,6 +22,7 @@ library("papaja")
 library("tidyverse")
 library("car")
 library("afex")
+library("ggpubr")
 library("ggpubr")
 
 ```
@@ -181,82 +182,216 @@ rm(carmod, idata, icond, st)
 #                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
 #                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
 
-dscr.sac.group <- df.w.et %>%
+dscr.sac.rpl <- df.w.et %>%
   group_by(group) %>%
-  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% 
-  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>%
+  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
   mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
          area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
-         area = substring(area,1,1),
+         area = as.factor(substring(area,1,1)),
          gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
-         gazed = substring(gazed,2)) %>%
-  select(-measure, everything()) %>% 
+         gazed = as.factor(substring(gazed,2)),
+         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+  select(-measure, everything()) %>% # neusortieren der variablen
   select(key, everything())
-```
 
-```{r plots saccade}
-
-# Plots: Saccade data
-farben <- c("blue","yellow")
-ttxt <- c("Person","Face","Body")
-
-for (i in 1:3) {
-  st <- (17:19)[i]
-
-  # Fixation density
-  m  <- cbind(apply(df.w.et[df.w.et$group=="free", c(st,st+3)],2,mean),
-              apply(df.w.et[df.w.et$group=="mem", c(st,st+3)],2,mean))
-  se <- cbind(apply(df.w.et[df.w.et$group=="free", c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
-              apply(df.w.et[df.w.et$group=="mem", c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
-
-  yrng <- c(0,.20)
-
-  x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
-  arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
-  axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-
-  title(ttxt[i])
-}
-
-x <- barplot(c(.14,.09),beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
-  arrows(x,c((.14-.01),(.09-.01)),x,c((.14+.01),(.09+.01)),length=0.03,angle=90,code=3,col="black")
-  #axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-  title("Zwickel2010")
-legend(max(x),.20,c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
-
-#rm(m, se, yrng, x, st, farben, ttxt, i)
+dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),gazed=c("gaze", "gaze", "nongaze", "nongaze"),stat=c("mean", "se"),measure=c(.14,0.01,.09,0.01)) # free = person
 
 ```
 
-```{r ggplots saccade}
+```{r descriptives fix*, include=FALSE}
+# dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+#                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+#                                   m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+#                                   m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+#                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+#                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
 
-ggplot(subset(dscr.sac.group, stat == "mean" & area == "f"),aes(x= group, y= measure, fill = gazed)) +
+dscr.fix.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(fix.face:fixlat.nongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, fix.face_mean:fixlat.nongaze_se) %>% # ins longformat
+  mutate(fix = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[1]) %>% unlist()),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,1)),
+         stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist())) %>% 
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.fix.rpl$gazed <- factor(dscr.fix.rpl$gazed, levels=c("face", "body", "gaze", "nongaze"))
+
+dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn","fixn","fixn","fixn","fixlat","fixlat","fixlat","fixlat"), gazed=c("gaze","gaze", "nongaze", "nongaze"), stat=c("mean","se"), measure=c(0.08,.01,.07,.01,5.89,.37,5.24,.34,3588,133,4008,166)) # free = person
+
+```
+<!-- VERGLEICH -->
+
+```{r plots saccade rpl-zwckl, include=FALSE}
+
+plot.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free"), aes(x= gazed, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
   geom_errorbar(aes(
-    ymin=subset(dscr.sac.group, stat == "mean" & area == "f")$measure - subset(dscr.sac.group, stat == "se" & area == "f")$measure,
-    ymax=subset(dscr.sac.group, stat == "mean" & area == "f")$measure + subset(dscr.sac.group, stat == "se" & area == "f")$measure),
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
     width=.2,
-    position=position_dodge(.9)) 
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,0.15))
+
+#plot.sac.rpl
 
 
-df_zw <- data.frame(group=c("free", "free"),gazed=c("gaze", "nongaze"),mean=c(.14,.09), se=c(0.1,0.1))
+plot.sac.zwckl <- ggplot(subset(dscr.sac.zwckl, stat == "mean"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.zwckl, stat == "mean")$measure - subset(dscr.sac.zwckl, stat == "se")$measure,
+    ymax=subset(dscr.sac.zwckl, stat == "mean")$measure + subset(dscr.sac.zwckl, stat == "se")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,0.15))
 
-ggplot(df_zw, aes(x = group, y=mean, fill = gazed)) +
-  geom_col(position = "dodge")
+ #plot.sac.zwckl
 
-
-x <- barplot(c(.14,.09),beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
-  arrows(x,c((.14-.01),(.09-.01)),x,c((.14+.01),(.09+.01)),length=0.03,angle=90,code=3,col="black")
-  #axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-  title("Zwickel2010")
-legend(max(x),.20,c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
-
-
-sac_face
 ```
 
+```{r plots fixlat rpl-zwckl, include=FALSE}
 
-```{r Anova saccades, warning=FALSE, message=FALSE}
+plot.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,4000))
+
+#plot.fixlat.rpl
+
+
+plot.fixlat.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,4000))
+
+#plot.fixlat.zwckl
+
+```
+
+```{r plots fix rpl-zwckl, include=FALSE}
+
+plot.fix.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,0.15))
+
+#plot.fix.rpl
+
+
+plot.fix.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fix"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,0.15))
+
+#plot.fix.zwckl
+
+```
+
+```{r plots fixn rpl-zwckl, include=FALSE}
+
+
+plot.fixn.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) #+
+  #expand_limits(y=c(0,0.15))
+
+#plot.fixn.rpl
+
+
+plot.fixn.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure),
+    width=.2,
+    position = position_dodge(.9))  #+
+  #expand_limits(y=c(0,0.15))
+
+#plot.fixn.zwckl
+
+```
+
+<!-- UNTERSCHIEDE -->
+```{r plots saccade free-mem, include=FALSE}
+
+plot.sac.freemem <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.sac.freemem
+
+```
+
+```{r plots fixlat free-mem, include=FALSE}
+
+plot.fixlat.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.fixlat.freemem
+
+```
+
+```{r plots fix free-mem, include=FALSE}
+
+plot.fix.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.fix.freemem
+
+```
+
+```{r plots fixn free-mem, include=FALSE}
+
+plot.fixn.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+plot.fixn.freemem
+
+```
+
+```{r Anova saccades, warning=FALSE, message=FALSE, include=FALSE}
 # ANOVA Saccades
 ## 2 (Group) x 2 (Gaze) ANOVA
 
@@ -275,7 +410,7 @@ for (st in 17:19) {
 
 rm(carmod, idata, icond, st)
 
-```{r plots memory, include=FALSE}
+
 
 ```
 
@@ -338,6 +473,7 @@ Specifically, if an individual looks into a specific direction, this might be re
         - recent study @Hayward2017 did not find reliable links between classical laboratory gaze cueing tasks and a real social engage
         
 researches must be sensible to these differences when generalizing laboratory findings
+
 ---
 
 To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with a more naturalistic scenario.
@@ -347,9 +483,317 @@ To account for the ecological validity of gaze cues @Zwickel2010 conducted a joi
 background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli-zwickel.png)
 background-size: 100%
 
+---
+
+# Ergebnisse Zwickel 
+
+nur ganz kurz und ausführlicher nach "unseren" Ergebnissen und Interpretation
 
 ---
+
+# Critique
 
 However, this conceptual replication of @Zwickel2010 aims at answering multiple research questions regarding joint and social attention, including the replication of Zwickel and Võ's [-@Zwickel2010] findings and extending this line of research.  
 - very little power in their study
 - computer generated stimuli in contrast to their motivation to provide a naturalistic setup
+
+---
+class: inverse, center, middle
+
+# Die Replikation
+
+---
+
+background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli.png)
+background-size: 94%
+
+---
+
+# unsere Ergebnisse und Interpretation
+
+## 1) Vergleich mit Zwickel
+
+## 2) Unterschiede durch Instruktion
+---
+
+## 1) Vergleich mit Zwickel
+Vergleich für Bed. Free mit Bed. person
+- Grafiken für:
+    - kopf->gazed
+        - sakkaden
+        - fixationlaten(FL-fixlat)
+        - fixationsdauer(TP-fix)
+        - fixationsanzahl(FF-fixn)
+---
+
+### Sakkaden vom Kopf zu den Objekten
+
+Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)
+
+.pull-left[
+
+#### Replication:
+```{r comparison saccades repl, echo=FALSE}
+plot.sac.rpl
+```
+
+]
+
+.pull-right[
+
+#### Zwickel:
+```{r comparison saccades zwickel, echo=FALSE}
+plot.sac.zwckl
+
+```
+
+]
+
+---
+
+### Fixationslatenz
+
+Dauer von Stimulus-onset bis erste Fixation (in ms)
+
+.pull-left[
+
+#### Replication:
+```{r comparison fixlat repl, echo=FALSE}
+plot.fixlat.rpl
+```
+
+]
+
+.pull-right[
+
+#### Zwickel:
+```{r comparison fixlat zwickel, echo=FALSE}
+plot.fixlat.zwckl
+
+```
+
+]
+
+---
+
+### Fixationsdauer
+
+Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)
+
+.pull-left[
+
+#### Replication:
+```{r comparison fix repl, echo=FALSE}
+plot.fix.rpl
+```
+
+]
+
+.pull-right[
+
+#### Zwickel:
+```{r comparison fix zwickel, echo=FALSE}
+plot.fix.zwckl
+
+```
+
+]
+
+
+---
+
+### Fixationsanzahl
+
+.pull-left[
+
+Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
+    
+    
+     
+
+#### Replication:
+```{r comparison fixn repl, echo=FALSE}
+plot.fixn.rpl
+```
+
+]
+
+.pull-right[
+
+"[...] size-normalized by multiplying them with the total area of the scene divided by the area of the object"
+
+#### Zwickel:
+```{r comparison fixn zwickel, echo=FALSE}
+plot.fixn.zwckl
+```
+
+]
+
+
+---
+
+## 2) Unterschiede durch Instruktion
+
+
+### Einfluss der Person top-down modulierbar?
+
+
+### Konsequenzen für nachfolgende kognitive Prozesse?
+
+---
+
+#### Sakkaden vom Kopf zu den Objekten
+
+Anzahl an Sakkaden "Kopf -> Objekt" / Alle Sakkaden "Kopf -> " (in %)
+
+.pull-left[
+
+```{r comparison saccades free, echo=FALSE}
+plot.sac.freemem
+```
+
+]
+
+--
+
+.pull-right[
+
+##### Objekte:
+
+free vs. mem:
+
+`r apa.anova.sac.fgaze$full_result$df_w_et_group `
+
+gaze vs. nongaze:
+
+`r apa.anova.sac.fgaze$full_result$icond `
+
+interaction:
+
+`r apa.anova.sac.fgaze$full_result$df_w_et_group_icond `
+
+]
+
+--
+
+*Fazit:* CDEFGHIJK!
+
+---
+
+#### Fixationlatenz
+
+Dauer von Stimulus-onset bis erste Fixation (in ms) 
+
+.pull-left[
+
+```{r comparison fixlat free, echo=FALSE}
+plot.fixlat.freemem
+```
+
+]
+
+--
+
+.pull-right[
+
+##### Objekte:
+
+free vs. mem:
+
+`r apa.anova.fixlat.gaze$full_result$df_w_et_group `
+
+gaze vs. nongaze:
+
+`r apa.anova.fixlat.gaze$full_result$icond `
+
+interaction:
+
+`r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond `
+
+]
+
+--
+
+*Fazit:* CDEFGHIJK!
+
+---
+
+#### Fixationsdauer
+
+Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)
+
+.pull-left[
+
+```{r comparison fix free, echo=FALSE}
+plot.fix.freemem
+```
+
+]
+
+--
+
+.pull-right[
+
+##### Objekte:
+
+free vs. mem:
+
+`r apa.anova.fix.gaze$full_result$df_w_et_group `
+
+gaze vs. nongaze:
+
+`r apa.anova.fix.gaze$full_result$icond `
+
+interaction:
+
+`r apa.anova.fix.gaze$full_result$df_w_et_group_icond `
+
+]
+
+--
+
+*Fazit:* CDEFGHIJK!
+
+---
+
+#### Fixationsanzahl
+
+Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
+
+.pull-left[
+
+```{r comparison fixn free, echo=FALSE}
+plot.fixn.freemem
+```
+
+]
+
+--
+
+.pull-right[
+
+##### Objekte:
+
+free vs. mem:
+
+`r apa.anova.fixn.gaze$full_result$df_w_et_group `
+
+gaze vs. nongaze:
+
+`r apa.anova.fixn.gaze$full_result$icond `
+
+interaction:
+
+`r apa.anova.fixn.gaze$full_result$df_w_et_group_icond `
+
+]
+
+--
+
+*Fazit:* CDEFGHIJK!
+
+---
+
+---
+
+# Conclusion
