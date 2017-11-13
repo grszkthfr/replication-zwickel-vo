@@ -503,7 +503,7 @@ Humans in their social environment rely on the information other humans provide.
 
 Specifically, if an individual looks into a specific direction, this might be read as a signal
 
-- redirects the observers attention towards the referred object or location
+- redirects the observers attention towards the referenced object or location
 
   - refered to as joint attention
 
@@ -531,6 +531,15 @@ Researches must be sensible to these differences when generalizing laboratory fi
 
 To account for the ecological validity of gaze cues Zwickel and Võ (2010) conducted a joint attention study with a more naturalistic scenario.
 
+???
+
+- present experiment controls for
+  - instruction dependency
+  - object saliency
+  - scene specificity
+  - prominence of the cuing object
+    - the referenced object was not placed at a prominent position in the scene
+
 ---
 
 background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli-zwickel.png)
@@ -546,7 +555,12 @@ background-size: 100%
     - the referenced object was not placed at a prominent position in the scene
 
 -  similarity between the loudspeaker and the person: both provided directional information
-  - If the loudspeaker led to orientation-following: clear evidence against the importance of a social cue for orientation- following. 
+  - If the loudspeaker led to orientation-following: clear evidence against the importance of a social cue for orientation- following.
+  
+- Eye-Tracking, design: 2 (cue,uncued) * 2 (person/speaker), ITI 500 msec, SOA 7 sec, “instructed to view the stimuli as they would view photos.”
+
+- 80 outdoor and indoor color scenes rendered in 3-D
+
 
 - Abhängige Variablen
     - Sakkaden (Kopf → Objekt)
@@ -558,7 +572,7 @@ background-size: 100%
 
 ## Critique
 
-- computer generated grayscaled stimuli, in contrast to their motivation to provide a naturalistic setup
+- computer generated gray scaled stimuli, in contrast to their motivation to provide a naturalistic setup
 
 - very little power in their study (n = 16)
 
@@ -587,6 +601,15 @@ class: inverse, center, middle
 
 background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli.png)
 background-size: 94%
+
+???
+
+- Obst, Kamera vs. Fernglas, Locher vs. Zollstock, Fahrradhelm vs. Stetoskop, Ventilator vs Hutbox, Globus vs. Korb, Thermoskanne vs. Toaster, Wecker vs. Marmeladenglas, Flasche vs. Tasse, Brille vs. Bürste, Stuhl vs. Mülleimer, etc…
+
+- ITI: 2-4 sekunden
+
+- Zerlegung der aufgezeichneten Augenbewegungsdaten in Fixationen und Sakkaden mit den Standardparametern der Software EyeLink DataViewer. Eine Sakkade wird erkannt wenn die Geschwindigkeit der Positionsänderung größer als 30°/s oder die Beschleunigung größer als 8000°/s2 ist.
+
 
 --
 
@@ -1029,7 +1052,7 @@ class: inverse, center, middle
 
 .footnote[
 
-<font size="-2">Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan) and [**papaja**](https://github.com/crsh/papaja) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).</font sioze>
+<font size="-2">Slides created via the R packages [**xaringan**](https://github.com/yihui/xaringan) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com) and [**papaja**](https://github.com/crsh/papaja).</font sioze>
 
 ]
       
