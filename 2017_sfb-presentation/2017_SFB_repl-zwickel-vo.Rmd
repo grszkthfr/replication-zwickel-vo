@@ -469,6 +469,15 @@ rm(imem, idata, carmod)
 
 # Diskussion
 
+???
+
+- In Folien gegossenes Manuskript
+- Dankbar für jegliche Hinweise
+  - Zum Aufbau der Einleitung
+  - Zur Auswertung der Daten
+  - Zur Interpretation der Daten
+  - Zu der allgemeinen Schlussfolgerung
+
 
 ---
 
@@ -527,6 +536,24 @@ To account for the ecological validity of gaze cues Zwickel and Võ (2010) condu
 background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli-zwickel.png)
 background-size: 100%
 
+???
+
+- present experiment control for
+  - instruction dependency
+  - object saliency
+  - scene specificity
+  - prominence of the cuing object
+    - the referenced object was not placed at a prominent position in the scene
+
+-  similarity between the loudspeaker and the person: both provided directional information
+  - If the loudspeaker led to orientation-following: clear evidence against the importance of a social cue for orientation- following. 
+
+- Abhängige Variablen
+    - Sakkaden (Kopf → Objekt)
+    - Fixationlatenz (gaze vs. nongaze Object)
+    - Fixationsdauer (gaze vs. nongaze Object)
+    - Fixationsanzahl (gaze vs. nongaze Object)
+
 ---
 
 ## Critique
@@ -541,7 +568,7 @@ This conceptual replication of Zwickel and Võ (2010) aims at answering multiple
 
 --
 
-1. the replication of Zwickel and Võ (2010) findings
+1. the replication of Zwickel and Võ's (2010) findings
 
 --
 
@@ -578,15 +605,16 @@ background-size: 94%
 
 --
 
-Vergleich der Bedingungen *free-encoding* mit Bedingung *Person*
+Vergleich der Bedingung *free-encoding* mit Bedingung *Person*
 
 --
 
 - Abhängige Variablen
-    - Sakkaden (Kopf → Objekt)
-    - Fixationlatenz (gaze vs. non-gaze Object)
-    - Fixationsdauer (gaze vs. non-gaze Object)
-    - Fixationsanzahl (gaze vs. non-gaze Object)
+  - Sakkaden (Kopf → Objekt)
+  - Fixationlatenz (gaze vs. nongaze Object)
+  - Fixationsdauer (gaze vs. nongaze Object)
+  - Fixationsanzahl (gaze vs. nongaze Object)
+  
 ---
 
 #### Sakkaden
@@ -718,7 +746,7 @@ plot.fixn.zwckl
 
   - Unterschiede joint attention vs. social attention?
     
-        - *joint attention:* Einfluss auf das Blickverhalten bezüglich der Objekte (gaze vs. non-gaze)?
+        - *joint attention:* Einfluss auf das Blickverhalten bezüglich der Objekte (gaze vs. nongaze)?
         
         - *social attention:* Einfluss auf das Blickverhalten bezüglich der Person (Kopf vs. Körper)?
 
@@ -773,7 +801,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Verstärkt Sakkaden vom Kopf zu den Objekten, wenn explizites Encoding der Szene & wenn Objekt gecued wird!
+**Fazit:** Verstärkt Sakkaden vom Kopf zu den Objekten, wenn explizites Encoding der Szene & wenn Objekt gecued wird!
 
 ---
 
@@ -814,9 +842,11 @@ _interaction:_<br>
 ##### social attention:<br>
 <br>
 `r apa.anova.fixlat.face$full_result$df_w_et_group `
-<br><br><br>
+
+<br> 
 `r apa.anova.fixlat.face$full_result$icond `
-<br><br><br>
+
+<br> 
 `r apa.anova.fixlat.face$full_result$df_w_et_group_icond `
 
 ]
@@ -827,7 +857,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Fixationslatzens Kopf-Körper; aber auf *joint attention*.
 
 ---
 
@@ -866,9 +896,11 @@ _interaction:_<br>
 ##### social attention:<br>
 <br>
 `r apa.anova.fix.face$full_result$df_w_et_group `
-<br><br><br>
+
+<br>
 `r apa.anova.fix.face$full_result$icond `
-<br><br><br>
+
+<br>
 `r apa.anova.fix.face$full_result$df_w_et_group_icond `
 
 ]
@@ -879,7 +911,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Fixationsdauer Kopf-Körper (aber Tendenz zur Interaktion?); aber Einfluss auf *joint attention*.
 
 ---
 
@@ -920,9 +952,11 @@ _interaction:_<br>
 ##### social attention:<br>
 <br>
 `r apa.anova.fixn.face$full_result$df_w_et_group `
-<br><br><br>
+
+<br>
 `r apa.anova.fixn.face$full_result$icond `
-<br><br><br>
+
+<br>
 `r apa.anova.fixn.face$full_result$df_w_et_group_icond `
 
 ]
@@ -933,7 +967,7 @@ _interaction:_<br>
 
 ______________
 
-*Fazit:* Top-Down-Modulation hat keinen Einfluss auf social attention; aber auf joint attention.
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Anzahl der Fixationen Kopf-Körper; aber auf *joint attention*.
 
 ---
 class: inverse, center, middle
@@ -950,23 +984,35 @@ class: inverse, center, middle
   
 --
   
-  - insgesamt stärkere und klarere Effekte (idR kleinere *SE*, und größere *ΔM*'s)
-      - zurückzuführen auf naturalistischere Szenen! (?)
+  - insgesamt stärkere und klarere Effekte (idR kleinere *SE*'s, und größere *ΔM*'s)
+      - zurückzuführen auf naturalistischere Szenen! 
       
       - Quantifizierbar?
+  
+???
+
+- Alternativerklärung zu naturalistischen Szenen
+
+- Standardfehler: Streuungsmaß für eine Schätzfunktion für einen unbekannten Parameter der Grundgesamtheit.
+  - Je kleiner der Standardfehler ist, desto genauer kann der unbekannte Parameter mit Hilfe der Schätzfunktion geschätzt werden.
+  - Je größer der Stichprobenumfang, desto kleiner der Standardfehler; je kleiner die Varianz, desto kleiner der Standardfehler.
 
 --
 
 - Einfluss der Top-Down-Modulation
 
-
 --
-  - kaum auf genuin soziale Reize (Kopf, Körper) → kein Einfluss auf *social attention* 
+
+  - kaum auf genuin soziale Reize (Kopf, Körper) → kein Einfluss auf *social attention*
+  
+???
+
+- abgesehen von der einen Tendenz zur Interaktion bei Fixationsdauer
     
 --
 
   - aber deutlich auf künstliche soziale Reize (falls Objekt gecued wird) → Einfluss auf *joint attention*
-    
+
 ---
 
 class: inverse, center, middle
@@ -974,4 +1020,16 @@ class: inverse, center, middle
 # Vielen Dank für Eure Aufmerksamkeit!
 
 # :-)
+
+
+
+
+
+
+
+.footnote[
+
+<font size="-2">Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan) and [**papaja**](https://github.com/crsh/papaja) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).</font sioze>
+
+]
       
