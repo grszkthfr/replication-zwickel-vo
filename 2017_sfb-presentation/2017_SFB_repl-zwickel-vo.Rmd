@@ -1052,7 +1052,7 @@ class: inverse, center, middle
 
 .footnote[
 
-<font size="-2">Slides created via the R packages [**xaringan**](https://github.com/yihui/xaringan) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com) and [**papaja**](https://github.com/crsh/papaja).</font sioze>
+<font size="-2">Slides created via the R packages [**xaringan**](https://github.com/yihui/xaringan) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com) and [**papaja**](https://github.com/crsh/papaja).</font size>
 
 ]
       
