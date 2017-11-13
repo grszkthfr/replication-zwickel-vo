@@ -2,7 +2,7 @@
 title: "Presence of persons in naturalistic scenes and consequences - A conceptual replication"
 subtitle: "SFB-Meeting"
 author: "Jonas Großekathöfer, Kristina Suchotzki & Matthias Gamer"
-date: "2016/12/12"
+date: "13/11/2017"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -11,6 +11,8 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+
+class: center, middle
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -22,6 +24,7 @@ library("papaja")
 library("tidyverse")
 library("car")
 library("afex")
+library("ggpubr")
 library("ggpubr")
 
 ```
@@ -153,6 +156,254 @@ dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), s
 
 ```
 
+```{r descriptives saccade, include=FALSE}
+# dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+#                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+#                                   m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+#                                   m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+#                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+#                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+
+dscr.sac.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
+  mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+         area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         area = as.factor(substring(area,1,1)),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,2)),
+         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),gazed=c("gaze", "gaze", "nongaze", "nongaze"),stat=c("mean", "se"),measure=c(.14,0.01,.09,0.01)) # free = person
+
+```
+
+```{r descriptives fix*, include=FALSE}
+# dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+#                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+#                                   m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+#                                   m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+#                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+#                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+
+dscr.fix.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(fix.face:fixlat.nongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, fix.face_mean:fixlat.nongaze_se) %>% # ins longformat
+  mutate(fix = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[1]) %>% unlist()),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,1)),
+         stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist())) %>% 
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.fix.rpl$gazed <- factor(dscr.fix.rpl$gazed, levels=c("face", "body", "gaze", "nongaze"))
+
+dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn","fixn","fixn","fixn","fixlat","fixlat","fixlat","fixlat"), gazed=c("gaze","gaze", "nongaze", "nongaze"), stat=c("mean","se"), measure=c(0.08,.01,.07,.01,5.89,.37,5.24,.34,3588,133,4008,166)) # free = person
+
+```
+<!-- VERGLEICH -->
+
+```{r plots saccade rpl-zwckl, include=FALSE}
+
+plot.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free"), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,0.15))
+
+#plot.sac.rpl
+
+
+plot.sac.zwckl <- ggplot(subset(dscr.sac.zwckl, stat == "mean"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.zwckl, stat == "mean")$measure - subset(dscr.sac.zwckl, stat == "se")$measure,
+    ymax=subset(dscr.sac.zwckl, stat == "mean")$measure + subset(dscr.sac.zwckl, stat == "se")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,0.15))
+
+ #plot.sac.zwckl
+
+```
+
+```{r plots fixlat rpl-zwckl, include=FALSE}
+
+plot.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,4000))
+
+#plot.fixlat.rpl
+
+
+plot.fixlat.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixlat")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixlat")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,4000))
+
+#plot.fixlat.zwckl
+
+```
+
+```{r plots fix rpl-zwckl, include=FALSE}
+
+plot.fix.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  expand_limits(y=c(0,0.15))
+
+#plot.fix.rpl
+
+
+plot.fix.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fix"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fix")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fix")$measure),
+    width=.2,
+    position = position_dodge(.9))  +
+  expand_limits(y=c(0,0.15))
+
+#plot.fix.zwckl
+
+```
+
+```{r plots fixn rpl-zwckl, include=FALSE}
+
+plot.fixn.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze")), aes(x= gazed, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & group == "free" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) #+
+  #expand_limits(y=c(0,0.15))
+
+#plot.fixn.rpl
+
+
+plot.fixn.zwckl <- ggplot(subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn"), aes(x = gazed, y=measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure - subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure,
+    ymax=subset(dscr.fix.zwckl, stat == "mean" & fix == "fixn")$measure + subset(dscr.fix.zwckl, stat == "se" & fix == "fixn")$measure),
+    width=.2,
+    position = position_dodge(.9))  #+
+  #expand_limits(y=c(0,0.15))
+
+#plot.fixn.zwckl
+
+```
+
+<!-- UNTERSCHIEDE -->
+```{r plots saccade free-mem, include=FALSE}
+
+plot.sac.freemem <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=c("#00BFC4", "#C77CFF")) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f" & group == "free")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.sac.freemem
+
+```
+
+```{r plots fixlat free-mem, include=FALSE}
+
+plot.fixlat.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.fixlat.freemem
+
+```
+
+```{r plots fix free-mem, include=FALSE}
+
+plot.fix.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+#plot.fix.freemem
+
+```
+
+```{r plots fixn free-mem, include=FALSE}
+
+plot.fixn.freemem <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn")$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn")$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn")$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn")$measure),
+    width=.2,
+    position=position_dodge(.9))
+
+plot.fixn.freemem
+
+```
+
+```{r Anova saccades, warning=FALSE, message=FALSE, include=FALSE}
+# ANOVA Saccades
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in 17:19) {
+  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,c(st,(st+3))]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
+  }
+
+
+
+rm(carmod, idata, icond, st)
+
+
+
+```
+
 ```{r Anova fixations joint, warning = FALSE, message = FALSE, include=FALSE}
 
 # ANOVA Fixations characteristics for joint attention
@@ -173,59 +424,22 @@ rm(carmod, idata, icond, st)
 
 ```
 
-```{r plots saccade, include=FALSE}
+```{r Anova fixations social, warning = FALSE, message = FALSE, echo= FALSE}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Face/Body) ANOVA
 
-# Plots: Saccade data
-farben <- c("blue","yellow")
-ttxt <- c("Person","Face","Body")
-
-for (i in 1:3) {
-  st <- (17:19)[i]
-
-  # Fixation density
-  m  <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,mean),
-              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,mean))
-  se <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
-              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
-
-  yrng <- c(0,max(m+se))
-
-  x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
-  arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
-  axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-
-  title(ttxt[i])
-}
-
-legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
-
-rm(m, se, yrng, x, st, farben, ttxt, i)
-
-```
-
-```{r Anova saccades, warning=FALSE, message=FALSE, include=FALSE}
-# ANOVA Saccades
-## 2 (Group) x 2 (Gaze) ANOVA
-
-icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+icond <- gl(2,1,labels=c("head","body")) # within-factor
 idata <- data.frame(icond)
 
-for (st in 17:19) {
-  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
-  #print(colnames(df.w.et[,c(st,(st+3))]))
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
+    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
-dscr.sac <- df.w.et %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
-
-dscr.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
 
 rm(carmod, idata, icond, st)
-```
-
-```{r plots memory, include=FALSE}
 
 ```
 
@@ -249,472 +463,596 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 
-- Grundlagen
-- Research Motivation
-- Hypothesen
-- Ergebnisse
-- Diskussion
+# Grundlagen
+
+# Die Replikation
+
+# Diskussion
+
+???
+
+- In Folien gegossenes Manuskript
+- Dankbar für jegliche Hinweise
+  - Zum Aufbau der Einleitung
+  - Zur Auswertung der Daten
+  - Zur Interpretation der Daten
+  - Zu der allgemeinen Schlussfolgerung
 
 
 ---
+
 class: inverse, center, middle
 
 # Grundlagen
 
-
-
 ---
 
-Humans in their social environment rely on the information other humans provide.
-- explicit signals like in conversations
-- implicit signals like in gaze following
-
----
+## Relevance 
 
 Humans in their social environment rely on the information other humans provide.
+
+--
+
 - explicit signals like in conversations
+
+--
+
 - **implicit signals like in gaze following**
 
+--
+
 Specifically, if an individual looks into a specific direction, this might be read as a signal
-- redirects the observers attention towards the referred object or location.
-- joint attention
+
+- redirects the observers attention towards the referenced object or location
+
+  - refered to as joint attention
 
 ---
 
+## Gaze cueing
 
-# Hello World
+Most used paradigm to investigate these attentional shifts is the gaze-cueing paradigm (Frischen et al., 2007)
+    
+  - perceived gaze cues lead to a reflexive attentional shift
+    
+  - but lack ecological validity
+      
+      - recent study did not find reliable links between classical laboratory gaze cueing tasks and real social engage (Hayward et al., 2017)
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+--
+        
+Researches must be sensible to these differences when generalizing laboratory findings, especially for social attention (Risko et al., 2012).
 
-```{r eval=FALSE, tidy=FALSE}
-devtools::install_github("yihui/xaringan")
-```
+---
+
+## Naturalistic scenarios
 
 --
 
-You are recommended to use the [RStudio IDE](https://www.rstudio.com/products/rstudio/), but you do not have to.
+To account for the ecological validity of gaze cues Zwickel and Võ (2010) conducted a joint attention study with a more naturalistic scenario.
 
-- Create a new R Markdown document from the menu `File -> New File -> R Markdown -> From Template -> Ninja Presentation`;<sup>1</sup>
+???
+
+- present experiment controls for
+  - instruction dependency
+  - object saliency
+  - scene specificity
+  - prominence of the cuing object
+    - the referenced object was not placed at a prominent position in the scene
+
+---
+
+background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli-zwickel.png)
+background-size: 100%
+
+???
+
+- present experiment control for
+  - instruction dependency
+  - object saliency
+  - scene specificity
+  - prominence of the cuing object
+    - the referenced object was not placed at a prominent position in the scene
+
+-  similarity between the loudspeaker and the person: both provided directional information
+  - If the loudspeaker led to orientation-following: clear evidence against the importance of a social cue for orientation- following.
+  
+- Eye-Tracking, design: 2 (cue,uncued) * 2 (person/speaker), ITI 500 msec, SOA 7 sec, “instructed to view the stimuli as they would view photos.”
+
+- 80 outdoor and indoor color scenes rendered in 3-D
+
+
+- Abhängige Variablen
+    - Sakkaden (Kopf → Objekt)
+    - Fixationlatenz (gaze vs. nongaze Object)
+    - Fixationsdauer (gaze vs. nongaze Object)
+    - Fixationsanzahl (gaze vs. nongaze Object)
+
+---
+
+## Critique
+
+- computer generated gray scaled stimuli, in contrast to their motivation to provide a naturalistic setup
+
+- very little power in their study (n = 16)
 
 --
 
-- Click the `Knit` button to compile it;
+This conceptual replication of Zwickel and Võ (2010) aims at answering multiple research questions regarding joint and social attention:
 
 --
 
-- or use the [RStudio Addin](https://rstudio.github.io/rstudioaddins/)<sup>2</sup> "Infinite Moon Reader" to live preview the slides (every time you update and save the Rmd document, the slides will be automatically reloaded in RStudio Viewer.
+1. the replication of Zwickel and Võ's (2010) findings
 
-.footnote[
-[1] 中文用户请看[这份教程](http://slides.yihui.name/xaringan/zh-CN.html)
+--
 
-[2] See [#2](https://github.com/yihui/xaringan/issues/2) if you do not see the template or addin in RStudio.
-]
-
+2. extending this line of research
+  
+  - influence of top-down modulations on joint and social attention in naturalistic scenes
+  
+  - consequences for subsequent cognitive processes, here memory effects
+  
 ---
-background-image: url(`r xaringan:::karl`)
-background-position: 50% 50%
-class: center, bottom, inverse
+class: inverse, center, middle
 
-# You only live once!
-
----
-
-# Hello Ninja
-
-As a presentation ninja, you certainly should not be satisfied by the "Hello World" example. You need to understand more about two things:
-
-1. The [remark.js](https://remarkjs.com) library;
-
-1. The **xaringan** package;
-
-Basically **xaringan** injected the chakra of R Markdown (minus Pandoc) into **remark.js**. The slides are rendered by remark.js in the web browser, and the Markdown source needed by remark.js is generated from R Markdown (**knitr**).
+# Die Replikation
 
 ---
 
-# remark.js
+background-image: url(2017_SFB_repl-zwickel-vo_files/stimuli.png)
+background-size: 94%
 
-You can see an introduction of remark.js from [its homepage](https://remarkjs.com). You should read the [remark.js Wiki](https://github.com/gnab/remark/wiki) at least once to know how to
+???
 
-- create a new slide (Markdown syntax<sup>*</sup> and slide properties);
+- Obst, Kamera vs. Fernglas, Locher vs. Zollstock, Fahrradhelm vs. Stetoskop, Ventilator vs Hutbox, Globus vs. Korb, Thermoskanne vs. Toaster, Wecker vs. Marmeladenglas, Flasche vs. Tasse, Brille vs. Bürste, Stuhl vs. Mülleimer, etc…
 
-- format a slide (e.g. text alignment);
+- ITI: 2-4 sekunden
 
-- configure the slideshow;
+- Zerlegung der aufgezeichneten Augenbewegungsdaten in Fixationen und Sakkaden mit den Standardparametern der Software EyeLink DataViewer. Eine Sakkade wird erkannt wenn die Geschwindigkeit der Positionsänderung größer als 30°/s oder die Beschleunigung größer als 8000°/s2 ist.
 
-- and use the presentation (keyboard shortcuts).
 
-It is important to be familiar with remark.js before you can understand the options in **xaringan**.
+--
 
-.footnote[[*] It is different with Pandoc's Markdown! It is limited but should be enough for presentation purporses. Come on... You do not need a slide for the Table of Contents! Well, the Markdown support in remark.js [may be improved](https://github.com/gnab/remark/issues/142) in the future.]
-
----
-background-image: url(`r xaringan:::karl`)
-background-size: cover
-class: center, bottom, inverse
-
-# I was so happy to have discovered remark.js!
-
----
-class: inverse, middle, center
-
-# Using xaringan
+background-image: url(2017_SFB_repl-zwickel-vo_files/design.png)
+background-size: 94%
 
 ---
 
-# xaringan
+## 1. Vergleich mit Zwickel und Võ (2010)
 
-Provides an R Markdown output format `xaringan::moon_reader` as a wrapper for remark.js, and you can use it in the YAML metadata, e.g.
-
-```yaml
----
-title: "A Cool Presentation"
-output:
-  xaringan::moon_reader
-    yolo: true
-    nature:
-      autoplay: 30000
----
-```
-
-See the help page `?xaringan::moon_reader` for all possible options that you can use.
+## 2. Unterschiede durch Instruktion
 
 ---
 
-# remark.js vs xaringan
+## 1. Vergleich mit Zwickel und Võ (2010)
 
-Some differences between using remark.js (left) and using **xaringan** (right):
+--
+
+Vergleich der Bedingung *free-encoding* mit Bedingung *Person*
+
+--
+
+- Abhängige Variablen
+  - Sakkaden (Kopf → Objekt)
+  - Fixationlatenz (gaze vs. nongaze Object)
+  - Fixationsdauer (gaze vs. nongaze Object)
+  - Fixationsanzahl (gaze vs. nongaze Object)
+  
+---
+
+#### Sakkaden
+
+Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br/><br/><br/>
 
 .pull-left[
-1. Start with a boilerplate HTML file;
 
-1. Plain Markdown;
+##### Replikation:
 
-1. Write JavaScript to autoplay slides;
+```{r comparison saccades repl, echo=FALSE}
 
-1. Manually configure MathJax;
+plot.sac.rpl
 
-1. Highlight code with `*`;
+```
 
-1. Edit Markdown source and refresh browser to see updated slides;
 ]
 
 .pull-right[
-1. Start with an R Markdown document;
 
-1. R Markdown (can embed R/other code chunks);
+##### Zwickel und Võ (2010):
 
-1. Provide an option `autoplay`;
+```{r comparison saccades zwickel, echo=FALSE}
 
-1. MathJax just works;<sup>*</sup>
+plot.sac.zwckl
 
-1. Highlight code with `{{}}`;
+```
 
-1. The RStudio addin "Infinite Moon Reader" automatically refreshes slides on changes;
 ]
 
-.footnote[[*] Not really. See next page.]
-
 ---
 
-# Math Expressions
+#### Fixationslatenz
 
-You can write LaTeX math expressions inside a pair of dollar signs, e.g. &#36;\alpha+\beta$ renders $\alpha+\beta$. You can use the display style with double dollar signs:
-
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-
-Limitations:
-
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
-
-1. There should not be spaces after the opening `$` or before the closing `$`.
-
-1. Math does not work on the title slide (see [#61](https://github.com/yihui/xaringan/issues/61) for a workaround).
-
----
-
-# R Code
-
-```{r comment='#'}
-# a boring regression
-fit = lm(dist ~ 1 + speed, data = cars)
-coef(summary(fit))
-dojutsu = c('地爆天星', '天照', '加具土命', '神威', '須佐能乎', '無限月読')
-grep('天', dojutsu, value = TRUE)
-```
-
----
-
-# R Plots
-
-```{r cars, fig.height=4, dev='svg'}
-par(mar = c(4, 4, 1, .1))
-plot(cars, pch = 19, col = 'darkgray', las = 1)
-abline(fit, lwd = 2)
-```
-
----
-
-# Tables
-
-If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
-
-```{r}
-knitr::kable(head(iris), format = 'html')
-```
-
----
-
-# HTML Widgets
-
-I have not thoroughly tested HTML widgets against **xaringan**. Some may work well, and some may not. It is a little tricky.
-
-Similarly, the Shiny mode (`runtime: shiny`) does not work. I might get these issues fixed in the future, but these are not of high priority to me. I never turn my presentation into a Shiny app. When I need to demonstrate more complicated examples, I just launch them separately. It is convenient to share slides with other people when they are plain HTML/JS applications.
-
-See the next page for two HTML widgets.
-
----
-
-```{r out.width='100%', fig.height=6, eval=require('leaflet')}
-library(leaflet)
-leaflet() %>% addTiles() %>% setView(-93.65, 42.0285, zoom = 17)
-```
-
----
-
-```{r eval=require('DT'), tidy=FALSE}
-DT::datatable(
-  head(iris, 10),
-  fillContainer = FALSE, options = list(pageLength = 8)
-)
-```
-
----
-
-# Some Tips
-
-- When you use the "Infinite Moon Reader" addin in RStudio, your R session will be blocked by default. You can click the red button on the right of the console to stop serving the slides, or use the _daemonized_ mode so that it does not block your R session. To do the latter, you can set the option
-
-    ```r
-    options(servr.daemon = TRUE)
-    ```
-    
-    in your current R session, or in `~/.Rprofile` so that it is applied to all future R sessions. I do the latter by myself.
-    
-    To know more about the web server, see the [**servr**](https://github.com/yihui/servr) package.
-
---
-
-- Do not forget to try the `yolo` option of `xaringan::moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        yolo: true
-    ```
-
----
-
-# Some Tips
-
-- Slides can be automatically played if you set the `autoplay` option under `nature`, e.g. go to the next slide every 30 seconds in a lightning talk:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          autoplay: 30000
-    ```
-
---
-
-- A countdown timer can be added to every page of the slides using the `countdown` option under `nature`, e.g. if you want to spend one minute on every page when you give the talk, you can set:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          countdown: 60000
-    ```
-
-    Then you will see a timer counting down from `01:00`, to `00:59`, `00:58`, ... When the time is out, the timer will continue but the time turns red.
-
----
-
-# Some Tips
-
-- There are several ways to build incremental slides. See [this presentation](https://slides.yihui.name/xaringan/incremental.html) for examples.
-
-- The option `highlightLines: true` of `nature` will highlight code lines that start with `*` or are wrapped in `{{ }}`;
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          highlightLines: true
-    ```
-
-    See examples on the next page.
-
----
-
-# Some Tips
-
+Dauer von Stimulus-onset bis erste Fixation (in ms)<br/><br/><br/>
 
 .pull-left[
-An example using a leading `*`:
 
-    ```r
-    if (TRUE) {
-    ** message("Very important!")
-    }
-    ```
-Output:
-```r
-if (TRUE) {
-* message("Very important!")
-}
+##### Replikation:
+
+```{r comparison fixlat repl, echo=FALSE}
+
+plot.fixlat.rpl
+
 ```
 
-This is invalid R code, so it is a plain fenced code block that is not executed.
 ]
 
 .pull-right[
-An example using `{{}}`:
 
-    `r ''````{r tidy=FALSE}
-    if (TRUE) {
-    *{{ message("Very important!") }}
-    }
-    ```
-Output:
-```{r tidy=FALSE}
-if (TRUE) {
-{{ message("Very important!") }}
-}
+##### Zwickel und Võ (2010):
+
+```{r comparison fixlat zwickel, echo=FALSE}
+
+plot.fixlat.zwckl
+
 ```
 
-It is valid R code so you can run it.
 ]
 
 ---
 
-# Some Tips
+#### Fixationsdauer
 
-- To make slides work offline, you need to download a copy of remark.js in advance, because **xaringan** uses the online version by default (see the help page `?xaringan::moon_reader`).
+Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)<br/><br/>
 
-- You can use `xaringan::summon_remark()` to download the latest or a specified version of remark.js. By default, it is downloaded to `libs/remark-latest.min.js`.
+.pull-left[
 
-- Then change the `chakra` option in YAML to point to this file, e.g.
+##### Replikation:
 
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        chakra: libs/remark-latest.min.js
-    ```
+```{r comparison fix repl, echo=FALSE}
 
-- If you used Google fonts in slides (the default theme uses _Yanone Kaffeesatz_, _Droid Serif_, and _Source Code Pro_), they won't work offline unless you download or install them locally. The Heroku app [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com/fonts) can help you download fonts and generate the necessary CSS.
+plot.fix.rpl
 
-
----
-
-# CSS
-
-Among all options in `xaringan::moon_reader`, the most challenging but perhaps also the most rewarding one is `css`, because it allows you to customize the appearance of your slides using any CSS rules or hacks you know.
-
-You can see the default CSS file [here](https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/default.css). You can completely replace it with your own CSS files, or define new rules to override the default.
-
----
-
-# CSS
-
-For example, suppose you want to change the font for code from the default "Source Code Pro" to "Ubuntu Mono". You can create a CSS file named, say, `ubuntu-mono.css`:
-
-```css
-@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 ```
 
-Then set the `css` option in the YAML metadata:
+]
 
-```yaml
-output:
-  xaringan::moon_reader:
-    css: ["default", "ubuntu-mono.css"]
+.pull-right[
+
+##### Zwickel und Võ (2010):
+
+```{r comparison fix zwickel, echo=FALSE}
+
+plot.fix.zwckl
+
 ```
 
-Here I assume `ubuntu-mono.css` is under the same directory as your Rmd.
+]
 
 ---
-class: inverse, middle, center
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg)
-background-size: contain
 
-# Naruto
+#### Fixationsanzahl
+
+.pull-left[
+
+Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)
+<br><br>
+
+##### Replikation:
+
+```{r comparison fixn repl, echo=FALSE}
+
+plot.fixn.rpl
+
+```
+
+]
+
+.pull-right[
+
+"[...] size-normalized by multiplying them with the total area of the scene divided by the area of the object"
+
+##### Zwickel und Võ (2010):
+
+```{r comparison fixn zwickel, echo=FALSE}
+
+plot.fixn.zwckl
+
+```
+
+]
 
 ---
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
-background-size: 100px
-background-position: 90% 8%
 
-# Sharingan
+## 2. Erweiterte Forschungsfrage
 
-The R package name **xaringan** was derived<sup>1</sup> from **Sharingan**, a dōjutsu in the Japanese anime _Naruto_ with two abilities:
+- Einfluss der Person top-down modulierbar?
 
-- the "Eye of Insight"
+  - Unterschiede joint attention vs. social attention?
+    
+        - *joint attention:* Einfluss auf das Blickverhalten bezüglich der Objekte (gaze vs. nongaze)?
+        
+        - *social attention:* Einfluss auf das Blickverhalten bezüglich der Person (Kopf vs. Körper)?
 
-- the "Eye of Hypnotism"
+- Konsequenzen für nachfolgende kognitive Prozesse?
 
-I think a presentation is basically a way to communicate insights to the audience, and a great presentation may even "hypnotize" the audience.<sup>2,3</sup>
+  - Einfluss auf die Gedächtnisleistung?
+  
+  
+--
+      - Spoiler:
+      
+          - Effekt nur für *free vs. mem* <font size="-1">[ `r apa.anova.mem$full_result$df_w_mem_bed `]</font>
+          
+          - kein Effekt für *gazed* <font size="-1">[ `r apa.anova.mem$full_result$imem `]</font>
+          
+          - keine Interaktion <font size="-1">[ `r apa.anova.mem$full_result$df_w_mem_bed_imem `]</font>
+
+---
+
+#### Sakkaden
+
+Anzahl an Sakkaden "Kopf → Objekt" / Alle Sakkaden "Kopf → " (in %)<br><br>
+
+.pull-left[
+
+```{r comparison saccades free, echo=FALSE}
+
+plot.sac.freemem
+
+```
+
+]
+
+--
+
+.pull-right[
+
+##### joint attention:
+
+_free vs. mem:_<br>
+`r apa.anova.sac.fgaze$full_result$df_w_et_group `
+
+_ROIs:_<br>
+`r apa.anova.sac.fgaze$full_result$icond `
+
+_interaction:_<br>
+`r apa.anova.sac.fgaze$full_result$df_w_et_group_icond `
+
+]
+
+--
+
+______________
+
+**Fazit:** Verstärkt Sakkaden vom Kopf zu den Objekten, wenn explizites Encoding der Szene & wenn Objekt gecued wird!
+
+---
+
+#### Fixationslatenz
+
+Dauer von Stimulus-onset bis erste Fixation (in ms)<br><br>
+
+.pull-left[
+
+```{r comparison fixlat free, echo=FALSE}
+
+plot.fixlat.freemem
+
+```
+
+]
+
+--
+
+.pull-right[
+
+.pull-left[
+
+##### joint attention:
+_free vs. mem:_<br>
+`r apa.anova.fixlat.gaze$full_result$df_w_et_group `
+
+_ROIs:_<br>
+`r apa.anova.fixlat.gaze$full_result$icond `
+
+_interaction:_<br>
+`r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fixlat.face$full_result$df_w_et_group `
+
+<br> 
+`r apa.anova.fixlat.face$full_result$icond `
+
+<br> 
+`r apa.anova.fixlat.face$full_result$df_w_et_group_icond `
+
+]
+
+]
+
+--
+
+______________
+
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Fixationslatzens Kopf-Körper; aber auf *joint attention*.
+
+---
+
+#### Fixationsdauer
+
+Kumulierte Zeit, wenn Fixation auf ROI / Kumulierte Zeit der Fixation der Szene (in %)
+
+.pull-left[
+
+```{r comparison fix free, echo=FALSE}
+plot.fix.freemem
+```
+
+]
+
+--
+
+.pull-right[
+
+.pull-left[
+
+##### joint attention:
+_free vs. mem:_<br>
+`r apa.anova.fix.gaze$full_result$df_w_et_group `
+
+_ROIs:_<br>
+`r apa.anova.fix.gaze$full_result$icond `
+
+_interaction:_<br>
+`r apa.anova.fix.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fix.face$full_result$df_w_et_group `
+
+<br>
+`r apa.anova.fix.face$full_result$icond `
+
+<br>
+`r apa.anova.fix.face$full_result$df_w_et_group_icond `
+
+]
+
+]
+
+--
+
+______________
+
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Fixationsdauer Kopf-Körper (aber Tendenz zur Interaktion?); aber Einfluss auf *joint attention*.
+
+---
+
+#### Fixationsanzahl
+
+Anzahl der Fixationen pro ROI / Alle Fixationen der Szene (in %)<br><br>
+
+.pull-left[
+
+```{r comparison fixn free, echo=FALSE}
+
+plot.fixn.freemem
+
+```
+
+]
+
+--
+
+.pull-right[
+
+.pull-left[
+
+##### joint attention:
+_free vs. mem:_<br>
+`r apa.anova.fixn.gaze$full_result$df_w_et_group `
+
+_ROIs:_<br>
+`r apa.anova.fixn.gaze$full_result$icond `
+
+_interaction:_<br>
+`r apa.anova.fixn.gaze$full_result$df_w_et_group_icond `
+
+]
+
+.pull-right[
+
+##### social attention:<br>
+<br>
+`r apa.anova.fixn.face$full_result$df_w_et_group `
+
+<br>
+`r apa.anova.fixn.face$full_result$icond `
+
+<br>
+`r apa.anova.fixn.face$full_result$df_w_et_group_icond `
+
+]
+
+]
+
+--
+
+______________
+
+**Fazit:** Top-Down-Modulation hat keinen Einfluss auf die Anzahl der Fixationen Kopf-Körper; aber auf *joint attention*.
+
+---
+class: inverse, center, middle
+
+# Diskussion
+
+---
+
+## Schlussfolgerung
+
+- erfolgreiche Replikation
+
+  - Alle Effekte der Person-Bedingung von Zwickel und Võ (2010) wurden repliziert
+  
+--
+  
+  - insgesamt stärkere und klarere Effekte (idR kleinere *SE*'s, und größere *ΔM*'s)
+      - zurückzuführen auf naturalistischere Szenen! 
+      
+      - Quantifizierbar?
+  
+???
+
+- Alternativerklärung zu naturalistischen Szenen
+
+- Standardfehler: Streuungsmaß für eine Schätzfunktion für einen unbekannten Parameter der Grundgesamtheit.
+  - Je kleiner der Standardfehler ist, desto genauer kann der unbekannte Parameter mit Hilfe der Schätzfunktion geschätzt werden.
+  - Je größer der Stichprobenumfang, desto kleiner der Standardfehler; je kleiner die Varianz, desto kleiner der Standardfehler.
+
+--
+
+- Einfluss der Top-Down-Modulation
+
+--
+
+  - kaum auf genuin soziale Reize (Kopf, Körper) → kein Einfluss auf *social attention*
+  
+???
+
+- abgesehen von der einen Tendenz zur Interaktion bei Fixationsdauer
+    
+--
+
+  - aber deutlich auf künstliche soziale Reize (falls Objekt gecued wird) → Einfluss auf *joint attention*
+
+---
+
+class: inverse, center, middle
+
+# Vielen Dank für Eure Aufmerksamkeit!
+
+# :-)
+
+
+
+
+
+
 
 .footnote[
-[1] In Chinese, the pronounciation of _X_ is _Sh_ /ʃ/ (as in _shrimp_). Now you should have a better idea of how to pronounce my last name _Xie_.
 
-[2] By comparison, bad presentations only put the audience to sleep.
+<font size="-2">Slides created via the R packages [**xaringan**](https://github.com/yihui/xaringan) with [remark.js](https://remarkjs.com), [knitr](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com) and [**papaja**](https://github.com/crsh/papaja).</font size>
 
-[3] Personally I find that setting background images for slides is a killer feature of remark.js. It is an effective way to bring visual impact into your presentations.
 ]
-
----
-
-# Naruto terminology
-
-The **xaringan** package borrowed a few terms from Naruto, such as
-
-- [Sharingan](http://naruto.wikia.com/wiki/Sharingan) (写輪眼; the package name)
-
-- The [moon reader](http://naruto.wikia.com/wiki/Moon_Reader) (月読; an attractive R Markdown output format)
-
-- [Chakra](http://naruto.wikia.com/wiki/Chakra) (查克拉; the path to the remark.js library, which is the power to drive the presentation)
-
-- [Nature transformation](http://naruto.wikia.com/wiki/Nature_Transformation) (性質変化; transform the chakra by setting different options)
-
-- The [infinite moon reader](http://naruto.wikia.com/wiki/Infinite_Tsukuyomi) (無限月読; start a local web server to continuously serve your slides)
-
-- The [summoning technique](http://naruto.wikia.com/wiki/Summoning_Technique) (download remark.js from the web)
-
-You can click the links to know more about them if you want. The jutsu "Moon Reader" may seem a little evil, but that does not mean your slides are evil.
-
----
-
-class: center
-
-# Hand seals (印)
-
-Press `h` or `?` to see the possible ninjutsu you can use in remark.js.
-
-![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Mudra-Naruto-KageBunshin.svg)
-
----
-
-class: center, middle
-
-# Thanks!
-
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
-
-The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+      

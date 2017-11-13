@@ -193,10 +193,11 @@ Humans in their social environment rely on the information other humans provide.
 The most used paradigm to investigate these attentional shifts is the so called gaze-cueing paradigm [@Friesen1998; @Driver1999; @Langton2000]. These studies show that perceived gaze cues lead to a reflexive attentional shift, which results in an processing benefit for that location [for a very recent study see @Langton2017]. Even though gaze cues are crucial for joint attention, it is criticized that among others these studies used isolated heads [@Friesen1998; @Langton2000] or even cartoon heads [@Driver1999; @Ristic2005] as gaze cues, and therefore lack ecological validity [for an overview on ecological validity see: @Risko2012]. For example, in an recent study @Hayward2017 did not find reliable links between classical laboratory gaze cueing tasks and a real social engage.  
 The relevance/sensibility/focus to ecologically valid stimuli is a core aspect of social attention research, which provides an bigger framework for gaze cueing [@Itier2009]. The research describes attentional consequences of social interactions and focuses often on similarities and differences of different types of social stimuli [@Risko2012]. The types range from real human interactions [for example: @Laidlaw2011, @Freeth2013a] to highly controlled laboratory settings with isolated faces as stimuli [for example: @Langton2017]. The main finding of this research line is, that some research findings related to social stimuli do not extend to the real world and researches must be sensible to these differences when generalizing laboratory findings [@Jarick2015; @Hayward2017; for an overview see: @Risko2016].  
     <!-- social attention -->
-To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with a more naturalistic scenario. First of all, in their study participants had no explicit task to fulfill. @Zwickel2010 argue, that the lack of a specific task results in more naturalistic viewing behavior and therefore adds more ecological validity to the classical gaze cuing paradigms. In this so called free-viewing paradigm they presented their observers multiple scenes for several seconds. The scenes contained a reference, either a person or a loudspeaker, and two objects. One of the objects was referenced either by an oriented person or loudspeaker. They showed that observers spontaneously prioritize the referenced object, but only when it was referenced by the person. The attentional focus of the person in the scene did influence the attentional distribution of the observer. Interestingly, the same was not true for the loudspeaker. So the referenced objects were not just focused because they might have been salient by themselves, but became more salient merely by the persons reference. <!--detailierter?!--> This finding is in line with predictions by the social attention. First, that social stimuli are prioritized was confirmed by the results, the most prioritized region was still the head of the shown person.Additionally, with regard to joint attention, the referenced object was fixated remarkably earlier, more often and overall longer then the not referenced object. After all, @Zwickel2010 provide evidence that joint attention as consequence of the gaze cue happens spontaneously and that it has high relevance in naturalistic situations.<!--softerer übergang pls-->  
+<!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen-->To account for the ecological validity of gaze cues @Zwickel2010 conducted a joint attention study with a more naturalistic scenario. First of all, in their study participants had no explicit task to fulfill. @Zwickel2010 argue, that the lack of a specific task results in more naturalistic viewing behavior and therefore adds more ecological validity to the classical gaze cuing paradigms. In this so called free-viewing paradigm they presented their observers multiple scenes for several seconds. The scenes contained a reference, either a person or a loudspeaker, and two objects. One of the objects was referenced either by an oriented person or loudspeaker. They showed that observers spontaneously prioritize the referenced object, but only when it was referenced by the person. The attentional focus of the person in the scene did influence the attentional distribution of the observer. Interestingly, the same was not true for the loudspeaker. So the referenced objects were not just focused because they might have been salient by themselves, but became more salient merely by the persons reference. <!--detailierter?!--> This finding is in line with predictions by the social attention. First, that social stimuli are prioritized was confirmed by the results, the most prioritized region was still the head of the shown person.Additionally, with regard to joint attention, the referenced object was fixated remarkably earlier, more often and overall longer then the not referenced object. After all, @Zwickel2010 provide evidence that joint attention as consequence of the gaze cue happens spontaneously and that it has high relevance in naturalistic situations.<!--softerer übergang pls-->
     <!-- research motivation -->
 However, this conceptual replication of @Zwickel2010 aims at answering multiple research questions regarding joint and social attention, including the replication of Zwickel and Võ's [-@Zwickel2010] findings and extending this line of research.  
 @Zwickel2010 had very little power in their study, with n = 16 participants<!-- zu unserer Power was schreiben?!-->. Additionally they used computer generated stimuli in contrast to their motivation to provide a naturalistic setup. Here, more naturalistic stimuli and a bigger sample size is used. Specifically, for more naturalistic stimuli real photographs are chosen over computer rendered scenes. As often, by being more naturalistic experimental control is reduced. The consequences are hold to a minimum by producing the stimuli the same way <!--genauer, klammer auflösen--> (each scene four times, with the individual looking twice to the left and right to each object). Nevertheless, in real photographs small changes are unavoidable. Whereas @Zwickel2010 only rotate the figure in the computer rendered scene, they have complete control of all the changes, e.g. angel of the body, facial expression. Here, another photography was taken. As consequence, for example, the body orientation within the four balanced scenes can not be perfectly controlled and might differ slightly between photographs within scenes.<!-- nochmal sagen, warum das torztdem toll ist? --> With higher power and more naturalistic stimuli this study will still<!-- still, however, nevertheless, yet, regardless, even though, despite --> underline @Zwickel2010 findings and tackle the two mentioned flaws. However, in this study we presume that the effect showed by @Zwickel2010 is genuine for social stimuli, therefore there is no non-social condition comparable to the loudspeaker-condition.  
+    <!-- extended research -->
 In fact, this line of research is being extended. First, the influence of top-down modulations on joint and social attention in naturalistic scenes is investigated. Earlier research showed, that social attention is influenced by multiple factors. For example, social status [@Foulsham2010] or expectations [@Perez-Osorio2015] change the viewing behavior of the observer. These studies have in common that they often manipulate the observers implicitly.  
 This is in contrast to the present study, where a very explicit manipulation is used for half of the observers. Additionally, consequences for latter cognitive processes, here memory effects, are examined. Therefore one half of the observers received the information that a memory test is following before the experimental part started. This top-down modulation is thought to induce a more explicit and systematic encoding of the presented scenes. The other half of the observers did not receive any top-down modulation, just like @Zwickel2010, but did the memory task unannounced after the experimental part. For both groups the memory task was a free-recall test where they had to recall as many as things as possible from the scenes.  
 As @Zwickel2010 showed, a person in a scene influences the viewing behavior of observers spontaneously and without further instruction or manipulation. Here the given instruction to complete a memory test was thought to influence the viewing behavior, in that sense, that spontaneous viewing behavior will be reduced. It is important to note, that it is not expected that the influence of the presence of the person would vanish due to top-down modulation, but it is supposed to be weaker. Effects should be visible regardless for the social attention part and also for the joint attention part of this study.  
@@ -273,20 +274,39 @@ rm(carmod, idata, icond, st)
 
 ```
 
-#### Fixation duration (H1, H2)
-The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene. It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`.
+#### Fixation duration
+<!-- (H1, H2) -->
+The relative cumulative fixation duration is calculated as time duration on an OOI divided by the time spent fixating the rest of the scene.<!-- what do you get then!? -->  It shows a bias towards the gazed-at object, which was fixated significantly longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`.
 
 
-#### Fixation latency (H1, H2)
+#### Fixation latency
+<!-- (H1, H2) -->
 An additional measurement of prioritization is fixation latency, that is for each OOI  the mean out of all first fixations after stimulus onset. In line with [@Zwickel2010], an object is fixated earlier when it is gazed-at. But also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). For fixation latency with a trend(?) for an interaction, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
 
-#### Fixation number (H1, H2)
+#### Fixation number
+<!-- (H1, H2) -->
 As a third measurement of prioritization, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when gazed-at `r apa.anova.fixn.gaze$full_result$icond`, again in line with [@Zwickel2010]. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
  
 
 ### Saccades
 
-```{r plots saccade}
+```{r descriptives saccade, include=FALSE}
+dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+                                  m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+                                  m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+                                  m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+                                  m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+                                  m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+
+dscr.sac.group <- df.w.et %>% group_by(group) %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+                                  m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+                                  m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+                                  m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+                                  m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+                                  m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+```
+
+```{r plots saccade, include=FALSE}
 
 # Plots: Saccade data
 farben <- c("blue","yellow")
@@ -331,17 +351,17 @@ for (st in 17:19) {
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
   }
 
-dscr.sac <- df.w.et %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
 
-dscr.sac.group <- df.w.et %>% group_by(group) %>% summarise(mean(sac.pgaze), sd(sac.pgaze), mean(sac.pnongaze), sd(sac.pnongaze), mean(sac.fgaze), sd(sac.fgaze), mean(sac.fnongaze), sd(sac.fnongaze), mean(sac.bgaze), sd(sac.bgaze), mean(sac.bnongaze), sd(sac.bnongaze))
 
 rm(carmod, idata, icond, st)
 ```
 
-#### Leaving saccades (H1, H2)
+#### Leaving saccades
+<!-- (H1, H2) -->
 The second hypothesis predicts, that there are more saccades leaving from the head to the gazed-at object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, and also for group,  `r apa.anova.sac.fgaze$full_results$df_w_et_group`. No confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
-### Memory (H3)
+### Memory
+<!-- (H3) -->
 
 ```{r plots memory}
 
