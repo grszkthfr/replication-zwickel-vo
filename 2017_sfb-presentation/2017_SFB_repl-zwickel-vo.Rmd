@@ -205,8 +205,8 @@ dscr.fix.rpl$gazed <- factor(dscr.fix.rpl$gazed, levels=c("face", "body", "gaze"
 dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn","fixn","fixn","fixn","fixlat","fixlat","fixlat","fixlat"), gazed=c("gaze","gaze", "nongaze", "nongaze"), stat=c("mean","se"), measure=c(0.08,.01,.07,.01,5.89,.37,5.24,.34,3588,133,4008,166)) # free = person
 
 ```
-<!-- VERGLEICH -->
 
+<!-- VERGLEICH -->
 ```{r plots saccade rpl-zwckl, include=FALSE}
 
 plot.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f" & group == "free"), aes(x= gazed, y= measure, fill = gazed)) +
