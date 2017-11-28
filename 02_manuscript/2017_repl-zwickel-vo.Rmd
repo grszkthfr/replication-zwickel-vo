@@ -289,7 +289,7 @@ rm(carmod, idata, icond, st)
 
 #### Fixation duration
 <!-- (H1, H2) -->
-To qunatify and compare priorisations against each object a measuer on how big the proportion of the duration of all fixations was for every ROI was calculated. Specifically, the time duration on an object was divided by <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> the time spent fixating the rest of the scene to get a  was for  fixated relative to all fixations.<!-- what do you get then!? -->  It shows a bias towards the gazed-at object, which was fixated longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`. <!-- was it against pred? --> 
+To quantify and compare prioritization against each object a measure on how big the proportion of the duration of all fixations was for every ROI was calculated. Specifically, the time duration on an object was divided by <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> the time spent fixating the rest of the scene to get a  was for  fixated relative to all fixations.<!-- what do you get then!? -->  It shows a bias towards the gazed-at object, which was fixated longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`. <!-- was it against pred? --> 
 
 
 #### Fixation latency
@@ -482,16 +482,34 @@ A t-test between face fixation for the different groups provides information whe
 
 # Discussion
 
-The main attempt of this study was to replicate effects from the mere presence of a person in a scene on gaze behaviour, what was first shown by @Zwickel2010. The findings in this study match findings from Zwickel. A strong preference for the gazed-at object can be seen in several measueres. First, a lower latency until first fixation can be seen for the gazed-at object, meaning that there is a urgent time sensitive priorisation. Furthermore, the gazed-at objects were also longer fixated and also more frequent fixated. therefore, these objects were also processed more thorughly during the whole time of scene presentation. These results replicate, what @Zwickel2010 already demonstrated in their study for joint attention. Overall, this finding puts more evidence on the idea that the viewing behavior is heavily but spontaneously influenced by persons in a scene.
-For genuine social stimuli like the person, and more specifically the head and the body, a similar pattern can be observed. The head had the lowest latency until first fixation, and logically even shorter then the gazed-at object. This makes sense, since it is assumed, that the head leads the gaze of the observer to the gazed-at object. Additionally, the head was also fixated longer and more often then the body.
-Saccades leaving the head were more likly to end on the gaze-at object, compared to the not-gazed-at-object.
-However, a direct replication was not the only motivation for this experiment. Additionally, it is shown that the pattern in gaze behavior Zwickel et al show, can be generalised to photographic scenes. The extension of this line of research, namly whether the gaze behavior can be influenced by top-down modulation. Consequently, this research is extended by the given study by an explicit task concerning the given scene. this modulation has an impact on gaze behavior. The objects receive more attention overall. The gaze behavior becomes more systematic. Interestingly, the top-down-modulation does not interact with either social attention nor joint attention measueres. So, the effects by social influence is even when observers investigate the scene systematic relevant and cant be easily overwritten. 
+<!-- Main motivation -->
+The main attempt of this study was to replicate attentional prioritization from the mere presence of a person in a scene on gaze behavior, what was first shown by @Zwickel2010. Unlike @Zwickel2010 her naturalistic photographic are used, in contrast to computer rendered scenes.
+<!-- Replikation -->
+Nevertheless, the findings in this study match findings from @Zwickel2010 very closely. As @Zwickel2010 and others (for example @Birmingham2008) a strong prioritization can be seen for the head region of the person in the scene. And in line with @Zwickel2010 there was also a strong prioritization for the object that was gazed at by the present person compared to the object that was not gazed-at in a given trial.
+This strong preference for the gazed-at object can be seen in several measures. First, latency till first fixation for the object which was gazed-at was shorter, compared to the not gazed-at object. Furthermore, the gazed-at objects were also longer fixated and also more frequent fixated. Therefore, the gazed-at objects were not only processed more thoroughly during the whole time of scene presentation, but also bind attentional resources very early. These results replicate, what @Zwickel2010 already demonstrated in their study. However, in this experiment the effect sizes are, overall, bigger with smaller standard errors.
 
-## joint attention
 
 
-## social attention
 
+
+
+Note, however, that this was not a direct replication but a conceptual, showing that @Zwickel2010 findings can be generalized from computer render scene to photographic scenes.
+Saccades leaving the head were more likely to end on the gaze-at object, compared to the not-gazed-at-object.
+However, a direct replication was not the only motivation for this experiment. Additionally, it is shown that the pattern in gaze behavior @Zwickel2010 show, The extension of this line of research, namely whether the gaze behavior can be influenced by top-down modulation. Consequently, this research is extended by the given study by an explicit task concerning the given scene. this modulation has an impact on gaze behavior. The objects receive more attention overall. The gaze behavior becomes more systematic. Interestingly, the top-down-modulation does not interact with either social attention nor joint attention measures. So, the effects by social influence is even when observers investigate the scene systematic relevant and can't be easily overwritten.
+
+All in all, it is concluded that without a specific task, and even with a task that makes the person in the scene irrelevant, the observers gaze behavior is influenced by the presence of a person in a scene. The task was not enough manipulation to kill the joint attention effects of social attention effects.  
+
+<!-- Conclusio -->
+Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leavin saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
+
+<!-- was will ich erzählen?! --> 1)Replikation --> Kopf-prio, gazed-prio, sac-prio! 
+<!-- was ist relevant?! --> top-down modulation verändert blickverhalten
+<!-- was überrascht? --> Selbst top-down modulation fängt die effekte nicht ein. 
+<!-- was überrascht nicht?! -->
+
+
+
+<!-- alt: For genuine social stimuli like the person, and more specifically the head and the body, a similar pattern can be observed. The head had the lowest latency until first fixation, so it is even shorter then the latency till first fixation for the gazed-at object. Under the light of joint attention this makes sense, since it is assumed, that the head in the first place leads the gaze of the observer to the gazed-at object. Additionally, the head was also fixated longer and more often then the body. -->
 
 
 
