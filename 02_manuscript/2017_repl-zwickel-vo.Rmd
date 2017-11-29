@@ -402,7 +402,7 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 The free-recall test showed, that unsurprisingly observers with explicit encoding remembered on average 2 items more then observers from the other group. An Anova proved this effect as statistically significant, `r apa.anova.mem$full_result$df_w_mem_bed`. Referencing an OOI did not influence memory performance, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`.
-
+The free recall-memory test was applied successful. Observers with instruction performed better in terms of recalling objects from the scenes.
 
 ## Social attention
 A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to account for prioritization. 
@@ -493,7 +493,7 @@ These results replicate, what @Zwickel2010 already demonstrated in their study. 
 
 Note, however, that this was not a direct replication but a conceptual, showing that @Zwickel2010 findings can be generalized from computer render scene to photographic scenes.
 <!-- erweiterung topdown -->
-However, a direct replication was not the only motivation for this experiment. Additionally, it aims to test the pattern in gaze behavior as it was shown here and in @Zwickel2010 against top-down modulation. That the top-down modulation was applied successful, can not only be seen in the better performance recalling objects of observers in that group. Also the viewing behavior changed, from a to a more systematic pattern in the explicit encoding group. Specifically, objects gain more attention in contrast to the free-viewing condition, with out any explicit modulation. Additionally, the head losses some of its natural salience, consistent for all measures. Interestingly, however, top-down-modulation does not interact with either social attention nor joint attention measures consistent for all measures. The prioritization shown for the head and also for the gazed-at object remain stable, unaffected of this specific top-down modulation. So, the effects by social influence is even when observers investigate the scene systematic relevant. This evidence provides support how automatic and reflexive and can't be easily overwritten. The extension of this line of research, namely whether the gaze behavior can be influenced by top-down modulation. Consequently, this research is extended by the given study by an explicit task concerning the given scene. this modulation has an impact on gaze behavior.<!-- Einordnen mit privious findings && unclear was bei anderen top down modulationen! -->
+However, a direct replication was not the only motivation for this experiment. It aims also at testing the pattern in gaze behavior as it was shown here and in @Zwickel2010 against a specific top-down modulation. Together with the better performance in the free-recall task, viewing behavior changed from observers in the explicit encoding groups. Specifically, objects gain more attention in contrast to the free-viewing condition. Additionally, the head loses some of its natural salience, consistent for all measures. It can be concluded, observers with instruction had a more systematic gaze pattern, so that they take account for succeeding in the instructed task. Interestingly, however, top-down-modulation does not interact with either social attention nor joint attention consistent for all measures. The prioritization shown for the head and also for the gazed-at object remain stable, unaffected of this specific top-down modulation. The influence of social and joint attention is can be seen, even when observers investigate the scene more systematic. This evidence provides support how automatic and reflexive the observed effects are. Furthermore, they can not be easily overwritten.<!-- Einordnen mit privious findings && unclear was bei anderen top down modulationen! -->
 
 All in all, it is concluded that without a specific task, and even with a task that makes the person in the scene irrelevant, the observers gaze behavior is influenced by the presence of a person in a scene. The task was not enough manipulation to kill the joint attention effects of social attention effects.  
 
@@ -508,7 +508,14 @@ Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (obje
 
 
 
-<!-- alt: For genuine social stimuli like the person, and more specifically the head and the body, a similar pattern can be observed. The head had the lowest latency until first fixation, so it is even shorter then the latency till first fixation for the gazed-at object. Under the light of joint attention this makes sense, since it is assumed, that the head in the first place leads the gaze of the observer to the gazed-at object. Additionally, the head was also fixated longer and more often then the body. -->
+<!-- alt: 
+
+For genuine social stimuli like the person, and more specifically the head and the body, a similar pattern can be observed. The head had the lowest latency until first fixation, so it is even shorter then the latency till first fixation for the gazed-at object. Under the light of joint attention this makes sense, since it is assumed, that the head in the first place leads the gaze of the observer to the gazed-at object. Additionally, the head was also fixated longer and more often then the body.
+
+The extension of this line of research, namely whether the gaze behavior can be influenced by top-down modulation. Consequently, this research is extended by the given study by an explicit task concerning the given scene. this modulation has an impact on gaze behavior.
+
+
+-->
 
 
 
