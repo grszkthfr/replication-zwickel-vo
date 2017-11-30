@@ -484,13 +484,12 @@ A t-test between face fixation for the different groups provides information whe
 # Discussion
 
 <!-- Main motivation -->
-The main attempt of this study was to replicate attentional prioritization from the mere presence of a person in a scene on gaze behavior, what was first shown by @Zwickel2010. Unlike @Zwickel2010, naturalistic photographic are used, in contrast to computer rendered scenes.
+The main attempt of this study to replicate @Zwickel2010 's findings on attentional prioritization from the mere presence of a person in a scene on gaze behavior was successful. 
 <!-- Replikation -->
-Nevertheless, the findings in this study match findings from @Zwickel2010. As @Zwickel2010 and others (for example @Birmingham2008) show, a strong prioritization can be seen for heads in the naturalistic scenes. Accordingly the head had was fixated first compared with all ROIs. Besides that it was also fixated more often, so that during the time observers kept looking at the head. Overall it was fixated the longest.
-And in line with @Zwickel2010 there was also a strong prioritization for the object that was gazed at by the present person compared to the object that was not gazed-at in a given trial. This strong preference for the gazed-at object can be seen in several measures. First, first fixation for the object which was gazed-at were earlier, compared to the not gazed-at object. Furthermore, the gazed-at objects were also longer fixated and also more frequent fixated. Therefore, the gazed-at objects were not only processed more thoroughly during the whole time of scene presentation, but also bind attentional resources very early.
-If the head... then ... . To examine these dependencies between the head region of the present person and the gazed-at object saccades leaving the head were looked at. Saccades leaving the head were more <!-- schon wäre auch die Aussage MOST likley--> likely to end on the gaze-at object, compared to the not-gazed-at-object.
-<!-- replication effort: success! -->
-These results replicate, what @Zwickel2010 already demonstrated in their study. However, in this experiment the effect sizes are, overall, bigger with smaller standard errors.
+As in @Zwickel2010 and others studies (for example @Birmingham2008), a strong prioritization can be seen for heads in the naturalistic scenes. Accordingly the head was fixated first, before any other ROI. Besides that it was also fixated more often, meaning that during scene presentation observers kept looking at the head. Consequently, no ROI was fixated longer in total then the head.
+Additionally, also in line with @Zwickel2010 gazed-at objects were preferenced over the object not being gazed-at by the person in a given trial. The preference for the gazed-at object can be seen in several measures. First, the object which was gazed-at were fixated remarkably earlier. Furthermore, objects were also fixated longer with more frequent fixations when they were gazed-at. Therefore, the gaze cue by the person does not only leads to more thorough processing during the whole time of scene presentation, but also guides attentional resources very early. All these findings together indicate a strong prioritization through the gaze cue of the person in the scene.
+Moreover, the compareable prioritization of the head and the gazed-at region already suggest a link between these two ROIs. To investigate a direct relation between these regions, the leaving saccades from the head are examined. Saccades leaving the head are more likely to end on the gazed-at object. This underlines a direct link between the head and the gazed-at object, and is again in line with @Zwickel2010. 
+So far the given results replicate all aspects @Zwickel2010 demonstrated for persons in their study. However, this replication had considerably more power then the original study, used photographic scenes and included a top-down modulation. As a consequence smaller standard error and therefore more precise estimation of the effect sizes were provided here.  
 
 Note, however, that this was not a direct replication but a conceptual, showing that @Zwickel2010 findings can be generalized from computer render scene to photographic scenes.
 <!-- erweiterung topdown -->
@@ -501,6 +500,11 @@ All in all, it is concluded that without a specific task, and even with a task t
 <!-- Conclusio -->
 Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leavin saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
 Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (object), 3: saccades (head -> object), 4: (kurzes oder detailliertes?!) fazit replication, 5: top down-modulation, 6: ?! DENK NACH! ?!, 7: conclusio
+
+
+
+Unlike @Zwickel2010, naturalistic photographic are used, in contrast to computer rendered scenes.
+
 
 <!-- was will ich erzählen?! --> Replikation --> Kopf-prio, gazed-prio, sac-prio! 
 <!-- was ist relevant?! --> 
