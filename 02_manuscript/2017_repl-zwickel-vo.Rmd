@@ -497,7 +497,7 @@ However, a conceptual replication was not the only motivation for this experimen
 <!-- Conclusio -->
 All in all, our results indicate that the mere presence of other human beings as well as their gaze orientation have a strong impact on attentional exploration. The observed attentional guidance of the gaze was so robust to resist even top-down modulation. It is concluded that attentional guidance by social attentional and joint attentional trigger is very robust.
 
-
+#Schrott
 Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leaving saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
 Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (object), 3: saccades (head -> object), 4: (kurzes oder detailliertes?!) fazit replication, 5: top down-modulation, 6: ?! DENK NACH! ?!, 7: conclusio
 
