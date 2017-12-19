@@ -5,6 +5,7 @@
 *.tex
 *.html
 *.xlsx
+*.doc
 *.pdf
 *.tex
 *.ttt
@@ -13,6 +14,7 @@
 *.fff
 *.bak
 *.sav
+draft*
 02_manuscript/2017_repl-zwickel-vo_files/
 .Rproj.user
 2017_sfb-presentation/libs/
