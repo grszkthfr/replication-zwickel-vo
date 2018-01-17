@@ -540,7 +540,11 @@ The extension of this line of research, namely whether the gaze behavior can be 
 
 -->
 
-
+<!-- List bibtex errors:
+  Risko2012
+  Langton2000
+  Langton2017
+  Laidlaw2011 -->
 
 \newpage
 
