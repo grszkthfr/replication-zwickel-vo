@@ -232,17 +232,19 @@ The foundation of this study is to examine top-down modulation on gaze cueing an
 <!-- We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
-In this study `r length(df.w.demo$vp)` observers (`r length(df.w.demo$sex[df.w.demo$sex==1])` female and `r length(df.w.demo$sex[df.w.demo$sex!=1])` male) between `r min(df.w.demo$age)` and `r max(df.w.demo$age)` years (M = `r round(mean(df.w.demo$age),2)`, SD = `r round(sd(df.w.demo$age),2)`) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburgs online subject pool or by blackboard. For participation observers received study credit or 5€. One observer was excluded due to missing data.
+In this study `r length(df.w.demo$vp)` observers (`r length(df.w.demo$sex[df.w.demo$sex==1])` female and `r length(df.w.demo$sex[df.w.demo$sex!=1])` male) between `r min(df.w.demo$age)` and `r max(df.w.demo$age)` years (M = `r round(mean(df.w.demo$age),2)`, SD = `r round(sd(df.w.demo$age),2)`) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburg's online subject pool or by blackboard. For participation observers received study credit or 5€. One observer was excluded due to missing data.
 
 ## Stimuli and Apparatus
 The experimental stimuli consisted of 26 different scenes with a single individual in the center looking at one of two objects of interests in the right or left half of the photography. The direction of the gaze cue and the place of the objects were balanced, creating 104 unique naturalistic scenes in the end. For each participant, a set was randomly generated from this pool containing each scene only once, resulting in 26 trials with exclusive scenes. Eye movements were recorded with an EyeLink1000 tower system, sampling at 1000 Hz.
 
 ## Design & Procedure
-A two-level (instruction: free viewing / explicit encoding) between subjects factor and a two-level (reference: cued/uncued) within subjects factor was manipulated in the experiment. After giving full informed consent, the eye-tracker was calibrated for each observer. Half of the observers were then manipulated by getting told, that  there is a follow-up memory test. The presentation of the stimuli was randomized. In each trial the scene was present for 10 seconds. Observers were told to look at the scene as they would look at photographs. Inter trial interval was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz). The questionnaire session was also used as a puffer for the following memory task, to prevent primacy and recency effects. Then observers were asked to recall as many items as possible in a free recall memory-test. Afterwards participants received their credit.
+The experimental design was a 2 x 2 within-between observer design. First, as a two-level factor the instruction was manipulated between subjects (*free-viewing* vs. *explicit-encoding*). Additionally, as a two-level within subjects factor the role of the object was manipulated (*referenced* vs. *not-referenced*).
+
+First, observer were aski to give full informed consent. Then the eye-tracker was calibrated for the observer. According to the manipulation, only half of the observers were told, that  there is a follow-up memory test. All observers were then told to look at the following scenes as they would look at photographs. The presentation of the scenes was randomized and the roles of the objects and their location were completely balanced and controlled. In each trial the scene was present for 10 seconds. Inter trial interval was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz). To prevent primacy and recency effects the questionnaire session was also used as a puffer for the following memory task. Afterwards all observers were asked to recall as many items as possible in a free recall memory-test. Observers received credit afterwards.
 
 
 ## Data analysis
-Regions-of-Interest were hand-drawn around the relevant objects and the face and body of the individual in the center. These ROIs were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. <!-- Outlier detection?!!? -->
+Regions-of-Interest (ROI) were hand-drawn around the relevant objects and the face and body of the individual in the center. These ROIs were color-coded for cued and uncued objects and also for the head and body of the individual on the photography to determine gaze locations. <!-- Outlier detection?!!? -->
 
 `r cite_r("r-references.bib")` is used for all analyses.
 
@@ -252,7 +254,7 @@ Prioritization of the ROIs in the scene were measured in multiple ways.
 
 ## Joint attention/ gaze following
 
-As a measure of prioritization fixation duration, fixation number, fixation latency, as well as leaving saccades are used.
+As a measure of prioritization fixation duration, fixation number, fixation latency, as well as leaving saccades are used. For all measueres, higher values indicate prioritization.
 
 ### Fixations
 ```{r TO-DO: Plots fixations joint, warining = FALSE, message = FALSE}
@@ -303,16 +305,15 @@ rm(carmod, idata, icond, st)
 
 #### Fixation duration
 <!-- (H1, H2) -->
-To quantify and compare prioritization against each object a measure on how big the proportion of the duration of all fixations was for every ROI was calculated. Specifically, the cumulative time a fixation rested on an object was divided by the total time spent fixating any other rest of the scene. By that, a relative measures for fixation duration was gained. It shows a bias towards the *referenced* object, which was fixated longer (see Table/Figure) and confirms [@Zwickel2010]'s findings. As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`. <!-- was it against pred? -->  <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> 
-
+The duration of all fixations is cumulated for each object. Specifically, the cumulative time (in ms) a fixation rested on an object was divided by the total time spent fixating any other rest of the scene. By that, a relative measures for fixation duration was gained. Observer show a bias towards the *referenced* object, which was fixated longer (see Table/Figure). As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction their was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`. <!-- was it against pred? -->  <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> 
 
 #### Fixation latency
 <!-- (H1, H2) -->
-An additional measurement of prioritization is fixation latency, that is for each ROI the mean out of all first fixations after stimulus onset<!--besser formulieren!!-->. In line with [@Zwickel2010], an object is fixated earlier when it is *referenced*. But also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). For fixation latency with a trend(?) for an interaction, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
+An additional measurement of prioritization is fixation latency.That is for each object the mean time out of all first fixations per object each trial<!--besser formulieren!!-->. This measure shows, that objects are fixated earlier when they are *referenced*, but also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). The interaction shows a trend, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`, suggesting a smaller difference for reference for the *explicit-encoding group*.
 
 #### Fixation number
 <!-- (H1, H2) -->
-As a third measurement of prioritization, fixation number, as the count of fixations per ROI during scene presentation, divided by the total number of fixations during scene presentation, was calculated. It shows, that OOI were fixated more often when *referenced* `r apa.anova.fixn.gaze$full_result$icond`, again in line with [@Zwickel2010]. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
+As a third measurement of prioritization, fixation number, as the count of fixations per object, divided by the total number of fixations during scene presentation, was calculated. It shows, that objects were fixated more often when *referenced*, `r apa.anova.fixn.gaze$full_result$icond`. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
  
 
 ### Saccades
@@ -387,7 +388,7 @@ rm(carmod, idata, icond, st)
 
 #### Leaving saccades
 <!-- (H1, H2) -->
-The second hypothesis predicts, that there are more saccades leaving from the head to the *referenced* object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing condition. An Anova supports the first claim. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, and also for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`. No confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
+The second hypothesis predicts, that there are more saccades leaving from the head to the *referenced* object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free-viewing group. The first claim finds statistical support from an Anova. There is an significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, and also for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`. No confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
 ### Memory
 <!-- (H3) -->
@@ -417,11 +418,10 @@ dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(mem
 rm(imem, idata, carmod)
 ```
 
-The free-recall test showed, that unsurprisingly observers with who received the instruction of the memory test before the free viewing remembered on average 2 items more then observers from the other group. An Anova proved this effect as statistically significant, `r apa.anova.mem$full_result$df_w_mem_bed`. Referencing an OOI did not influence memory performance, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`.
-The free recall-memory test was applied successful. Observers with instruction performed better in terms of recalling objects from the scenes.
+The free-recall memory test showed, that observers with who received the instruction of the memory test before the free viewing remembered more items then observers from the other group. An Anova showed its statitical significane, `r apa.anova.mem$full_result$df_w_mem_bed`. However, against prediction, referencing an object did not influence memory performance, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`, such that referencing an object would increase memorability only for one group, as it is stated in the hypothesis for the free-viewing group.
 
 ## Social attention
-A similar pattern to the OOI can be seen when comparing the head with the body region. Again there were the same measurements to account for prioritization. 
+A similar pattern to the objects can be seen when comparing the head with the body region. Again there were the same measurements to account for prioritization. 
 
 ```{r TO-DO: Plots fixations social, warining = FALSE, message = FALSE}
 
@@ -453,12 +453,14 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
 rm(carmod, idata, icond, st)
 
 ```
-Analysis for the social attention part contained again Anovas for the different dependent variables indicating prioritization.
+For the social attention part Anovas are conducted for the same dependent variables indicating prioritization, but the head is compared against the body region.
 
 ### Face vs body fixation (H4)
-The first measurement shows, that faces were fixated longer then the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction (trend) between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
-The same pattern can be seen for fixation number, where there is a strong effect for region, with more fixations on the face, `r apa.anova.fixn.face$full_result$icond` and no difference between the instructions, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
-Latencies of fixation differed also remarkably between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for instruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was their an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
+The first measurement shows, that head regions were fixated longer then the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
+
+The same pattern can be seen for fixation number, with a strong effect for region, with more fixations on the head, `r apa.anova.fixn.face$full_result$icond` and no difference between the groups, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
+
+Latencies of fixation differed also remarkably between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for instruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was there an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
 ### Free-viewing vs explicit-encoding face fixations (H5)
 ```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
@@ -494,7 +496,8 @@ rm(msd, teststat, st)
 
 ```
 
-A t-test between face fixation for the different groups provides information whether faces are differently processed dependent on the instruction observers get. Only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result`. And fixation number did not differ, `r apa.ttest.fixn.face$full_result`.   
+A post Hoc t-test between head fixations for each group provides information whether heads are differently processed dependent on the instruction observers get. Only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result`. And fixation number did not differ, `r apa.ttest.fixn.face$full_result`.
+
 
 # Discussion
 <!-- Main motivation -->
