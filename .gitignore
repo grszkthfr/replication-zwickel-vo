@@ -15,6 +15,7 @@
 *.bak
 *.sav
 draft*
+*.docx
 02_manuscript/2017_repl-zwickel-vo_files/
 .Rproj.user
 2017_sfb-presentation/libs/
