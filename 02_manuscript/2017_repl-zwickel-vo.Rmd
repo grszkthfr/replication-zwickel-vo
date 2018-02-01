@@ -382,9 +382,9 @@ for (st in 17:19) {
   #print(colnames(df.w.et[,c(st,(st+3))]))
   #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
   assign(paste0("anova.",colnames(df.w.et)[st]), Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("postHoc.",colnames(df.w.et)[st]), lsmeans::lsmeans(carmod, specs = c(names(carmod$model[2]), "rep.meas")))
   assign(paste0("apa.anova.",colnames(df.w.et)[st]), apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"), correction="GG", mse = FALSE))
-  }
-
+}
 
 
 rm(carmod, idata, icond, st)
