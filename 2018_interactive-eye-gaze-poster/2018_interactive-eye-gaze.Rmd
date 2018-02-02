@@ -1,0 +1,187 @@
+---
+title: "Presence of persons in naturalistic scenes and consequences - A conceptual replication"
+subtitle: "Poster for the Interactive Eye Gaze Conference, London 2018"
+output: html_notebook
+---
+
+```{r Descriptives fixations joint, include=FALSE}
+
+# Descriptives for fixation chacracteristics for joint attention
+
+dscr.fixjoi <- df.w.et %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+
+dscr.fixjoi.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.gaze), sd(fix.gaze), mean(fix.nongaze), sd(fix.nongaze), mean(fixn.gaze), sd(fixn.gaze), mean(fixn.nongaze), sd(fixn.nongaze), mean(fixlat.gaze), sd(fixlat.gaze), mean(fixlat.nongaze), sd(fixlat.nongaze))
+
+```
+
+```{r descriptives saccade, include=FALSE}
+# dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+#                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+#                                   m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+#                                   m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+#                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+#                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+
+# old
+# dscr.sac.rpl <- df.w.et %>%
+#   group_by(group) %>%
+#   summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+#   gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
+#   mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+#          area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+#          area = as.factor(substring(area,1,1)),
+#          gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+#          gazed = as.factor(substring(gazed,2)),
+#          key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+#   select(-measure, everything()) %>% # neusortieren der variablen
+#   select(key, everything())
+# 
+# dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"), group=c("free", "free"), stat=c("mean", "se"), area=(c("f")), gazed=c("gaze", "gaze", "nongaze", "nongaze"), measure=c(.14,0.01,.09,0.01)) # free = person
+# 
+# dscr.sac <- rbind(dscr.sac.rpl, dscr.sac.zwckl)
+
+dscr.sac <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
+  mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+         area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         area = as.factor(substring(area,1,1)),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,2)),
+         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything()) %>%
+  rbind(., data.frame(key=c("zwickel"), group=c("free"), stat=c("mean", "se"), area=(c("f")), gazed=c("gaze", "gaze", "nongaze", "nongaze"), measure=c(.14,0.01,.09,0.01))) # hinzufügen der Daten aus Zwickel2010 free = person
+
+
+```
+
+```{r descriptives fix*, include=FALSE}
+# dscr.sac <- df.w.et %>% summarise(m_sac.pgaze = mean(sac.pgaze), sd_sac.pgaze = sd(sac.pgaze),
+#                                   m_sac.pnongaze=mean(sac.pnongaze), sd_sac.pnongaze=sd(sac.pnongaze),
+#                                   m_sac.fgaze=mean(sac.fgaze), sd_sac.fgaze=sd(sac.fgaze),
+#                                   m_sac.fnongaze=mean(sac.fnongaze), sd_sac.fnongaze=sd(sac.fnongaze),
+#                                   m_sac.bgaze=mean(sac.bgaze), sd_sac.bgaze=sd(sac.bgaze),
+#                                   m_sac.bnongaze=mean(sac.bnongaze), sd_sac.bnongaze=sd(sac.bnongaze))
+
+# dscr.fix.rpl <- df.w.et %>%
+#   group_by(group) %>%
+#   summarise_at(vars(fix.face:fixlat.nongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+#   gather(key, measure, fix.face_mean:fixlat.nongaze_se) %>% # ins longformat
+#   mutate(fix = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[1]) %>% unlist()),
+#          gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+#          gazed = factor(substring(gazed,1), levels=c("face", "body", "gaze", "nongaze")),
+#          stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+#          key = as.factor("replication")) %>%
+#   select(-measure, everything()) %>% # neusortieren der variablen
+#   select(key, everything())
+# 
+# dscr.fix.zwckl <- data.frame(key="zwickel", group="free", fix = c("fix", "fix", "fix", "fix", "fixn", "fixn", "fixn", "fixn", "fixlat", "fixlat", "fixlat", "fixlat"), gazed = c("gaze","gaze", "nongaze", "nongaze"), stat = c("mean", "se"), measure = c(0.08, .01, .07, .01, 5.89, .37, 5.24, .34, 3588, 133, 4008, 166)) # free = person
+
+dscr.fix <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(fix.face:fixlat.nongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, fix.face_mean:fixlat.nongaze_se) %>% # ins longformat
+  mutate(fix = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[1]) %>% unlist()),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = factor(substring(gazed,1), levels=c("face", "body", "gaze", "nongaze")),
+         stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+         key = as.factor("replication")) %>% 
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything()) %>% rbind(., data.frame(key="zwickel", group="free",fix=c("fix","fix","fix","fix","fixn","fixn","fixn","fixn","fixlat","fixlat","fixlat","fixlat"), gazed=c("gaze","gaze", "nongaze", "nongaze"), stat=c("mean","se"), measure=c(0.08,.01,.07,.01,5.89,.37,5.24,.34,3588,133,4008,166)))  #hinzufügen der repl. data # free = person
+
+```
+
+<!-- VERGLEICH -->
+```{r Prerequisits}
+
+# Library
+library("tidyverse")
+library("ggsignif")
+library("scales")
+library("extrafont")
+
+# Design variables
+customColors = c("#0072B2", "#F0E442")
+customTheme = theme(text=element_text(size=24, family="Candara"))
+customLabels = c("Objects gazed-at", " Objects not gazed-at")
+customLabels = element_blank()
+
+```
+
+```{r Boxplot fixation latency}
+
+boxplot.fixlat.gaze <- df.l.et %>% filter(key == "fixlat.gaze" | key == "fixlat.nongaze") %>% 
+  ggplot(aes(x = group, y = value, fill = region)) +
+  geom_boxplot(position = "dodge") +
+  geom_signif(annotation="***", y_position=5800, xmin=1, xmax=2, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="***", y_position=5600, xmin=.81, xmax=1.188, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=5600, xmin=1.81, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="**", y_position=5400, xmin=.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=5200, xmin=1.188, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
+  scale_y_continuous(name = "Fixation latency (in ms)") +
+  scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
+  scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
+  theme_minimal() +
+  customTheme #+
+  ggsave("bplt.lixlat.png")
+
+boxplot.fixlat.gaze
+
+```
+
+
+```{r Boxplot fixation duration}
+
+
+boxplot.fix.gaze <- df.l.et %>% filter(key == "fix.gaze" | key == "fix.nongaze") %>% 
+  ggplot(aes(x = group, y=value, fill = region)) +
+  geom_boxplot(position = "dodge") +
+  geom_signif(annotation="***", y_position=.38, xmin=1.188, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
+  #geom_signif(annotation="***", y_position=.36, xmin=1.188, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
+  #geom_signif(annotation="*", y_position=.42, xmin=0.81, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=.36, xmin=0.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=.36, xmin=0.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
+  scale_y_continuous(name = "relative Fixation duration", labels = percent_format()) +
+  scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
+  scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors)+
+  theme_minimal() +
+  customTheme +
+  ggsave("bplt.fixdur.png")
+
+boxplot.fix.gaze
+```
+
+
+```{r Boxplot saccades head-obkject}
+boxplot.sac <- df.l.et %>% filter(key == "sac.fgaze" | key == "sac.fnongaze") %>% 
+  ggplot(aes(x = group, y=value, fill = key)) +
+  geom_boxplot(position = "dodge") +
+  geom_signif(annotation="*", y_position=.265, xmin=.84, xmax=1.16, tip_length = 0.01, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=.28, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) +
+  geom_signif(annotation="*", y_position=.265, xmin=1.84, xmax=2.16, tip_length = 0.01, vjust = 0.5)+
+  scale_y_continuous(name = "Saccades leaving the head", labels = percent_format()) +
+  scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
+scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
+  theme_minimal() +
+  customTheme +
+  ggsave("bplt.sacho.png")
+
+boxplot.sac
+```
+
+# Introduction
+
+Humans in their social environment rely on the information conspecifics provide. One important signal in social communication is eye gaze. The current study (n=90) sought to replicate and extend previous findings of attentional guidance by eye gaze in complex everyday scenes and to investigate how robust this prioritization is against top-down modulation, half of the observers receive a memory task that required scanning the whole scene instead of exclusively focusing on *referenced* objects.
+
+
+# Methods
+
+# Results
+<!-- Drei Plots: Latenz, Duration & Sakkaden: Kopf-Objekt -->
+
+# Discussion
+
+# References
+
