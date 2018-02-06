@@ -25,7 +25,6 @@ library("tidyverse")
 library("car")
 library("afex")
 library("ggpubr")
-library("ggpubr")
 
 ```
 
