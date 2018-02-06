@@ -115,60 +115,109 @@ customLabels = element_blank()
 boxplot.fixlat.gaze <- df.l.et %>% filter(key == "fixlat.gaze" | key == "fixlat.nongaze") %>% 
   ggplot(aes(x = group, y = value, fill = region)) +
   geom_boxplot(position = "dodge") +
-  geom_signif(annotation="***", y_position=5800, xmin=1, xmax=2, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="***", y_position=5600, xmin=.81, xmax=1.188, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=5600, xmin=1.81, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="**", y_position=5400, xmin=.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=5200, xmin=1.188, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
+    geom_signif(annotation="***", y_position=5800, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  geom_signif(annotation="***", y_position=5600, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+  geom_signif(annotation="***", y_position=5600, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
   scale_y_continuous(name = "Fixation latency (in ms)") +
   scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
   scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
   theme_minimal() +
   customTheme #+
-  ggsave("bplt.lixlat.png")
+  ggsave("boxplt.lixlat.png")
 
-boxplot.fixlat.gaze
+#boxplot.fixlat.gaze
 
 ```
 
 
 ```{r Boxplot fixation duration}
 
-
 boxplot.fix.gaze <- df.l.et %>% filter(key == "fix.gaze" | key == "fix.nongaze") %>% 
   ggplot(aes(x = group, y=value, fill = region)) +
   geom_boxplot(position = "dodge") +
-  geom_signif(annotation="***", y_position=.38, xmin=1.188, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
-  #geom_signif(annotation="***", y_position=.36, xmin=1.188, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
-  #geom_signif(annotation="*", y_position=.42, xmin=0.81, xmax=2.188, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=.36, xmin=0.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=.36, xmin=0.81, xmax=1.81, tip_length = 0.0, vjust = 0.5) +
+  geom_signif(annotation="***", y_position=.39, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  geom_signif(annotation="*", y_position=.37, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  geom_signif(annotation="n.s.", y_position=.37, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
   scale_y_continuous(name = "relative Fixation duration", labels = percent_format()) +
   scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
   scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors)+
   theme_minimal() +
   customTheme +
-  ggsave("bplt.fixdur.png")
+  ggsave("boxplt.fixdur.png")
 
-boxplot.fix.gaze
+#boxplot.fix.gaze
 ```
 
 
-```{r Boxplot saccades head-obkject}
+```{r Boxplot saccades head-object}
 boxplot.sac <- df.l.et %>% filter(key == "sac.fgaze" | key == "sac.fnongaze") %>% 
   ggplot(aes(x = group, y=value, fill = key)) +
   geom_boxplot(position = "dodge") +
-  geom_signif(annotation="*", y_position=.265, xmin=.84, xmax=1.16, tip_length = 0.01, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=.28, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) +
-  geom_signif(annotation="*", y_position=.265, xmin=1.84, xmax=2.16, tip_length = 0.01, vjust = 0.5)+
+  geom_signif(annotation="***", y_position=.39, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p = .002 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  geom_signif(annotation="***", y_position=.37, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
+  geom_signif(annotation="***", y_position=.37, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
   scale_y_continuous(name = "Saccades leaving the head", labels = percent_format()) +
   scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
 scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
   theme_minimal() +
   customTheme +
-  ggsave("bplt.sacho.png")
+  ggsave("boxplt.sacho.png")
 
-boxplot.sac
+#boxplot.sac
+```
+
+
+```{r Memory performance}
+
+dscr.mem <- df.w.mem %>% rename( group = bed) %>% 
+  group_by(group) %>%
+  summarise_at(vars(memgaze:memnogaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>%
+  gather(key, value, memgaze_mean: memnogaze_se, factor_key = T) %>%
+  separate(key, c("key", "stat"), sep = "\\_", extra = "merge") %>% 
+  spread(stat, value) %>%
+  mutate(lowerSE = mean - se,
+         upperSE = mean + se)
+
+
+# boxplot.mem <- df.w.mem %>% gather(key, value, memgaze:memnogaze, factor_key = T) %>% 
+#   rename( group = bed) %>% 
+#   ggplot(aes(x = group, y=value, fill = key)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=dscr.mem$lowerSE,
+#     ymax=dscr.mem$upperSE),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   scale_y_continuous(name = "Items recalled") +
+#   scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
+# scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
+#   theme_minimal() +
+#   customTheme
+
+
+boxplot.mem <- dscr.mem %>% 
+ggplot(aes(x = group, y=mean, fill = key)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=lowerSE,
+    ymax=upperSE),
+    width=.2,
+    position=position_dodge(.9)) +
+  scale_y_continuous(name = "Items recalled", breaks = seq(0,10, by = 2)) +
+  scale_x_discrete(name = "Groups", labels=c("free encoding", "explicit encoding")) +
+scale_fill_manual(name = element_blank(), guide=FALSE, values=customColors) +
+  theme_minimal() +
+  customTheme +
+  ggsave("barplt.mem.png")
+
+#boxplot.mem
+
 ```
 
 # Introduction
