@@ -54,10 +54,14 @@ library("tidyverse")
 library("car")
 library("afex")
 library("ggpubr")
+library("ggsignif")
+library("scales")
+library("extrafont")
+library("gridExtra")
 
 ```
 
-```{r paths}
+```{r Paths}
 
 rm(list=ls())
 
@@ -196,75 +200,71 @@ The most frequently used paradigm to investigate such attentional shifts is the 
 Additionally, laboratory studies showed, that joint attention cannot only be induced by the gaze [for an detailed overview see: @Frischen2007a], but also from the body or the head itself [@Lawson2016].-->
 
   <!-- social attention -->
-<!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen, weitere Ansätze-->To account for these issues in gaze cuing paradigms @Zwickel2010 conducted a joint attention study <!--using a so called free viewing paradigm--> with a full person (instead of isolated heads or faces) as a directional cue.
-A main aspect of their study was that participants had no explicit task to fulfill. @Zwickel2010 argue, that the lack of a specific task puts gaze following to a stricter test. This is explicitly in contrast to @Castelhano2007 who asked participants to understand the story. Additionally, without a task represents naturalistic viewing behavior and therefore adds more ecological validity to classical gaze cuing paradigms. They presented their observers multiple scenes for several seconds. The scenes contained a reference, either a person or a loudspeaker, and two objects. The authors of the study made sure, that the relevant objects were not placed in prominent locations, so that the object is not highlighted by position itself. In each scene, only one of the objects was referenced either by the oriented person or by the loudspeaker.
-They showed that observer of the scene fixated the referenced object remarkably earlier, more often and overall longer than the not referenced object. However, the prioritization of the object occurred only when the person referenced the object. By showing that leaving saccades from the head (but not from the loudspeaker) landed most often onto the referenced object the results give direct support for the relation between cue type and object role.
-The attentional focus of the person in the scene guided attentional distribution of the observer. Interestingly, the same was not true for the loudspeaker. The referenced objects were not just focused because they might have been salient by themselves (due to e.g. positioning), but became more salient merely by the persons reference.<!--detailierter?!--> <!--Additionally finding is in line with general predictions from the social attention approach. First, that social stimuli are prioritized was confirmed by the results, the most prioritized region was still the head of the shown person.-->After all, @Zwickel2010 provide evidence that joint attention as consequence of gaze cues happen spontaneously and that it has high relevance even in situations that are more naturalistic.<!--softerer übergang pls-->
-
-  <!-- research motivation -->
-Unclear remains, how robust these joint attentional effects are. So, this conceptual replication of Zwickel and Võ's work aims at answering multiple research questions regarding joint and social attention, including the replication of Zwickel and Võ's [-@Zwickel2010] findings and extending this line of research.
-
-  <!-- extended research | Top-Down Modulations-->
-To extend this line of research the influence of top-down modulations on joint and social attention in naturalistic scenes is investigated. Earlier research showed that social attention is influenced by multiple factors like social status [@Foulsham2010] or expectations [@Perez-Osorio2015]. These studies have in common that they manipulate viewing behavior of the observer by manipulating the stimuli in one or the other way. For example, @Foulsham2010 build the stimulus set from stimuli that were previously rated for social status and confirmed the predicted shift in attention with eye-tracking measures.
-
-In the present study, however, observers receive a very explicit manipulation. In the *explicit encoding group* the observers received the information that a memory test is following the experimental part. In contrast, in the *free viewing group* observers were instructed right before the memory task. Besides that, manipulation all observer did exactly the same experiment (with balanced and randomized stimuli). By instruction objects became relevant for succeeding in the memory task. Conclusively, attention towards the person would be inefficient. The manipulation is thought to induce a more explicit and systematic encoding of the presented scenes, specifically towards objects.
-
-Additionally, the consequences for latter cognitive processes, here memory effects, are examined for the different roles of the objects. Observers from the *free viewing group* who did not receive any top-down modulation in advance should provide an unaffected viewing behavior, just as @Zwickel2010 demonstrated. Both groups had to recall as many as things as possible from the scenes in a free-recall memory test. With this manipulation it is thought to demonstrate top-down influence on social attention aspects, but also its influence on joint attention. As @Zwickel2010 showed, a person in a scene influences the viewing behavior of observers spontaneously and without further instruction or manipulation.
-
-In the given study, the motivation for the manipulation of the instructions for the memory test was twofold. First, it is thought to test robustness of the social and joint attention effects and second joint attentional effects on memory can be observed. The influence of the manipulation is expected to reduce spontaneous viewing behavior and foster a more systematic processing of the scene. It is important to note, that it is not expected that the influence of the presence of the person vanishes completely for social and joint attentional effects due to top-down modulation. It is supposed to be weaker, because it does not represent the optimal strategy for the observer. Therefore, the voluntary part of the scene processing might be overwritten. However, as social and joint attentional effects are expected to be (partially) independent of volition and occur spontaneously and reflexive the effects should still be visible regardless for the social attention part and for the joint attention part of this study. Specifically, prioritization effects for the head should be smaller but still visible in the *explicit encoding group*. For the joint attention measures a decreased prioritization for the referenced object is expected for the *explicit encoding group* is decreased compared with the not referenced object. An optimal strategy for observer in the *explicit encoding group* would be to ignore completely the person in the scene, resulting in smaller differences in attentional prioritization between the two object roles.
-Additionally, memory effects sensitive for the role of the object were examined, to answer the question whether more attentional resources on an object pays off with enhanced memorability. This is mainly interesting for the free viewing group with the unbiased viewing behavior, as it is expected that both objects bind comparable amount of attention due to the more systematic processing in the explicit encoding group.
-
-<!-- @Zwickel2010 had very little power in their study, with n = 16 participants -- zu unserer Power was schreiben?!-->
-@Zwickel2010 used computer-generated stimuli. Here, stimuli that are more naturalistic and a bigger sample size is used.
-Consequently, real photographs are chosen over computer rendered scenes. As often, by being more naturalistic experimental control is reduced. The consequences are hold to a minimum by producing the stimuli the same way. In particular, each scene was photographed four times, with the individual looking twice to the left and right to each object. Although, as much as possible was controlled for in the photographs, real photographs contain small unavoidable changes. Whereas @Zwickel2010 rotate the figure in the computer rendered scene, they have complete control of all the changes, e.g. angel of the body or facial expression. Here, another photography was taken. As consequence, for example, the body orientation within the four balanced scenes cannot be perfectly controlled and might differ slightly between photographs within scenes.<!-- nochmal sagen, warum das torztdem toll ist? -->
-With higher power and stimuli, that are more naturalistic, this study will <!-- still, however, nevertheless, yet, regardless, even though, despite --> underline @Zwickel2010 findings. However, it is presumed that the effect showed by @Zwickel2010 is genuine for social stimuli. Therefore, no non-social condition comparable to the loudspeaker-condition was tested.  
+<!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen, weitere Ansätze-->To account for these issues in gaze cuing paradigms @Zwickel2010 conducted a joint attention study <!--using a so called free viewing paradigm-->with a full person (instead of isolated heads or faces) as a directional cue.
+In this study, the authors used a free viewing instruction, meaning that participants had no explicit task to fulfill. @Zwickel2010 argue, that the lack of a specific task puts gaze following to a stricter test. In earlier studies participants task was to follow the gaze cue. In classical gaze cueing paradigms the task contained reacting to the only change in the display [e.g. @Friesen1998] and in more recent and more naturalistic studies participants were asked to understand a scene [@Castelhano2007]. As a consequence, it remains unclear how large the proportion of gaze is for gaze cueing paradigms. Additionally, the absence of a task represents a more naturalistic viewing behavior and therefore adds more ecological validity to gaze cuing paradigms. In fact, @Zwickel2010 presented participants multiple scenes for several seconds. Each scene contained either a person or a loudspeaker and two objects. <!--The authors of the study made sure, that the relevant objects were not placed in prominent locations, so that the object is not highlighted by position itself. In each scene, only one of the objects was referenced either by the oriented person or by the loudspeaker. -->
+The results of the study showed that participants fixated the referenced object remarkably earlier, more often and overall longer than the not referenced object. However, the prioritization of the object occurred only when the person referenced the object. By showing that leaving saccades from the head (but not from the loudspeaker) landed most often onto the referenced object the results give direct support for the relation between cue type and attentional guidance <!-- and highlight therefore the innewohnende relevance of gaze cues-->
+The attentional focus of the person in the scene guided attentional distribution of the observer. Interestingly, the same was not true for the loudspeaker. The referenced objects were not just focused because they might have been salient by themselves (due to e.g. positioning), or because they were referenced by another object, but became more salient merely by the persons reference.<!--detailierter?!--> <!--Additionally finding is in line with general predictions from the social attention approach. First, that social stimuli are prioritized was confirmed by the results, the most prioritized region was still the head of the shown person.--> Thereby, in their study @Zwickel2010 provide evidence that joint attention is a direct consequence of gaze cues, happens spontaneously and has high relevance even in more naturalistic situations.<!--softerer übergang pls-->
 
   <!-- Hypothesis -->
-<!-- alter baustein: First, for joint attention, it is presumed to replicate the main effects of a persons presence on the observer described by @Zwickel2010. It is therefore hypothesized that the gaze of the person in the scene leads to prioritization for the *referenced*/referenced object. The prioritization can be seen in earlier, more and longer fixations. In line with @Zwickel2010 it is also expected, that saccades leaving from the head are more likely to move to the *referenced* object. -->
-        <!-- joint attention -->
-The foundation of this study is to examine top-down modulation on gaze cueing and to replicate the findings from [@Zwickel2010].  
-*H1*. Consequently, a prioritization for the *referenced* objects is predicted. In line with @Zwickel2010, this  prioritization is measured in multiple ways. First, there should be an early fixation bias towards the *referenced* object. During presentation time, the total time that the *referenced* object is fixated should be prolonged, with more fixations as well. For saccades it is expected, that leaving from the head it is more likely to move to the *referenced* object, in contrast to the not-*referenced* object.<!--Main effect icond, Anova-->
-*H2*. New, compared to Zwickel and Võ's [-@Zwickel2010] study, is the instruction condition. For gaze following it is expected that the exclusive prioritization for the *referenced* object will decrease for subjects in explicit encoding group, due to the instruction of the memory test and a more explicit and systematic processing of the scene. This means smaller differences in the fixation measurements are expected. For leaving saccades it is also expected that the under H1 stated effect decreases. <!--1st: (Interaction group:icond)
+This conceptual replication of aims at replicating and extending the Zwickel and Võ's findings [-@Zwickel2010].
+  <!-- extended research | Top-Down Modulations-->
+To extend this line of research the influence of top-down modulations on gaze following in naturalistic scenes is investigated. Earlier research showed that social attention is influenced by multiple factors like social status [@Foulsham2010] or action-related expectations [@Perez-Osorio2015]. These studies have in common [together with @Zwickel2010] that they manipulate viewing behavior of the observer by manipulating the stimuli. <!--For example, @Foulsham2010 build the stimulus set from stimuli that were previously rated for social status and confirmed the predicted shift towards hi in attention with eye-tracking measures.--> @Perez-Osorio2015, for example, showed stronger gaze following for action-congruent stimuli. @Zwickel2010 manipulated the source of the reference towards the objects, and showed, that objects were prioritized only when referenced by a person but not when referenced by loudspeaker.
+
+In the present study, however, viewing behavior should not be manipulated via the stimuli, but via top-down modulation. The motivation for the manipulation was twofold. First, it is thought to test robustness of the social and joint attention effects against top-down processes. Second, joint attentional effects on memory can be observed. To investigate this question all participants performed a memory task after completing a free viewing task of static scenes. In the *explicit encoding group* participants received the information that the viewing task is followed by a memory test. In contrast, the *free viewing group* did not receive this instruction in advance. Only participants from the free viewing group should provide an unaffected viewing behavior as @Zwickel2010 demonstrated in their person condition.
+
+*H1*. To replicate the findings from @Zwickel2010, a prioritization for *referenced* objects is predicted for participants in the free viewing group. Identical to @Zwickel2010, this  prioritization is measured in multiple ways. First, there should be an early fixation bias towards *referenced* objects. During presentation time, the total time that *referenced* objects are fixated should be prolonged, with more fixations compared to *not-referenced* objects. For saccades it is expected, that saccades leaving from the head are more likely to land on *referenced* objects, in contrast to *not-referenced* objects.<!--Main effect icond, ANOVA-->
+
+The instruction in the explicit encoding group is thought to induce a more explicit and systematic encoding of the presented scenes resulting in less prioritization for the referenced object. For the free viewing group prioritization for the referenced object are expected (as stated under H1). It is important to note, that it is not expected that the influence of the presence of the person vanishes completely due to top-down modulation. However, the preference for the *referenced* object is supposed to be weaker. For the participants in the explicit encoding group all objects should be equally important for succeeding the task.
+
+*H2*. For gaze following it is expected that the prioritization for the *referenced* object will decrease for participants in the explicit encoding group compared to participants in the free viewing group. This should result in smaller differences between referenced and not-referenced objects in the fixation measurements for the explicit encoding group. For leaving saccades it is also expected that the under H1 expected difference between referenced and not-referenced objects decreases for observer in the explicit encoding group. <!--1st: (Interaction group:icond)
 (?!Hypothese zu Gruppen, dass explicit mehr focus auf Gegensätnde richtet, da anweisung? (Maineffect group) -->
-*H3*. For the follow-up memory test it is assumed, that observers with announced memory test (in the *explicit encoding group*) will recall more items, because they process the scenes more thorough. Additionally it is expected, that in the free-recall condition *referenced* objects are better recalled than not-*referenced* objects.
-        <!-- social attention -->
-*H4*. Additionally to the joint attentional effects stated in H1, the basic effects of social attention are expected. This means, that the head will be prioritized over the body. This prioritization can be measured, in multiple ways. Again, it is expected, that first fixation fall earlier on the head, that it is fixated longer and more often than the body. Additionally, fixations occur earlier on the head, than on the *referenced* object, because the gaze cue needs to be processed in advance.<!--gibt's gar keine Analyse für!!!-->
-*H5*. Due to the instruction of the memory test, and the assumed change in processing the scene, the viewing behavior should change for social stimuli. Due to explicit encoding, it is expected that natural viewing behavior that is known to prioritize the head is reduced and therefore the head loses some of its salience. As a consequence, the head should be prioritized stronger in the *free viewing group* compared to the *explicit encoding group*, resulting in longer fixations, faster fixations and more fixations.
+
+Additionally, the consequences for later cognitive processes, here memory effects, are examined for the different objects and groups. The study aims at answering the question whether more attentional resources on an object results in enhanced memorability. <!--... whether a memory test is sensitive to the attentional resources spent on an object-->This effect is mainly expected for participants in the free viewing group. Those participants are expected to spent remarkably more attentional resources on referenced objects but not on not-referenced objects.
+
+*H3*. For the follow-up memory test it is assumed, that observers with announced memory test (in the *explicit encoding group*) will recall more items than observers without announced memory test (free viewing group), because they process the scenes more thorough. Additionally it is expected, that in the free-recall group *referenced* objects are better recalled than *not-referenced* objects.
+
+<!--In the given study, the motivation for the manipulation of the instructions for the memory test was twofold. First, it is thought to test robustness of the social and joint attention effects and second joint attentional effects on memory can be observed. The influence of the manipulation is expected to reduce spontaneous viewing behavior and foster a more systematic processing of the scene. It is important to note, that it is not expected that the influence of the presence of the person vanishes completely for social and joint attentional effects due to top-down modulation. It is supposed to be weaker, because it does not represent the optimal strategy for the observer. Therefore, the voluntary part of the scene processing might be overwritten. However, as social and joint attentional effects are expected to be (partially) independent of volition and occur spontaneously and reflexive the effects should still be visible regardless for the social attention part and for the joint attention part of this study. Specifically, prioritization effects for the head should be smaller but still visible in the *explicit encoding group*. For the joint attention measures a decreased prioritization for the referenced object is expected for the *explicit encoding group* is decreased compared with the not referenced object. An optimal strategy for observer in the *explicit encoding group* would be to ignore completely the person in the scene, resulting in smaller differences in attentional prioritization between the two object roles.
+Additionally, memory effects sensitive for the role of the object were examined, to answer the question whether more attentional resources on an object pays off with enhanced memorability. This is mainly interesting for the free viewing group with the unbiased viewing behavior, as it is expected that both objects bind comparable amount of attention due to the more systematic processing in the explicit encoding group.-->
+<!-- Observers from the free viewing group who did not receive any instruction in advance should provide an unaffected viewing behavior. Both groups had to recall as many as things as possible from the scenes in a free-recall memory test. With this manipulation it is thought to demonstrate top-down influence on social attention aspects, but also its influence on joint attention. As @Zwickel2010 showed, a person in a scene influences the viewing behavior of observers spontaneously and without further instruction or manipulation.-->
+<!--*H4*. Additionally to the joint attentional effects stated in H1, the basic effects of social attention are expected. This means, that the head will be prioritized over the body. This prioritization can be measured, in multiple ways. Again, it is expected, that first fixation fall earlier on the head, that it is fixated longer and more often than the body. Additionally, fixations occur earlier on the head, than on the *referenced* object, because the gaze cue needs to be processed in advance.--><!--gibt's gar keine Analyse für!!!-->
+<!--*H5*. Due to the instruction of the memory test, and the assumed change in processing the scene, the viewing behavior should change for social stimuli. Due to explicit encoding, it is expected that natural viewing behavior that is known to prioritize the head is reduced and therefore the head loses some of its salience. As a consequence, the head should be prioritized stronger in the *free viewing group* compared to the *explicit encoding group*, resulting in longer fixations, faster fixations and more fixations.-->
 
 
 # Methods
 <!-- We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
-In this study `r length(df.w.demo$vp)` observers (`r length(df.w.demo$sex[df.w.demo$sex==1])` female and `r length(df.w.demo$sex[df.w.demo$sex!=1])` male) between `r min(df.w.demo$age)` and `r max(df.w.demo$age)` years (M = `r round(mean(df.w.demo$age),2)`, SD = `r round(sd(df.w.demo$age),2)`) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburg's online subject pool or by blackboard. For participation observers received study credit or 5€. One observer was excluded due to missing data.
+In this study `r length(df.w.demo$vp)` subjects (`r length(df.w.demo$sex[df.w.demo$sex==1])` female and `r length(df.w.demo$sex[df.w.demo$sex!=1])` male) between `r min(df.w.demo$age)` and `r max(df.w.demo$age)` years (M = `r round(mean(df.w.demo$age),2)`, SD = `r round(sd(df.w.demo$age),2)`) participated voluntarily. All observer had normal or corrected vision and were recruited at the University of Würzburg's online subject pool or by blackboard. For participation observers received study credit or 5€. One observer was excluded due to missing data. All participants gave informed consent.
 
 ## Stimuli and Apparatus
-The experimental stimuli consisted of 26 different scenes with a single individual in the center looking at one of two objects of interests in the right or left half of the photography. The direction of the gaze cue and the place of the objects were balanced, creating 104 unique naturalistic scenes in the end. For each participant, a set was randomly generated from this pool containing each scene only once, resulting in 26 trials with exclusive scenes. Eye movements were tracked with the corneal-reflexion method and were recorded with an EyeLink1000 tower system, sampling at 1000 Hz. The eye tracker and stimuli were controlled by the software Presentation® (Neurobehavioral Systems).
+The experimental stimuli consisted of 4 photographs of 26 different scenes with a single individual looking at one of two objects of interests. The direction of the gaze and the place of the objects were balanced, creating 104 unique naturalistic scenes in the end. For each participant, a set was randomly generated from this pool containing one version of each scene, resulting in 26 trials. Eye movements were tracked with the corneal-reflexion method and were recorded with an EyeLink1000 tower system, sampling at 1000 Hz. The eye tracker and stimuli were controlled by the software Presentation® (Neurobehavioral Systems).
 
 ## Design and Procedure
-The experimental design was a 2 x 2 within-between observer design. First, as a two-level factor the instruction was manipulated between subjects (*free viewing* vs. *explicit encoding*). Additionally, as a two-level within subjects factor the role of the object was manipulated (*referenced* vs. *not-referenced*).
+The experimental design was a 2 x 2 mixed design. First, as a two-level factor the instruction was manipulated between subjects (*free viewing* vs. *explicit encoding*). Additionally, as a two-level within subjects factor the role of the object was manipulated (*referenced* vs. *not-referenced*).
 
-First, observer were ask to give full informed consent. Then the eye-tracker was calibrated for the observer. According to the manipulation, only half of the observers were told that  there is a follow-up memory test. All observers were then told to look at the following scenes as they would look at photographs. The presentation of the scenes was randomized and the roles of the objects and their location were completely balanced and controlled. In each trial the scene was present for 10 seconds. Inter trial interval was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz). To prevent primacy and recency effects the questionnaire session was also used as a puffer for the following memory task. Afterwards all observers were asked to recall as many items as possible in a free recall memory-test. Observers received credit afterwards.
+First, subjects were ask to give full informed consent. Then the eye-tracker was calibrated for the subject. According to the manipulation, only half of the observers were told that  there is a follow-up memory test. All observers were then told to look at the following scenes as they would look at photographs. The presentation of the scenes was randomized. In each trial the scene was presented for 10 seconds. The inter trial interval was randomized between 2 and 4 seconds. After the last trial participants filled in questionnaires (demographics, autism-questionnaire (short), and Inventar soziale kompetenz). To prevent primacy and recency effects the questionnaire session was also used as a puffer for the following memory task. After filling in the questionnaires, all participants were asked to recall as many items as possible in a free recall memory task. Participants received credit or payment afterwards.
 
 
 ## Data analysis
-For the analysis standard configuration of SR Research’s EyeLink DataViewer software was used to categorize eye movements into saccades and fixations. Saccades were defined as eye movements exceeding a velocity threshold of 30°/sec or an acceleration threshold of 8.000°/sec2. Fixations were defined as time periods between saccades. Regions-of-Interest (ROI) were hand-drawn around the relevant objects and the face and body of the individual in the center. These ROIs were color-coded for cued and uncued objects and for the head and body of the individual on the photography to determine gaze locations. <!-- Outlier detection?!!? -->
+For data processing and statistical analysis the the open-source statistical programming language *R* [@R-base] is used with the packages *tidyverse* [@R-tidyverse] and *lme4* [@R-lme4]. *papaja* [@R-papaja] was used for the manuscript.
+Separate repeated measures ANOVAs (rmANOVA) with the between-subject factor *group* and the within-subject factor *reference* were conducted for the dependent variables fixation latency of the objects, fixation duration of the objects, number of fixation of the objects and recalled items. Additionally, rmANOVAs are also conducted for the head and body region with the factor group with the dependent variables fixation latency of the region, fixation duration of the region, number of fixations of the region to investigate prioritization for the presented person.
+For all analysis the a priori significance level of **alpha** = 0.05 was used. As effect sizes **eta**² for ANOVAS are reported.
+For the analysis of the eye tracking data standard configuration of SR Research’s EyeLink DataViewer software was used to categorize eye movements into saccades and fixations. Saccades were defined as eye movements exceeding a velocity threshold of 30°/sec or an acceleration threshold of 8.000°/sec². Fixations were defined as time periods between saccades. Regions of interest (ROI), the gazed-at object, the not gazed-at object, the head and the body, were color-coded by hand using Gimp (GNU Image Manipulation Program) to determine gaze locations.
+ANOVAs were conducted for several measures of prioritization.
 
-`r cite_r("r-references.bib")` is used for all analyses.
+## Variables
+The duration and the number of all fixations is cumulated for each ROI in each trial. Specifically, for fixation duration the cumulative time a fixation rested on a ROI was divided by the total time spent fixating any other rest of the scene. For fixation number fixations were count per ROI and divided by the total number of fixations.
+An additional measurement of prioritization, particularly for early attention allocation, is fixation latency. It describes in each trial the time for each ROI until first fixation.
+These measures allow for effective comparisons of prioritization between the two relevant objects and between the head and the body.
+To reveal direct relations between the head and the relevant objects saccades leaving the head are count for gazed-at and not gazed-at objects and divided by all saccades leaving the head.
+<!--`r cite_r("r-references.bib")` is used for all analyses.-->
 
 
 # Results
 Prioritization of the ROIs in the scene were measured in multiple ways. 
 
-## Joint attention
-
-As a measure of prioritization fixation duration, fixation number, fixation latency, as well as leaving saccades are used. For all measures, higher values indicate prioritization. 
-
+## Gaze following
 ### Fixations
-```{r TO-DO: Plots fixations joint, warining = FALSE, message = FALSE}
-
-```
-
 ```{r Descriptives fix*, warining = FALSE, message = FALSE}
 
 # Descriptives for fixation chacracteristics for joint attention
@@ -287,7 +287,281 @@ dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn","
 
 ```
 
-```{r Anova fixations joint, warning = FALSE, message = FALSE}
+```{r Descriptives saccade, include=FALSE}
+dscr.sac.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
+  mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+         area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         area = as.factor(substring(area,1,1)),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,2)), 
+         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),gazed=c("gaze", "gaze", "nongaze", "nongaze"),stat=c("mean", "se"),measure=c(.14,0.01,.09,0.01)) # free = person
+
+```
+
+```{r Descriptives memory}
+
+dscr.mem <- df.w.mem %>% rename( group = bed) %>% 
+  group_by(group) %>%
+  summarise_at(vars(memgaze:memnogaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>%
+  gather(key, value, memgaze_mean: memnogaze_se, factor_key = T) %>%
+  separate(key, c("key", "stat"), sep = "\\_", extra = "merge") %>% 
+  spread(stat, value) %>%
+  mutate(lowerSE = mean - se,
+         upperSE = mean + se)
+
+```
+
+```{r results = 'asis', echo = TRUE}
+
+t1 <- dscr.fix.rpl %>%
+  filter(gazed %in% c("gaze", "nongaze"), group == "free", gazed == "gaze") %>% 
+  select(fix, stat, measure) %>% 
+  spread(key = "stat", value = "measure")
+
+t2 <- dscr.fix.rpl %>%
+  filter(gazed %in% c("gaze", "nongaze"), group == "free", gazed == "nongaze") %>% 
+  select(fix, stat, measure) %>% 
+  spread(key = "stat", value = "measure")
+
+t3 <- dscr.fix.rpl %>%
+  filter(gazed %in% c("gaze", "nongaze"), group == "mem", gazed == "gaze") %>% 
+  select(fix, stat, measure) %>% 
+  spread(key = "stat", value = "measure")
+
+t4 <- dscr.fix.rpl %>%
+  filter(gazed %in% c("gaze", "nongaze"), group == "mem", gazed == "nongaze") %>% 
+  select(fix, stat, measure) %>% 
+  spread(key = "stat", value = "measure")
+           
+
+t5 <- cbind(t1,t2[-1],t3[-1],t4[-1])
+
+t6 <- list(`Measure`=t1[1], `gazed-at`= t1[-1], `not gazed-at`=t2[-1], `gazed-at`=t3[-1], `not gazed-at`=t4[-1])
+
+apa_table(t5,
+          align = c("l", rep("c", 12)),
+          caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (gazed-at, not gazed at",
+          note = "here is space for a note.",
+          #added_stub_head = "Variables",
+          #col_spanners = list(`free viewing`= c(2,7), `explicit encoding`= c(8,13)),
+          landscape = TRUE
+          )
+
+```
+
+```{r Layout plots, echo=FALSE}
+cTheme = theme(
+    title = element_text(size = 8, color = "black"),
+    text=element_text(size=12, color = "black"),
+    axis.title=element_text(size=12, color = "black"),
+    axis.line = element_line(colour = "black"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(colour = "grey", size = .01),
+    panel.background = element_blank(),
+    legend.text = element_text(size=12, color = "black"),
+    legend.position = "none")
+cColors = c("darkgrey", "lightgrey")
+cLabels = c("free", "explicit")
+
+
+#family = "Times New Roman", excluded due to warnings
+
+```
+
+```{r Plots objects, echo = FALSE, message=FALSE}
+
+cLimitsObjects = c(0,0.17)
+
+p1.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(), limits = cLimitsObjects) +
+  scale_x_discrete(name = element_blank(), labels=element_blank()) +
+  scale_fill_manual(name = "Objects", labels = c("gazed-at", "not gazed-at"), values=cColors) +
+  labs(title = "Objects", subtitle = "Fixation duration") 
+
+cLegendObjects <- get_legend(p1.fixdur.rpl)
+
+p1.fixdur.rpl <- p1.fixdur.rpl +
+  cTheme
+
+p2.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  ## Significanes from duration!!!
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(), limits = cLimitsObjects) +
+  scale_x_discrete(name = element_blank(), labels=element_blank()) +
+  scale_fill_manual(name = element_blank(), values=cColors) +
+  labs(title = " ", subtitle = "Fixation number") +
+  cTheme
+
+p3.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+  scale_y_continuous(name = element_blank(), limits = c(0,3400)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColors) +
+  labs(title = " ", subtitle = "Fixation latency") +
+  cTheme
+
+p4.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values=customColors) +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" )$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f")$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.15, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p = .002 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=.13, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
+  #geom_signif(annotation="***", y_position=.13, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
+  scale_y_continuous(name = element_blank(), labels = percent_format(), limits = cLimitsObjects) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values = cColors) +
+  labs(title = " ", subtitle = "Saccades leaving head") +
+  cTheme
+
+p5.mem.rpl <- dscr.mem %>% 
+  ggplot(aes(x = group, y=mean, fill = key)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=lowerSE,
+    ymax=upperSE),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=10.5, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="n.s.", y_position=11, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=11, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), breaks = seq(0,10, by = 5), limits = c(0,11)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColors) +
+  labs(title = " ", subtitle = "Memory performance") +
+  cTheme
+
+```
+
+```{r barplotsObjects, fig.cap = "Bar plot of the different prioritisation measuers for the fixation of the gazed-at and not gazed-at objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=7}
+
+grid.arrange(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, layout_matrix = rbind(c(1,2,6), c(3,4,5)))
+
+rm(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, cLimitsObjects)
+
+```
+
+```{r Plots head, echo = FALSE, message=FALSE}
+
+cLimitsHeads = c(0,0.28)
+
+p6.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(), limits = cLimitsHeads) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = "Persons", labels = c("Head", "Body"), values=cColors) +
+  labs(title = "Head and Body", subtitle = "Fixation duration") 
+
+cLegendHead <- get_legend(p6.fixdur.rpl)
+
+p6.fixdur.rpl <- p6.fixdur.rpl +
+  cTheme
+
+
+p7.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  ## Significanes from duration!!!
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(), limits = cLimitsHeads) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColors) +
+  labs(title = " ", subtitle = "Fixation number") +
+  cTheme
+
+p8.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+  scale_y_continuous(name = element_blank(), limits = c(0,2800)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColors) +
+  labs(title = " ", subtitle = "Fixation latency") +
+  cTheme
+
+```
+
+```{r barplotsHead, fig.cap = "Bar plot of the different prioritisation measuers for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height = 3.5}
+
+grid.arrange(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, cLegendHead, layout_matrix = rbind(c(1,2,3,4)))
+
+rm(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, p5.mem.rpl, cLegendHead, cLimitsHeads)
+
+```
+
+```{r ANOVA fixations joint, warning = FALSE, message = FALSE}
 
 # ANOVA Fixations characteristics for joint attention
 ## 2 (Group) x 2 (Gaze) ANOVA
@@ -309,68 +583,20 @@ rm(carmod, idata, icond, st)
 
 #### Fixation duration
 <!-- (H1, H2) -->
-The duration of all fixations is cumulated for each object. Specifically, the cumulative time (in ms) a fixation rested on an object was divided by the total time spent fixating any other rest of the scene. By that, a relative measures for fixation duration was gained. Observer show a bias towards the *referenced* object, which was fixated longer (see Table/Figure). As predicted the corresponding ANOVA revealed a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond` and for condition `r apa.anova.fix.gaze$full_result$df_w_et_group`. Against prediction there was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`. <!-- was it against pred? -->  <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> 
+In fixation duration the predicted difference, that participants fixated the gazed-at object longer (see Figure\ \@ref(fig:barplotsObjects)) finds supported in the 2 x 2 ANOVA for fixation duration, indicating a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond`. Against prediction there was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond` but a significant main effect for group `r apa.anova.fix.gaze$full_result$df_w_et_group`. Participants in the explicit group fixate objects longer than participants in the free viewing group. <!-- was it against pred? -->  <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> 
 
 #### Fixation latency
 <!-- (H1, H2) -->
-An additional measurement of prioritization is fixation latency. That is for each object the mean time out of all first fixations per object each trial<!--besser formulieren!!-->. This measure shows, that objects are fixated earlier when they are *referenced*, but also when the observer was in the explicit encoding condition. The statistical significance is confirmed by an ANOVA: for reference `r apa.anova.fixlat.gaze$full_result$icond` and condition, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`). The interaction shows a trend, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`, suggesting a smaller difference for reference for the *explicit encoding group*.
+Faster fixations for the gazed-at object (see Figure\ \@ref(fig:barplotsObjects)) compared to not gazed-at objects are confirmed to be statistical significant by the 2 x 2 ANOVA for fixation latency `r apa.anova.fixlat.gaze$full_result$icond`. Group membership is also significant, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`, with faster fixations in the explicit encoding group compared to the free viewing group. The interaction shows a trend, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`, suggesting a smaller differences between objects in the *explicit encoding group*.
 
 #### Fixation number
 <!-- (H1, H2) -->
-As a third measurement of prioritization, fixation number, as the count of fixations per object, divided by the total number of fixations during scene presentation, was calculated. It shows that objects were fixated more often when *referenced*, `r apa.anova.fixn.gaze$full_result$icond`. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`, and again against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
+That gazed-at objects were fixated more often (See Figure\ \@ref(fig:barplotsObjects)) is confirmed in the 2 x 2 ANOVA on fixation number, `r apa.anova.fixn.gaze$full_result$icond`. Objects were also more often fixated in the explicit encoding condition`r apa.anova.fixn.gaze$full_result$df_w_mem`. Against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`, indicating no difference between the objects in relation to instruction group.
  
 
 ### Saccades
 
-```{r descriptives saccade, include=FALSE}
-dscr.sac.rpl <- df.w.et %>%
-  group_by(group) %>%
-  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
-  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
-  mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
-         area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
-         area = as.factor(substring(area,1,1)),
-         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
-         gazed = as.factor(substring(gazed,2)), 
-         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
-  select(-measure, everything()) %>% # neusortieren der variablen
-  select(key, everything())
-
-dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),gazed=c("gaze", "gaze", "nongaze", "nongaze"),stat=c("mean", "se"),measure=c(.14,0.01,.09,0.01)) # free = person
-
-```
-
-```{r Matthias plots saccade, include=FALSE, echo = FALSE}
-# Plots: Saccade data
-'
-farben <- c("blue","yellow")
-ttxt <- c("Person","Face","Body")
-
-for (i in 1:3) {
-  st <- (17:19)[i]
-
-  # Fixation density
-  m  <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,mean),
-              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,mean))
-  se <- cbind(apply(df.w.et[df.w.et$group=="free",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="free")),
-              apply(df.w.et[df.w.et$group=="mem",c(st,st+3)],2,sd)/sqrt(sum(df.w.et$group=="mem")))
-
-  yrng <- c(0,max(m+se))
-
-  x <- barplot(m,beside=TRUE,col=farben,ylim=yrng,xlab="",ylab="% of total fixation time")
-  arrows(x,m-se,x,m+se,length=0.03,angle=90,code=3,col="black")
-  axis(1,apply(x,2,mean),c("Free viewing","Explicit encoding"),tick=FALSE)
-
-  title(ttxt[i])
-}
-
-legend(max(x),max(yrng),c("Cued","Uncued"),fill=farben,xjust=1,yjust=1)
-
-rm(m, se, yrng, x, st, farben, ttxt, i)
-'
-```
-
-```{r Anova saccades, warning=FALSE, message=FALSE}
+```{r ANOVA saccades, warning=FALSE, message=FALSE}
 # ANOVA Saccades
 ## 2 (Group) x 2 (Gaze) ANOVA
 
@@ -390,18 +616,13 @@ for (st in 17:19) {
 rm(carmod, idata, icond, st)
 ```
 
-#### Leaving saccades
 <!-- (H1, H2) -->
-The second hypothesis predicts that there are more saccades leaving from the head to the *referenced* object. Furthermore it is claimed, that an interaction between instruction and reference results in increasing differences in the free viewing group. The first claim finds statistical support from an Anova. There is a significant main effect for reference, `r apa.anova.sac.fgaze$full_result$icond`, and for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`. No confirmation was found for the predicted interaction between reference and instruction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
+That saccades leaving the head are more likely to land on the gazed-at object (see Figure\ \@ref(fig:barplotsObjects)) is confirmed by a significant main effect in the 2 x 2 ANOVA for for leaving saccades, `r apa.anova.sac.fgaze$full_result$icond`. The main effect for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group` shows that saccades of participants in the explicit encoding group leave the head more often to both objects. No confirmation was found for the predicted interaction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
 ### Memory
 <!-- (H3) -->
 
-```{r plots memory}
-
-```
-
-```{r Anova memory, warning=FALSE, message=FALSE, echo = FALSE}
+```{r ANOVA memory, warning=FALSE, message=FALSE, echo = FALSE}
 
 # Recalled items
 # 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
@@ -416,20 +637,15 @@ carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
 anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
 apa.anova.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III"), correction="GG", mse = FALSE)
 
-dscr.mem <- df.w.mem %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
-dscr.mem.group <- df.w.mem %>% group_by(bed) %>% summarise(mean(memgaze), sd(memgaze), mean(memnogaze), sd(memnogaze))
 
 rm(imem, idata, carmod)
 ```
 
-The free-recall memory test showed, that observers with who received the instruction of the memory test before the free viewing remembered more items than observers from the other group. An Anova showed its statistical significance, `r apa.anova.mem$full_result$df_w_mem_bed`. However, against prediction, referencing an object did not influence memory performance, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`, such that referencing an object would increase memorability only for one group, as it is stated in the hypothesis for the free viewing group.
+The free-recall memory test showed, that observers with who received the instruction of the memory test before the free viewing remembered more items than observers from the other group (see Figure\ \@ref(fig:barplotsObjects)). The corresponding 2 x 2 ANOVA indicates its statistical significance, `r apa.anova.mem$full_result$df_w_mem_bed`. The main effect for objects was not significant, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`, such that referencing an object would increase memorability only for the free viewing group, as it is stated in the hypothesis.
 
-## Social attention
-A similar pattern to the objects can be seen when comparing the head with the body region. Again, there were the same measurements to account for prioritization. 
 
-```{r TO-DO: Plots fixations social, warining = FALSE, message = FALSE}
 
-```
+A similar pattern to the objects can be seen when comparing the head with the body region.
 
 ```{r Descriptives fixations social, warining = FALSE, message = FALSE}
 
@@ -439,7 +655,7 @@ dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body
 dscr.fixsoc.group <- df.w.et %>% group_by(group) %>% summarise(mean(fix.face), sd(fix.face), mean(fix.body), sd(fix.body), mean(fixn.face), sd(fixn.face), mean(fixn.body), sd(fixn.body), mean(fixlat.face), sd(fixlat.face), mean(fixlat.body), sd(fixlat.body))
 ```
 
-```{r Anova fixations social, warning = FALSE, message = FALSE}
+```{r ANOVA fixations social, warning = FALSE, message = FALSE}
 # ANOVA Fixations characteristics
 ## 2 (Group) x 2 (Face/Body) ANOVA
 
@@ -457,13 +673,15 @@ for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; 
 rm(carmod, idata, icond, st)
 
 ```
-For the social attention part Anovas are conducted for the same dependent variables indicating prioritization, but the head is compared against the body region.
-
+## Head prioritization
 ### Face vs body fixation (H4)
-The first measurement shows, that head regions were fixated longer than the body  (Table X), `r apa.anova.fix.face$full_result$icond`, but there is no difference between the instruction-groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and no interaction between the two factors, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
+#### Fixation duration
+That head regions were fixated longer than the body (see Figure\ \@ref(fig:barplotsHead)) finds support in the corresponding 2 x 2 ANOVA on fixation duration for the main effect region, `r apa.anova.fix.face$full_result$icond`. No difference are found for the main effect instruction groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and for the interaction, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
 
-The same pattern can be seen for fixation number, with a strong effect for region, with more fixations on the head, `r apa.anova.fixn.face$full_result$icond` and no difference between the groups, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
+#### Fixation number
+The same pattern can be seen for fixation number (see Figure\ \@ref(fig:barplotsHead)). The 2 x 2 ANOVA on fixation number shows a significant main effect for the region, `r apa.anova.fixn.face$full_result$icond` and no difference between the groups, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
 
+#### Fixation latency
 Latencies of fixation differed also remarkably between head and body, but only for region `r apa.anova.fixlat.face$full_result$icond`. There was neither an effect for instruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was there an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
 ### free viewing vs explicit encoding for face fixations (H5)
@@ -500,7 +718,11 @@ rm(msd, teststat, st)
 
 ```
 
-A post Hoc t-test between head fixations for each group provides information whether heads are differently processed dependent on the instruction observers get. It reveals, that only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group. For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result`. In addition, fixation number did not differ, `r apa.ttest.fixn.face$full_result`.
+A post Hoc t-test between head prioritization measures for each instruction group provides information whether heads are differently processed dependent on the instruction observers get. It reveals, that only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group compared to the explicit encoding group (see table). For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result` with longer fixations for participants in the free viewing group. In addition, fixation number did not differ, `r apa.ttest.fixn.face$full_result`.
+
+## Questionnaires
+
+
 
 
 # Discussion
@@ -513,6 +735,10 @@ Additionally, also in line with @Zwickel2010 *referenced* objects were preferenc
 Moreover, the consistent prioritization of the head and the *referenced* object indirectly suggest a link between these two regions. To investigate a direct relation leaving saccades from the head are examined as well. It is shown that saccades leaving the head are more likely to end on the *referenced* object. This underlines a direct link between the head and the *referenced* object.
 So far, the given results replicate all aspects @Zwickel2010 demonstrated for the presence of a person in their study.
 However, this replication included a top-down modulation, used photographic scenes and had considerably more power than the original study. Although it is unclear how the photographs changed the results compared to the computer rendered scenes, the higher power lead to more precise estimation of the effect sizes. Note, however, that this was not a direct but a conceptual replication, showing that @Zwickel2010 findings can be generalized from computer rendered to photographic scenes.
+<!-- @Zwickel2010 had very little power in their study, with n = 16 participants -- zu unserer Power was schreiben?!-->
+@Zwickel2010 used computer-generated stimuli. Here, stimuli that are more naturalistic and a bigger sample size is used.
+Consequently, real photographs are chosen over computer rendered scenes. As often, by being more naturalistic experimental control is reduced. The consequences are hold to a minimum by producing the stimuli the same way. In particular, each scene was photographed four times, with the individual looking twice to the left and right to each object. Although, as much as possible was controlled for in the photographs, real photographs contain small unavoidable changes. Whereas @Zwickel2010 rotate the figure in the computer rendered scene, they have complete control of all the changes, e.g. angel of the body or facial expression. Here, another photography was taken. As consequence, for example, the body orientation within the four balanced scenes cannot be perfectly controlled and might differ slightly between photographs within scenes.<!-- nochmal sagen, warum das torztdem toll ist? -->
+With higher power and stimuli, that are more naturalistic, this study aims at <!-- still, however, nevertheless, yet, regardless, even though, despite --> underline @Zwickel2010 findings. However, it is presumed that the effect showed by @Zwickel2010 is genuine for social stimuli. Therefore, no non-social condition comparable to the loudspeaker-condition was tested.  
 <!-- top-down -->
   Besides replicating, this study aims also at extending the line of research, generalizing it to new stimuli and at testing the pattern in gaze behavior as it was shown here against top-down modulation, specifically an instructed task prior free viewing. Unsurprisingly the task scores show, that observer, who knew about the free-recall task in advance perform better in recalling items. More interesting, viewing behavior was different depending on instruction group. Specifically, observer pay more attention to objects when they received the instruction prior to the viewing part, and at the same time, the head loses some of its natural salience. Both findings are consistent over all measures. These findings suggest that observers with instruction had a more systematic gaze pattern, where they preferred task relevant objects. **However, no interaction between top-down modulation and reference of an object can be found.** Consistent for social attention as well as joint attention, prioritization in all measurements remain stable against the memory task instruction. The prioritization shown for the head and for the *referenced* object was unaffected by the given top-down modulation<!--, although descriptive differences became smaller (note, that this trend was not significant)-->. The attentional guidance of social and joint attentional processes can be seen, even when observers investigate the scene more systematic. This evidence provides support for the automaticity and reflexivness of joint and social attentional effects, even when the observer voluntarily aims at scanning the scene systematically. Nevertheless, observer with instructed free-recall task performed better. However, the contribution of the attentional reallocation remains unclear.
 In particular, **whether an object was cued or not by the person, did not influence its probability being recalled**. This is in contrast to the increased attention referenced objects receive. That is partially inconsistent with the hypothesis, which stated correct that scene processing changes, but the actual link is missing that the change in processing for solving the task can be explained from the attentional reallocation of attention. Even as it is assumed, these findings do not indicate a link between spent attentional resources and performance for recall.<!--This missing link can mean WHAT!?--> <!-- korrelation zeit angeschaut und erinnert? -->
@@ -520,15 +746,15 @@ Overall, the results provide additional support to previous findings that attent
 <!-- Conclusio -->
 All in all, our results indicate that the mere presence of other human beings as well as their gaze orientation have a strong impact on attentional exploration. The observed attentional guidance of the gaze was so robust to resist even top-down modulation. It is concluded that attentional guidance by social attentional and joint attentional trigger is very robust.
 
-<!--#Schrott
-Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leaving saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
-Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (object), 3: saccades (head -> object), 4: (kurzes oder detailliertes?!) fazit replication, 5: top down-modulation, 6: ?! DENK NACH! ?!, 7: conclusio
 
 
+<!--Besides that, manipulation all observer did exactly the same experiment (with balanced and randomized stimuli). By instruction objects became relevant for succeeding in the memory task. Conclusively, attention towards the person would be inefficient.-->
 
 Unlike @Zwickel2010, naturalistic photographic are used, in contrast to computer rendered scenes.-->
 
-
+<!--#Schrott
+Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leaving saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
+Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (object), 3: saccades (head -> object), 4: (kurzes oder detailliertes?!) fazit replication, 5: top down-modulation, 6: ?! DENK NACH! ?!, 7: conclusio
 <!-- was will ich erzählen?! Replikation -> Kopf-prio, gazed-prio, sac-prio! --> 
 <!-- was ist relevant?! --> 
 <!-- was überrascht nicht?! topdown-modulatioon verändert blickverhalten--> 
