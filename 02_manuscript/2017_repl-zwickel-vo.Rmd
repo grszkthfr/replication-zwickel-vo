@@ -35,6 +35,7 @@ bibliography      :
 
 figsintext        : no
 figurelist        : no
+tableintext        : no
 tablelist         : no
 footnotelist      : no
 lineno            : no
@@ -209,7 +210,7 @@ mutate_at(
 Humans in their social environment rely on the information conspecifics provide. This does not only hold for reading explicit signals, as in conversations, but also for implicit signals, as in gazes. Specifically, if an individual looks into a certain direction, this information is often read spontaneously by an observer who redirects his or her attention towards the referred object or location. Such guidance of someone else's attention is  called gaze following. As a consequence, joint attention is established.
 
   <!-- gaze cuing to joint attenion & social attention -->
-The most frequently used paradigm to investigate such attentional shifts is the so-called gaze cueing paradigm [@Friesen1998; @Driver1999; @Langton2000; for a review see: @Frischen2007]. Studies using this paradigm show that perceived gaze cues (e.g. faces looking at a certain location) lead to reflexive attentional shifts, which can result in a processing benefit for the gazed-at locations. Even though gaze cues are crucial for joint attention, the standard gaze cueing paradigm is criticized for lacking ecological validity, because (among others) these studies use isolated heads [@Friesen1998; @Langton2000] or even cartoon heads [@Driver1999; @Ristic2005] as gaze cues [for an overview see: @Risko2012]. For example, in a recent study @Hayward2017 compared attentional measures of gaze following from laboratory (classical gaze cueing) and real world (real social engage) and did not find reliable links between those measures.  
+The most frequently used paradigm to investigate such attentional shifts is the so-called gaze cueing paradigm [@Friesen1998; @Driver1999; @Langton2000; for a review see: @Frischen2007a]. Studies using this paradigm show that perceived gaze cues (e.g. faces looking at a certain location) lead to reflexive attentional shifts, which can result in a processing benefit for the gazed-at locations. Even though gaze cues are crucial for joint attention, the standard gaze cueing paradigm is criticized for lacking ecological validity, because (among others) these studies use isolated heads [@Friesen1998; @Langton2000] or even cartoon heads [@Driver1999; @Ristic2005] as gaze cues [for an overview see: @Risko2012]. For example, in a recent study @Hayward2017 compared attentional measures of gaze following from laboratory (classical gaze cueing) and real world (real social engage) and did not find reliable links between those measures.  
 
   <!-- social attention -->
 <!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen, weitere Ansätze-->To account for these issues in gaze cuing paradigms @Zwickel2010 conducted a gaze following study <!--using a so called free viewing paradigm-->with a full person (instead of isolated heads or faces) as a directional cue.
