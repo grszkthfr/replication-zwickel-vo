@@ -412,7 +412,7 @@ t9 <- dscr.fix.rpl %>%
 
 t5 <- cbind(t1,t2[-1],t3[-1],t4[-1]) # only objects
 
-kable(t5, format = "latex", longtable = F, booktabs = T, digits = 0, align =  c('l', rep("c",12)), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)") %>%
+kable(t5, format = "latex", longtable = F, booktabs = T, digits = 0, align =  c('l', rep("c",12), escape = T), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)") %>%
    add_header_above(c(" ", "cued" = 3, "uncued" = 3, "cued" = 3, "uncued" = 3)) %>%
    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
    footnote(general = "Here is a footnote.") #%>% 
@@ -426,7 +426,7 @@ kable(t5, format = "latex", longtable = F, booktabs = T, digits = 0, align =  c(
 
 t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
 
-kable(t10, format = "latex", booktabs = T, digits = 0, align =  c('l', rep("c",12)), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)") %>%
+kable(t10, format = "latex", booktabs = T, digits = 0, align =  c('l', rep("c",12)), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)", escape = T) %>%
   add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
   footnote(general = "Here is a footnote.") %>%
