@@ -51,7 +51,7 @@ output            :
 ```{r load_packages, include = FALSE}
 
 library(tidyverse)
-#library("ggsignif")
+#library(ggsignif)
 library(car)
 library(knitr)
 library(papaja)
