@@ -50,12 +50,12 @@ output            :
 
 ```{r load_packages, include = FALSE}
 
-library("tidyverse")
+library(tidyverse)
 #library("ggsignif")
-library("car")
-library("knitr")
-library("papaja")
-library("kableExtra")
+library(car)
+library(knitr)
+library(papaja)
+library(kableExtra)
 
 ```
 
