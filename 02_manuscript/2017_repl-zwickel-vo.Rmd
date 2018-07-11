@@ -662,19 +662,15 @@ rm(carmod, idata, icond, st)
 ```
 
 ## Gaze following
-#### Fixation duration
+<!-- #### Fixation latency -->
 <!-- (H1, H2) -->
-In fixation duration the predicted difference, that participants fixated the cued object longer (see Figure\ \@ref(fig:barplotsObjects)) finds supported in the 2 x 2 ANOVA for fixation duration, indicating a significant main effect for reference, `r apa.anova.fix.gaze$full_result$icond`. Against prediction there was no effect of the two-way interaction, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond` but a significant main effect for group `r apa.anova.fix.gaze$full_result$df_w_et_group`. Participants in the explicit group fixate objects longer than participants in the free viewing group. <!-- was it against pred? -->  <!-- The relative cumulative fixation duration is calculated as time duration on an object divided by--> 
+A significant main effect of object role in the analysis of fixation latencies indicates earlier fiations on cued compared to uncued objects, `r apa.anova.fixlat.gaze$full_result$icond`. The main effect of instruction group was also significant, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`, with earlier fixations on both objects in the explicit encoding compared to the free viewing group. The interaction effect failed to reach statistical singificance, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
 
-#### Fixation latency
+<!--#### Fixation duration & number-->
 <!-- (H1, H2) -->
-Faster fixations for the cued object compared to uncued objects (see Figure\ \@ref(fig:barplotsObjects)) are confirmed to be statistical significant by the 2 x 2 ANOVA for fixation latency `r apa.anova.fixlat.gaze$full_result$icond`. Instruction group is also significant, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`, with faster fixations in the explicit encoding group compared to the free viewing group. The interaction shows a trend, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`, suggesting a smaller differences between objects in the *explicit encoding group*.
+Largely similar effects were obtained in the analyses of fixation durations and numbers (see Figure X). Significant main effects of object role indicate that  participants fixated the cued object longer (see Figure\ \@ref(fig:barplotsObjects)), `r apa.anova.fix.gaze$full_result$icond`, and more often then the uncued object, `r apa.anova.fixn.gaze$full_result$icond`. Explicit instructions also led to longer, `r apa.anova.fix.gaze$full_result$df_w_et_group`, and more fixations on the objects as compared to the free viewing condition, `r apa.anova.fixn.gaze$full_result$df_w_et_group`. The interaction effects of instruction group and object role were not statistically significant, neither for the durations, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`, nor for the number of fixations, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
 
-#### Fixation number
-<!-- (H1, H2) -->
-That cued objects were fixated more often (See Figure\ \@ref(fig:barplotsObjects)) is confirmed in the 2 x 2 ANOVA on fixation number, `r apa.anova.fixn.gaze$full_result$icond`. Objects were also more often fixated in the explicit encoding group`r apa.anova.fixn.gaze$full_result$df_w_mem`. Against prediction there was no interaction, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`, indicating no difference between the objects in relation to instruction group.
-
-### Saccades
+<!--### Saccades-->
 
 ```{r ANOVA saccades, warning = TRUE, message = TRUE}
 # ANOVA Saccades
@@ -697,9 +693,9 @@ rm(carmod, idata, icond, st)
 ```
 
 <!-- (H1, H2) -->
-That saccades leaving the head are more likely to land on the cued object (see Figure\ \@ref(fig:barplotsObjects)) is confirmed by a significant main effect in the 2 x 2 ANOVA for leaving saccades, `r apa.anova.sac.fgaze$full_result$icond`. The main effect for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`, shows that saccades of participants in the explicit encoding group leave the head more often to both objects. No confirmation was found for the predicted interaction `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
+Saccades leaving the head were more likely to land on the cued compared to the uncued object (see Figure\ \@ref(fig:barplotsObjects)) as confirmed by a significant main effect of object role, `r apa.anova.sac.fgaze$full_result$icond`. The main effect for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`, shows that saccades of participants in the explicit encoding group were more often directed towards any of the objects as compared to the free viewing group. Again, the interaction effect of instruction group and object role fails to reach statistical singificance `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
 
-### Memory
+## Memory for objects
 <!-- (H3) -->
 
 ```{r ANOVA memory, warning = TRUE, message = TRUE, echo = FALSE}
@@ -721,10 +717,9 @@ apa.anova.mem <- apa_print(Anova(carmod, idata=idata, idesign=~imem, type="III")
 rm(imem, idata, carmod)
 ```
 
-The free-recall memory test showed, that participants in the explicit encoding group remembered more items than participants from the other group (see Figure\ \@ref(fig:barplotsObjects)). The corresponding 2 x 2 ANOVA indicates its statistical significance, `r apa.anova.mem$full_result$df_w_mem_bed`. The main effect for objects was not significant, `r apa.anova.mem$full_result$imem`. There was also no interaction, `r apa.anova.mem$full_result$df_w_mem_bed_imem`, such that referencing an object would increase memorability only for the free viewing group, as it is stated in the hypothesis.
+An analysis of the recall data showed, that participants in the explicit encoding group remembered more items than participants from the other group (see Figure\ \@ref(fig:barplotsObjects)), `r apa.anova.mem$full_result$df_w_mem_bed`. Neither the main effect of object role, `r apa.anova.mem$full_result$imem` nor the interaction effect were statistically significant, `r apa.anova.mem$full_result$df_w_mem_bed_imem`.
 
 ## Social prioritization
-A similar pattern to the objects can be seen when comparing the head with the body region.
 ```{r Descriptives fixations social, warining = FALSE, message = FALSE}
 
 # Descriptives for fixation chacracteristics for social attention
@@ -752,16 +747,13 @@ rm(carmod, idata, icond, st)
 
 ```
 
-#### Fixation duration
-That head regions were fixated longer than the body (see Figure\ \@ref(fig:barplotsHead)) finds support in the corresponding 2 x 2 ANOVA on fixation duration for the main effect region, `r apa.anova.fix.face$full_result$icond`. No difference are found for the main effect instruction groups, `r apa.anova.fix.face$full_result$df_w_et_group`, and for the interaction, `r apa.anova.fix.face$full_result$df_w_et_group_icond`.
+<!--#### Fixation latency-->
+Fixation latencies differed remarkably between the head and the body (see Figure\ \@ref(fig:barplotsHead)). Consequently, the ANOVA yielded a significant main effect of ROI, `r apa.anova.fixlat.face$full_result$icond` with earlier fixations of the head compared to the body. There was neither a statistically significant main effect of instruction group, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor an interaction between both factors, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
 
-#### Fixation number
-The same pattern can be seen for fixation number (see Figure\ \@ref(fig:barplotsHead)). The 2 x 2 ANOVA on fixation number shows a significant main effect for the region, `r apa.anova.fixn.face$full_result$icond` and no difference between the groups, `r apa.anova.fixn.face$full_result$df_w_et_group`, and no interaction `r apa.anova.fixn.face$full_result$df_w_et_group_icond`.
+<!--#### Fixation duration & number-->
+Fixation duration and numbers showed a very similar pattern with longer, `r apa.anova.fix.face$full_result$icond`, as well as more fixations on the head thean the body ROI, `r apa.anova.fixn.face$full_result$icond` (see Figure\ \@ref(fig:barplotsHead)). Remarkably, the instruction group did not exhibit a statistically significant effect, neither for the fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group`, nor for the number of fixation, `r apa.anova.fixn.face$full_result$df_w_et_group`. Furthermore, the interaction effects of instruction group and ROI fialed to reach statistical significancefor fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group_icond` and fixation numbers, `r apa.anova.fixn.face$full_result$df_w_et_group_icond`. These findings indicate that the prioritization of social ROIs was unaffected by the explicit instruction to attend to objects depicted in the scene.
 
-#### Fixation latency
-Latencies of fixation differed also remarkably between head and body (see Figure\ \@ref(fig:barplotsHead)). The ANOVA showed a significant effect for region `r apa.anova.fixlat.face$full_result$icond` with earlier fixations of the head compared to the body. There was neither an effect for instruction, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor was there an interaction, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
-
-### free viewing vs explicit encoding for face fixations (H5)
+<!--### free viewing vs explicit encoding for face fixations (H5)-->
 ```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
 
 # # plots
@@ -795,7 +787,7 @@ rm(msd, teststat, st)
 
 ```
 
-A post Hoc t-test between head prioritization measures for each instruction group provides information whether heads are differently processed dependent on the instruction participants get. It reveals, that only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group compared to the explicit encoding group (see Table\ \@ref(tab:tableHead) and\ \@ref(tab:tableHead)). For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result` with longer fixations for participants in the free viewing group. In addition, fixation number did not differ, `r apa.ttest.fixn.face$full_result`.
+<!--A post Hoc t-test between head prioritization measures for each instruction group provides information whether heads are differently processed dependent on the instruction participants get. It reveals, that only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group compared to the explicit encoding group (see Table\ \@ref(tab:tableHead) and\ \@ref(tab:tableHead)). For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result` with longer fixations for participants in the free viewing group. In addition, fixation number did not differ, `r apa.ttest.fixn.face$full_result`.-->
 
 
 # Discussion
