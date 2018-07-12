@@ -40,11 +40,11 @@ tablelist         : no
 footnotelist      : no
 lineno            : no
 
-lang              : "english"
-class             : "man"
+documentclass     : "apa6"
+classoption       : "man"
 output            : 
   papaja::apa6_pdf:
-    keep_tex: TRUE
+    #keep_tex: TRUE
 ---
 
 ```{r load_packages, include = FALSE}
@@ -58,6 +58,7 @@ library(scales)
 library(ggpubr)
 library(gridExtra)
 library(lsmeans)
+library(ggplot2)
 library(papaja)
 
 ```
@@ -213,7 +214,7 @@ mutate_at(
 Humans in their social environment rely on the information conspecifics provide. This does not only hold for reading explicit signals, such as verbal communication in conversations, but also for implicit signals, such as eye gaze or nonverbal cues. Specifically, if an individual looks into a certain direction, this information is often read spontaneously by an observer who redirects his or her attention towards the referred object or location. Such guidance of someone else’s attention is called gaze following. As a consequence, joint attention is established.
 
   <!-- gaze cuing to joint attenion & social attention -->
-The most frequently used paradigm to investigate such attentional shifts is the so-called gaze cueing paradigm [@Friesen1998; @Driver1999; @Langton2000; for a review see: @Frischen2007a]. This paradigm has been inspired by classical studies on spatial attention by @Posner1980 and consists of a centrally presented face with varying gaze direction followed by a subsequently presented target at either the cued location (i.e., the location that the face is looking at) or an uncued location (i.e., a location that is not being looked at by the face). Studies using this gaze cueing paradigm have demonstrated that gaze cues facilitate target processing as evident in smaller reaction times to targets at cued as compared to uncued locations [@Frischen2007]. However, even though gaze cues are crucial for joint attention, this standard gaze cueing paradigm can be criticized for lacking ecological validity, because these studies typically used isolated heads [@Friesen1998; @Langton2000] or even cartoon heads [@Driver1999; @Ristic2005] as gaze cues [for an overview see: @Risko2012], whereas in field situations, gaze signals occur within a rich context of competing visual information. For example, in a recent study @Hayward2017 compared attentional measures of gaze following from laboratory (classical gaze cueing) and real world (real social engagement) and did not find reliable links between those measures.
+The most frequently used paradigm to investigate such attentional shifts is the so-called gaze cueing paradigm [@Friesen1998; @Driver1999; @Langton2000; for a review see: @Frischen2007a]. This paradigm has been inspired by classical studies on spatial attention by @Posner1980 and consists of a centrally presented face with varying gaze direction followed by a subsequently presented target at either the cued location (i.e., the location that the face is looking at) or an uncued location (i.e., a location that is not being looked at by the face). Studies using this gaze cueing paradigm have demonstrated that gaze cues facilitate target processing as evident in smaller reaction times to targets at cued as compared to uncued locations [@Frischen2007a]. However, even though gaze cues are crucial for joint attention, this standard gaze cueing paradigm can be criticized for lacking ecological validity, because these studies typically used isolated heads [@Friesen1998; @Langton2000] or even cartoon heads [@Driver1999; @Ristic2005] as gaze cues [for an overview see: @Risko2012], whereas in field situations, gaze signals occur within a rich context of competing visual information. For example, in a recent study @Hayward2017 compared attentional measures of gaze following from laboratory (classical gaze cueing) and real world (real social engagement) and did not find reliable links between those measures.
 
   <!-- social attention -->
 <!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen, weitere Ansätze-->As a compromise between rich but also less controllable field conditions and standardized by impoverished laboratory gaze cuing studies, @Zwickel2010 used pictures of a full person (instead of isolated heads or faces) as a directional cue within a naturalistic scene. In this study, the authors used a free viewing instruction, meaning that participants had no explicit task to fulfill. @Zwickel2010 argued, that the lack of a specific task puts gaze following to a stricter test since previous studies frequently used target detection tasks [e.g. @Langton2017] or comprised specific instructions such as asking participants to understand a scene [@Castelhano2007]. Consequently, it remains unclear to what degree gaze following occurred spontaneously or was caused by the specific task at hand. In detail, @Zwickel2010 presented participants multiple 3D rendered outdoor and indoor scenes for several seconds that always included two clearly visible objects as well as either a person or a loudspekaer that was directed rowards one of these objects. The loudspeaker, that also represents an object with a clear spatial orientation, served as a control condition to ensure that gaze cueing effects are due to the social meaning (i.e., the direction of the depicted person’s gaze) as compared to a mere gaze following triggered by any directional cue.
