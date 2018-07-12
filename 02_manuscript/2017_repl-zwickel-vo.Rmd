@@ -421,7 +421,7 @@ t9 <- dscr.fix.rpl %>%
 
 t5 <- cbind(t1,t2[-1],t3[-1],t4[-1]) # only objects
 
-table_fix_objects <- kable(t5, format = "latex", longtable = F, booktabs = T,
+t.fix.obj <- kable(t5, format = "latex", longtable = F, booktabs = T,
                            digits = 0, align =  c('l', rep("c",12)), escape = T,
                            caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)") %>%
    add_header_above(c(" ", "cued" = 3, "uncued" = 3, "cued" = 3, "uncued" = 3)) %>%
@@ -440,7 +440,7 @@ rm(t1,t2,t3,t4,t5)
 
 t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
 
-table_fix_head <- kable(t10, format = "latex", longtable = F, booktabs = T,
+t.fix.head <- kable(t10, format = "latex", longtable = F, booktabs = T,
                         digits = 0, align =  c('l', rep("c",12)), escape = T,
                         caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)") %>%
     add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
@@ -511,11 +511,12 @@ pl.fixdur.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
   scale_y_continuous(name = element_blank(), labels = percent_format(),
-                     limits = cLimitsObjects, expand = c(0,0)) +
-  scale_x_discrete(name = element_blank(), labels=element_blank()) +
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = "Objects", labels = c("cued", "uncued"),
                     values=cColors) +
-  labs(title = "Objects", subtitle = "Fixation duration")
+  labs(title = "Object fixations", subtitle = "Fixation duration")
 
 cLegendObjects <- get_legend(pl.fixdur.obj)
 
@@ -545,8 +546,9 @@ pl.fixnum.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
   scale_y_continuous(name = element_blank(), labels = percent_format(),
-                     limits = cLimitsObjects, expand = c(0,0)) +
-  scale_x_discrete(name = element_blank(), labels=element_blank()) +
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
   labs(title = " ", subtitle = "Fixation number") +
   cTheme
@@ -578,8 +580,6 @@ pl.fixlat.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
   labs(title = " ", subtitle = "Fixation latency") +
   cTheme
 
-
-
 pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
                      aes(x= group, y= measure, fill = gazed)) +
   geom_col(position = "dodge") +
@@ -596,7 +596,8 @@ pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
   #geom_signif(annotation="***", y_position=.13, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
   #geom_signif(annotation="***", y_position=.13, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
   scale_y_continuous(name = element_blank(), labels = percent_format(),
-                     limits = cLimitsObjects, expand = c(0,0)) +
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values = cColors) +
   labs(title = " ", subtitle = "Saccades leaving head") +
@@ -624,15 +625,23 @@ pl.mem <- dscr.mem %>%
 
 ```
 
-```{r Grid Barplots Objects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=7}
+```{r Figure Objects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
 
 grid.pl.obj <- grid.arrange(pl.fixlat.obj, pl.fixdur.obj, pl.fixnum.obj,
-                            cLegendObjects, 
-                            layout_matrix = rbind(c(1,4), c(2, 3)))
+                            pl.sac.obj, cLegendObjects, 
+                            layout_matrix = rbind(c(1, 2, 3, 4, 5)))
 
 #rm(pl.fixdur.obj, pl.fixnum.obj, pl.fixlat.obj, pl.sac.obj, pl.mem, cLegendObjects, cLimitsObjects)
 
 ```
+
+```{r Figure Memory, , fig.cap = "Bar plot of the memory performance for the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=3, fig.width= 3}
+
+grid.pl.mem <- grid.arrange(pl.mem, cLegendObjects,
+                            layout_matrix = rbind(c(1,2)))
+
+```
+
 
 ```{r Plots for Barplot Heads, echo = FALSE}
 
@@ -659,13 +668,14 @@ pl.fixdur.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
   scale_y_continuous(name = element_blank(), labels = percent_format(),
-                     limits = cLimitsHeads, expand = c(0,0)) +
+                     limits = cLimitsHeads, expand = c(0,0),
+                     breaks = c(.05, .10, .15, .20, .25)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = "Persons", labels = c("Head", "Body"),
                     values=cColors) +
-  labs(title = "Head and Body", subtitle = "Fixation duration")
+  labs(title = "", subtitle = "Fixation duration")
 
-cLegendHead <- ggpubr::get_legend(pl.fixdur.head)
+cLegendHead <- get_legend(pl.fixdur.head)
 
 pl.fixdur.head <- pl.fixdur.head +
   cTheme
@@ -693,7 +703,8 @@ pl.fixnum.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
   scale_y_continuous(name = element_blank(), labels = percent_format(),
-                     limits = cLimitsHeads, expand = c(0,0)) +
+                     limits = cLimitsHeads, expand = c(0,0),
+                     breaks = c(.05, .10, .15, .20, .25)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
   labs(title = " ", subtitle = "Fixation number") +
@@ -728,11 +739,11 @@ pl.fixlat.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
 
 ```
 
-```{r Grid Barplots Head, fig.cap = "Bar plot of the different prioritization  measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height = 3.5}
+```{r Figure Head, fig.cap = "Bar plot of the different prioritization measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
 
-grid.pl.head <- gridExtra::grid.arrange(pl.fixdur.head, pl.fixnum.head,
-                                        pl.fixlat.head, cLegendHead,
-                                        layout_matrix = rbind(c(1,2,3,4)))
+grid.pl.head <- grid.arrange(pl.fixlat.head, pl.fixdur.head,
+                             pl.fixnum.head, cLegendHead,
+                             layout_matrix = rbind(c(1,2,3,4)))
 
 rm(pl.fixdur.head, pl.fixnum.head, pl.fixlat.head, cLegendHead, cLimitsHeads,
    cTheme, cColors, cLabels)
