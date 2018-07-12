@@ -312,36 +312,36 @@ dscr.mem <- df.w.mem %>% rename( group = bed) %>%
 
 ```
 
-```{r Table objects, echo = FALSE}
+```{r Descrptives for Table Objects, echo = FALSE}
 
 t1 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "gaze") %>% 
-  select(fix, stat, measure) %>% 
+  filter(group == "free", gazed == "gaze") %>%
+  select(fix, stat, measure) %>%
   mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
          Measurements = ifelse(fix == "fixlat", "Fixation latency (in ms)",
                       ifelse(fix == "fix", "Fixation duration (in %)",
-                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>% 
-  spread(key = "stat", value = "measure") %>% 
+                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
+  spread(key = "stat", value = "measure") %>%
   select(Measurements:se)
 
 t2 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "nongaze") %>% 
+  filter(group == "free", gazed == "nongaze") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
 
 t3 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "gaze") %>% 
+  filter(group == "mem", gazed == "gaze") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
 
 t4 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "nongaze") %>% 
+  filter(group == "mem", gazed == "nongaze") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
-           
+
 
 # apa_table(t5,
 #           align = c("l", rep("c", 12)),
@@ -354,36 +354,36 @@ t4 <- dscr.fix.rpl %>%
 
 ```
 
-```{r Table head, echo = FALSE}
+```{r Descrptives for Table Head, echo = FALSE}
 
 t6 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "face") %>% 
-  select(fix, stat, measure) %>% 
+  filter(group == "free", gazed == "face") %>%
+  select(fix, stat, measure) %>%
   mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
          Measurements = ifelse(fix == "fixlat", "Fixation latency (in ms)",
                       ifelse(fix == "fix", "Fixation duration (in %)",
-                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>% 
-  spread(key = "stat", value = "measure") %>% 
+                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
+  spread(key = "stat", value = "measure") %>%
   select(Measurements:se)
 
 t7 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "body") %>% 
+  filter(group == "free", gazed == "body") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
 
 t8 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "face") %>% 
+  filter(group == "mem", gazed == "face") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
 
 t9 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "body") %>% 
+  filter(group == "mem", gazed == "body") %>%
   select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>% 
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
   spread(key = "stat", value = "measure")
-           
+
 
 # apa_table(t5,
 #           align = c("l", rep("c", 12)),
@@ -396,62 +396,68 @@ t9 <- dscr.fix.rpl %>%
 
 ```
 
-```{r tableObjects, results = 'asis', echo = FALSE}
+```{r TableObjects, results = 'asis', echo = FALSE}
 
 t5 <- cbind(t1,t2[-1],t3[-1],t4[-1]) # only objects
 
-kable(t5, format = "latex", longtable = F, booktabs = T, digits = 0, align =  c('l', rep("c",12), escape = T), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)") %>%
+table_fix_objects <- kableExtra::kable(t5, format = "latex", longtable = F, booktabs = T, digits = 0, align =  c('l', rep("c",12)),
+                                       escape = T) %>%
    add_header_above(c(" ", "cued" = 3, "uncued" = 3, "cued" = 3, "uncued" = 3)) %>%
    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
-   footnote(general = "Here is a footnote.") #%>% 
+   footnote(general = "Here is a footnote.") #%>%
    #landscape()
- 
- rm(t1,t2,t3,t4,t5)
+
+#Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)
+
+ #rm(t1,t2,t3,t4,t5)
 
 ```
 
-```{r tableHead, results = 'asis', echo = FALSE}
+`r table_fix_objects`
 
-t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
+```{r Table Head, results = 'asis', echo = FALSE}
 
-kable(t10, format = "latex", booktabs = T, digits = 0, align =  c('l', rep("c",12)), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)", escape = T) %>%
-  add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
-   add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
-  footnote(general = "Here is a footnote.") %>%
-  landscape()
-
-rm(t6,t7,t8,t9,t10)
+# t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
+# 
+# table_fix_head <- kable(t10, format = "latex", booktabs = T, digits = 0, align =  c('l', rep("c",12)), caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)", escape = T) %>%
+#   add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
+#    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
+#   footnote(general = "Here is a footnote.") %>%
+#   landscape()
+# 
+# #rm(t6,t7,t8,t9,t10)
 
 ```
 
 ```{r Layout plots, echo = FALSE}
-cTheme = theme(
-    title = element_text(
-      size = 8,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    text=element_text(
-      size=12,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    axis.title=element_text(
-      size=12,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    axis.line = element_line(
-      colour = "black"),
-    panel.grid = element_blank(),
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_line(
-      size = .01,
-      colour = "grey"),
-    panel.background = element_blank(),
-    legend.text = element_text(
-      size=12,
-      color = "black"),
-    legend.position = "none")
-cColors = c("darkgrey", "lightgrey")
-cLabels = c("free", "explicit")
+
+# cTheme = theme(
+#     title = element_text(
+#       size = 8,
+#       #family = "Times New Roman", #excluded due to warnings
+#       color = "black"),
+#     text=element_text(
+#       size=12,
+#       #family = "Times New Roman", #excluded due to warnings
+#       color = "black"),
+#     axis.title=element_text(
+#       size=12,
+#       #family = "Times New Roman", #excluded due to warnings
+#       color = "black"),
+#     axis.line = element_line(
+#       colour = "black"),
+#     panel.grid = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     panel.grid.major.y = element_line(
+#       size = .01,
+#       colour = "grey"),
+#     panel.background = element_blank(),
+#     legend.text = element_text(
+#       size=12,
+#       color = "black"),
+#     legend.position = "none")
+# cColors = c("darkgrey", "lightgrey")
+# cLabels = c("free", "explicit")
 
 
 
@@ -459,185 +465,185 @@ cLabels = c("free", "explicit")
 
 ```{r Plots objects, echo = FALSE}
 
-cLimitsObjects = c(0,0.17)
-
-p1.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
-  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
-  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
-  scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
-  scale_x_discrete(name = element_blank(), labels=element_blank()) +
-  scale_fill_manual(name = "Objects", labels = c("cued", "uncued"), values=cColors) +
-  labs(title = "Objects", subtitle = "Fixation duration") 
-
-cLegendObjects <- ggpubr::get_legend(p1.fixdur.rpl)
-
-p1.fixdur.rpl <- p1.fixdur.rpl +
-  cTheme
-
-p2.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  ## Significanes from duration!!!
-  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
-  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
-  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
-  scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
-  scale_x_discrete(name = element_blank(), labels=element_blank()) +
-  scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation number") +
-  cTheme
-
-p3.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
-  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
-  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
-  scale_y_continuous(name = element_blank(), limits = c(0,3400)) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation latency") +
-  cTheme
-
-p4.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" )$measure,
-    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f")$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=.15, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p = .002 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
-  #geom_signif(annotation="***", y_position=.13, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
-  #geom_signif(annotation="***", y_position=.13, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
-  scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = element_blank(), values = cColors) +
-  labs(title = " ", subtitle = "Saccades leaving head") +
-  cTheme
-
-p5.mem.rpl <- dscr.mem %>% 
-  ggplot(aes(x = group, y=mean, fill = key)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=lowerSE,
-    ymax=upperSE),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=10.5, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
-  #geom_signif(annotation="n.s.", y_position=11, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0) + # gazed free - not gazed free: p = .01
-  #geom_signif(annotation="n.s.", y_position=11, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
-  scale_y_continuous(name = element_blank(), breaks = seq(0,10, by = 5), limits = c(0,11)) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Memory performance") +
-  cTheme
+# cLimitsObjects = c(0,0.17)
+# 
+# p1.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("gaze", "nongaze"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+#   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+#   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+#   scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
+#   scale_x_discrete(name = element_blank(), labels=element_blank()) +
+#   scale_fill_manual(name = "Objects", labels = c("cued", "uncued"), values=cColors) +
+#   labs(title = "Objects", subtitle = "Fixation duration")
+# 
+# cLegendObjects <- ggpubr::get_legend(p1.fixdur.rpl)
+# 
+# p1.fixdur.rpl <- p1.fixdur.rpl +
+#   cTheme
+# 
+# p2.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("gaze", "nongaze"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   ## Significanes from duration!!!
+#   #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+#   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+#   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+#   scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
+#   scale_x_discrete(name = element_blank(), labels=element_blank()) +
+#   scale_fill_manual(name = element_blank(), values=cColors) +
+#   labs(title = " ", subtitle = "Fixation number") +
+#   cTheme
+# 
+# p3.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("gaze", "nongaze")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("gaze", "nongaze"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("gaze", "nongaze"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+#   #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+#   #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+#   #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+#   scale_y_continuous(name = element_blank(), limits = c(0,3400)) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = element_blank(), values=cColors) +
+#   labs(title = " ", subtitle = "Fixation latency") +
+#   cTheme
+# 
+# p4.sac.rpl <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(dscr.sac.rpl, stat == "se" & area == "f" )$measure,
+#     ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(dscr.sac.rpl, stat == "se" & area == "f")$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=.15, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p = .002
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+#   #geom_signif(annotation="***", y_position=.13, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
+#   #geom_signif(annotation="***", y_position=.13, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
+#   scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsObjects) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = element_blank(), values = cColors) +
+#   labs(title = " ", subtitle = "Saccades leaving head") +
+#   cTheme
+# 
+# p5.mem.rpl <- dscr.mem %>%
+#   ggplot(aes(x = group, y=mean, fill = key)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=lowerSE,
+#     ymax=upperSE),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=10.5, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+#   #geom_signif(annotation="n.s.", y_position=11, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0) + # gazed free - not gazed free: p = .01
+#   #geom_signif(annotation="n.s.", y_position=11, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+#   scale_y_continuous(name = element_blank(), breaks = seq(0,10, by = 5), limits = c(0,11)) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = element_blank(), values=cColors) +
+#   labs(title = " ", subtitle = "Memory performance") +
+#   cTheme
 
 ```
 
-```{r barplotsObjects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=7}
+```{r Grid Barplots Objects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=7}
 
-gridExtra::grid.arrange(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, layout_matrix = rbind(c(1,2,6), c(3,4,5)))
-
-rm(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, cLimitsObjects)
+# grid_barplots_cued <- gridExtra::grid.arrange(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, layout_matrix = rbind(c(1,2,6), c(3,4,5)))
+# 
+# rm(p1.fixdur.rpl, p2.fixnum.rpl, p3.fixlat.rpl, p4.sac.rpl, p5.mem.rpl, cLegendObjects, cLimitsObjects)
 
 ```
 
 ```{r Plots head, echo = FALSE}
 
-cLimitsHeads = c(0,0.28)
-
-p6.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
-  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
-  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
-  scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsHeads) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = "Persons", labels = c("Head", "Body"), values=cColors) +
-  labs(title = "Head and Body", subtitle = "Fixation duration") 
-
-cLegendHead <- ggpubr::get_legend(p6.fixdur.rpl)
-
-p6.fixdur.rpl <- p6.fixdur.rpl +
-  cTheme
-
-
-p7.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  ## Significanes from duration!!!
-  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
-  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
-  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
-  scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsHeads) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation number") +
-  cTheme
-
-p8.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(
-    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure,
-    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure),
-    width=.2,
-    position=position_dodge(.9)) +
-  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
-  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
-  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
-  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
-  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
-  scale_y_continuous(name = element_blank(), limits = c(0,2800)) +
-  scale_x_discrete(name = element_blank(), labels=cLabels) +
-  scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation latency") +
-  cTheme
+# cLimitsHeads = c(0,0.28)
+# 
+# p6.fixdur.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fix" & gazed %in% c("face", "body"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+#   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+#   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+#   scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsHeads) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = "Persons", labels = c("Head", "Body"), values=cColors) +
+#   labs(title = "Head and Body", subtitle = "Fixation duration") 
+# 
+# cLegendHead <- ggpubr::get_legend(p6.fixdur.rpl)
+# 
+# p6.fixdur.rpl <- p6.fixdur.rpl +
+#   cTheme
+# 
+# 
+# p7.fixnum.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn" & gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixn" & gazed %in% c("face", "body"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   ## Significanes from duration!!!
+#   #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+#   #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+#   #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+#   #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+#   scale_y_continuous(name = element_blank(), labels = scales::percent_format(), limits = cLimitsHeads) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = element_blank(), values=cColors) +
+#   labs(title = " ", subtitle = "Fixation number") +
+#   cTheme
+# 
+# p8.fixlat.rpl <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" & gazed %in% c("face", "body")), aes(x= group, y= measure, fill = gazed)) +
+#   geom_col(position = "dodge") +
+#   geom_errorbar(aes(
+#     ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure - subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure,
+#     ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat" &  gazed %in% c("face", "body"))$measure + subset(dscr.fix.rpl, stat == "se" & fix == "fixlat" & gazed %in% c("face", "body"))$measure),
+#     width=.2,
+#     position=position_dodge(.9)) +
+#   #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+#   #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001, 
+#   #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+#   #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+#   #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+#   scale_y_continuous(name = element_blank(), limits = c(0,2800)) +
+#   scale_x_discrete(name = element_blank(), labels=cLabels) +
+#   scale_fill_manual(name = element_blank(), values=cColors) +
+#   labs(title = " ", subtitle = "Fixation latency") +
+#   cTheme
 
 ```
 
-```{r barplotsHead, fig.cap = "Bar plot of the different prioritization  measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height = 3.5}
+```{r Grid Barplots Head, fig.cap = "Bar plot of the different prioritization  measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height = 3.5}
 
-gridExtra::grid.arrange(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, cLegendHead, layout_matrix = rbind(c(1,2,3,4)))
-
-rm(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, cLegendHead, cLimitsHeads, cTheme, cColors, cLabels)
+# gripd_barplots_person <- gridExtra::grid.arrange(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, cLegendHead, layout_matrix = rbind(c(1,2,3,4)))
+# 
+# rm(p6.fixdur.rpl, p7.fixnum.rpl, p8.fixlat.rpl, cLegendHead, cLimitsHeads, cTheme, cColors, cLabels)
 
 ```
 
@@ -853,7 +859,8 @@ The extension of this line of research, namely whether the gaze behavior can be 
 -->
 
 <!-- List bibtex errors:
-  Freitag2007 -->
+  Freitag2007
+-->
 
 \newpage
 
