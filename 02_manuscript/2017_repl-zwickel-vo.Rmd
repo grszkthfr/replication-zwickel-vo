@@ -420,6 +420,56 @@ rm(t1,t2,t3,t4,t5)
 
 ```
 
+```{r Table Head, results = 'asis', echo = FALSE}
+
+t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
+
+t.fix.head <- kable(t10, format = "latex", longtable = F, booktabs = T,
+                        digits = 0, align =  c('l', rep("c",12)), escape = T,
+                        caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)") %>%
+    add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
+    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
+    footnote(general = "Here is a footnote.") %>%
+    landscape()
+
+rm(t6,t7,t8,t9,t10)
+
+```
+
+```{r Layout plots, echo = FALSE}
+
+cTheme = theme(
+    title = element_text(
+      size = 8,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    text=element_text(
+      size=12,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.title=element_text(
+      size=12,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.line = element_line(
+      colour = "black"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(
+      size = .01,
+      colour = "grey"),
+    panel.background = element_blank(),
+    legend.text = element_text(
+      size=12,
+      color = "black"),
+    legend.position = "none")
+cColors = c("darkgrey", "lightgrey")
+cLabels = c("free", "explicit")
+
+
+
+```
+
 ```{r Plots for Barplot Objects, echo = FALSE}
 
 cLimitsObjects = c(0,0.17)
@@ -756,6 +806,14 @@ rm(t6,t7,t8,t9,t10)
 
 ```
 
+```{r Figure Memory, , fig.cap = "Bar plot of the memory performance for the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=3, fig.width= 3}
+
+grid.pl.mem <- grid.arrange(pl.mem, cLegendObjects,
+                            layout_matrix = rbind(c(1,2)))
+
+```
+
+
 ```{r Plots for Barplot Heads, echo = FALSE}
 
 cLimitsHeads = c(0,0.28)
@@ -853,6 +911,7 @@ pl.fixlat.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
 ```
 
 ```{r FigureHead, fig.cap = "Bar plot of the different prioritization measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
+
 
 grid.pl.head <- grid.arrange(pl.fixlat.head, pl.fixdur.head,
                              pl.fixnum.head, cLegendHead,
