@@ -436,40 +436,6 @@ rm(t6,t7,t8,t9,t10)
 
 ```
 
-```{r Layout plots, echo = FALSE}
-
-cTheme = theme(
-    title = element_text(
-      size = 8,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    text=element_text(
-      size=12,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    axis.title=element_text(
-      size=12,
-      #family = "Times New Roman", #excluded due to warnings
-      color = "black"),
-    axis.line = element_line(
-      colour = "black"),
-    panel.grid = element_blank(),
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_line(
-      size = .01,
-      colour = "grey"),
-    panel.background = element_blank(),
-    legend.text = element_text(
-      size=12,
-      color = "black"),
-    legend.position = "none")
-cColors = c("darkgrey", "lightgrey")
-cLabels = c("free", "explicit")
-
-
-
-```
-
 ```{r Plots for Barplot Objects, echo = FALSE}
 
 cLimitsObjects = c(0,0.17)
@@ -1009,7 +975,8 @@ Besides replicating previous findings, this study also aimed at extending the li
 As expected participants with specific reall instructions performed better in the subsequent memory task. However, the contribution of the automatic attentional processes to memory encoding remains unclear. In particular, although cued objects were prioritized in the attentional exploration, this did not increase their probability of being recalled. This is in contrast to studies on eye movements and memory performance showing that increased attention results in better memory performance [e.g., @Hollingworth2002]. From that perspective, the cued object should be recalled better than the uncued object. However, another study showed that if certain scene details have a special meaning (e.g., by being central to the content of a picture story), attention does no longer predict memory for these details [@Kim2013]. With resprect to the current study, these findings may indicate that both objects that were placed wihtin reaching distance of the depicted person conveyed such meaning and were therefore remembered with equal probability. Since we only tested for early memory effects, it would be very intersting to dealy the memory test by atl east 24h to examine whether memory consolidation differst between cued and uncued objects [@Squire].
 
 <!-- Limitations -->
-Although the current study has several strengths including the systematic generation of novel stimulus material and the large sample size, it also has some limitations that need to be mentioned. First, although this study shows that humans follow other persons gaze implicitly in unconstrained situations, this is only true for situations where no interaction is possible. Research shows, that fixation pattern differ remarkably when a real interaction between persons is possible [@Laidlaw2011, for an overview see: @Risko2016]. However, we argue that our findings are true. Although @Hayward2017 could not find a relaible link, we think, that our results should be tested in a similar unconstrainged setting.
+Although the current study has several strengths including the systematic generation of novel stimulus material and the large sample size, it also has some limitations that need to be mentioned.
+First, although this study shows that humans follow other persons gaze implicitly in unconstrained situations, this is only true for situations where no interaction is possible. Research shows, that fixation pattern differ remarkably when a real interaction between persons is possible [e.g., @Laidlaw2011, @Hayward2017, for an overview see: @Risko2016]. However, we argue that our findings are true. Although @Hayward2017 could not find a relaible link, we think, that our results should be tested in a similar unconstrainged setting.
 
 <!-- Conclusio -->
 Overall, the current results provide additional support to previous findings that attention is shifted reflexively to locations where other persons are looking at [e.g. @Ristic2005,  @Hayward2017]. This evidence, which was previously extended to free viewing of more complex static scenes by @Zwickel2010, was shown to be robust against top-down modulation. Even when explicitly directing attention away from depicted individuals by making objects tast-relevant, social and joint attentional shifts were still affected by the mere presence of a person, comparable to the unbiased free viewing condition. These results indicate that the mere presence of other human beings as well as their gaze orientation have a strong impact on attentional exploration.
