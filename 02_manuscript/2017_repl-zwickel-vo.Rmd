@@ -265,6 +265,47 @@ For all analysis the a priori significance level of $\alpha$ = 0.05 was used. As
 [^Rpkg]: Specifically, `r cite_r("r-references.bib")` is used for all analyses.
 
 # Results
+
+
+
+```{r Layout plots, echo = FALSE}
+
+cTheme = theme(
+    title = element_text(
+      size = 8,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    text=element_text(
+      size=12,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.title=element_text(
+      size=12,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.line = element_line(
+      colour = "black"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(
+      size = .01,
+      colour = "grey"),
+    panel.background = element_blank(),
+    legend.text = element_text(
+      size=12,
+      color = "black"),
+    legend.position = "none")
+cColors = c("darkgrey", "lightgrey")
+cLabels = c("free", "explicit")
+
+
+
+```
+
+## Gaze following
+<!-- #### Fixation latency -->
+<!-- (H1, H2) -->
+
 ```{r Descriptives fix*, echo = FALSE}
 
 # Descriptives for fixation chacracteristics for joint attention
@@ -320,19 +361,6 @@ dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),
 
 ```
 
-```{r Descriptives memory, echo = FALSE}
-
-dscr.mem <- df.w.mem %>% rename( group = bed) %>% 
-  group_by(group) %>%
-  summarise_at(vars(memgaze:memnogaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>%
-  gather(key, value, memgaze_mean: memnogaze_se, factor_key = T) %>%
-  separate(key, c("key", "stat"), sep = "\\_", extra = "merge") %>% 
-  spread(stat, value) %>%
-  mutate(lowerSE = mean - se,
-         upperSE = mean + se)
-
-```
-
 ```{r Descrptives for Table Objects, echo = FALSE}
 
 t1 <- dscr.fix.rpl %>%
@@ -375,48 +403,6 @@ t4 <- dscr.fix.rpl %>%
 
 ```
 
-```{r Descrptives for Table Head, echo = FALSE}
-
-t6 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "face") %>%
-  select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
-         Measurements = ifelse(fix == "fixlat", "Fixation latency (in ms)",
-                      ifelse(fix == "fix", "Fixation duration (in %)",
-                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
-  spread(key = "stat", value = "measure") %>%
-  select(Measurements:se)
-
-t7 <- dscr.fix.rpl %>%
-  filter(group == "free", gazed == "body") %>%
-  select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
-  spread(key = "stat", value = "measure")
-
-t8 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "face") %>%
-  select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
-  spread(key = "stat", value = "measure")
-
-t9 <- dscr.fix.rpl %>%
-  filter(group == "mem", gazed == "body") %>%
-  select(fix, stat, measure) %>%
-  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
-  spread(key = "stat", value = "measure")
-
-
-# apa_table(t5,
-#           align = c("l", rep("c", 12)),
-#           caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, not gazed at",
-#           note = "here is space for a note.",
-#           #added_stub_head = "Variables",
-#           #col_spanners = list(`free viewing`= c(2,7), `explicit encoding`= c(8,13)),
-#           landscape = TRUE
-#           )
-
-```
-
 ```{r Table Objects, results = 'asis', echo = FALSE}
 
 t5 <- cbind(t1,t2[-1],t3[-1],t4[-1]) # only objects
@@ -433,8 +419,6 @@ t.fix.obj <- kable(t5, format = "latex", longtable = F, booktabs = T,
 rm(t1,t2,t3,t4,t5)
 
 ```
-
-
 
 ```{r Table Head, results = 'asis', echo = FALSE}
 
@@ -521,7 +505,7 @@ pl.fixdur.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
 cLegendObjects <- get_legend(pl.fixdur.obj)
 
 pl.fixdur.obj <- pl.fixdur.obj +
-  labs(title = " ", subtitle = "Fixation duration") +
+  labs(title = "B", subtitle = "Fixation duration") +
   cTheme
 
 pl.fixnum.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
@@ -550,7 +534,7 @@ pl.fixnum.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
                      breaks = c(.05, .10, .15)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation number") +
+  labs(title = "C", subtitle = "Fixation number") +
   cTheme
 
 pl.fixlat.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
@@ -577,7 +561,7 @@ pl.fixlat.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
                      expand = c(0,0)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation latency") +
+  labs(title = "A", subtitle = "Fixation latency") +
   cTheme
 
 pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
@@ -600,8 +584,96 @@ pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
                      breaks = c(.05, .10, .15)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values = cColors) +
-  labs(title = " ", subtitle = "Saccades leaving head") +
+  labs(title = "D", subtitle = "Saccades leaving head") +
   cTheme
+
+```
+
+```{r FigureObjects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
+
+grid.pl.obj <- grid.arrange(pl.fixlat.obj, pl.fixdur.obj, pl.fixnum.obj,
+                            pl.sac.obj, cLegendObjects, 
+                            layout_matrix = rbind(c(1, 2, 3, 4, 5)))
+
+#rm(pl.fixdur.obj, pl.fixnum.obj, pl.fixlat.obj, pl.sac.obj, pl.mem, cLegendObjects, cLimitsObjects)
+
+```
+
+```{r ANOVA fixations joint, echo = FALSE}
+
+# ANOVA Fixations characteristics for joint attention
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,st:(st+1)]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]),
+         Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
+         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
+                   correction="GG", mse = FALSE))
+  }
+
+rm(carmod, idata, icond, st)
+
+```
+
+A significant main effect of object role in the analysis of fixation latencies indicates earlier fiations on cued compared to uncued objects (see Figure \ \@ref(fig:FigureObjects) A), `r apa.anova.fixlat.gaze$full_result$icond`. The main effect of instruction group was also significant, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`, with earlier fixations on both objects in the explicit encoding compared to the free viewing group. The interaction effect failed to reach statistical singificance, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
+
+<!--#### Fixation duration & number-->
+<!-- (H1, H2) -->
+Largely similar effects were obtained in the analyses of fixation durations and numbers . Significant main effects of object role indicate that participants fixated the cued object longer, `r apa.anova.fix.gaze$full_result$icond`, and more often then the uncued object, `r apa.anova.fixn.gaze$full_result$icond`. Explicit instructions also led to longer, `r apa.anova.fix.gaze$full_result$df_w_et_group`, and more fixations on the objects as compared to the free viewing condition, `r apa.anova.fixn.gaze$full_result$df_w_et_group`. The interaction effects of instruction group and object role were not statistically significant, neither for the durations, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`, nor for the number of fixations, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond` (see Figure\ \@ref(fig:FigureObjects) B & C).
+
+<!--### Saccades-->
+
+```{r ANOVA saccades, warning = TRUE, message = TRUE}
+# ANOVA Saccades
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in 17:19) {
+  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,c(st,(st+3))]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]),
+         Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("postHoc.",colnames(df.w.et)[st]),
+         lsmeans(carmod, specs = c(names(carmod$model[2]), "rep.meas")))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
+         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
+                   correction="GG", mse = FALSE))
+}
+
+
+rm(carmod, idata, icond, st)
+```
+
+<!-- (H1, H2) -->
+Saccades leaving the head were more likely to land on the cued compared to the uncued object as confirmed by a significant main effect of object role, `r apa.anova.sac.fgaze$full_result$icond`. The main effect for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`, shows that saccades of participants in the explicit encoding group were more often directed towards any of the objects as compared to the free viewing group. Again, the interaction effect of instruction group and object role fails to reach statistical singificance `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond` (see Figure\ \@ref(fig:FigureObjects) D).
+
+## Memory for objects
+<!-- (H3) -->
+
+```{r Descriptives memory, echo = FALSE}
+
+dscr.mem <- df.w.mem %>% rename( group = bed) %>% 
+  group_by(group) %>%
+  summarise_at(vars(memgaze:memnogaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>%
+  gather(key, value, memgaze_mean: memnogaze_se, factor_key = T) %>%
+  separate(key, c("key", "stat"), sep = "\\_", extra = "merge") %>% 
+  spread(stat, value) %>%
+  mutate(lowerSE = mean - se,
+         upperSE = mean + se)
+
+```
+
+```{r Plot memory}
 
 pl.mem <- dscr.mem %>%
   ggplot(aes(x = group, y=mean, fill = key)) +
@@ -625,13 +697,112 @@ pl.mem <- dscr.mem %>%
 
 ```
 
-```{r Figure Objects, fig.cap = "Bar plot of the different prioritization  measures for the fixation of the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
+```{r FigureMemory, fig.cap = "Bar plot of the memory performance for the cued and uncued objects. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=3, fig.width= 3}
 
-grid.pl.obj <- grid.arrange(pl.fixlat.obj, pl.fixdur.obj, pl.fixnum.obj,
-                            pl.sac.obj, cLegendObjects, 
-                            layout_matrix = rbind(c(1, 2, 3, 4, 5)))
+grid.pl.mem <- grid.arrange(pl.mem, cLegendObjects,
+                            layout_matrix = rbind(c(1,2)))
 
-#rm(pl.fixdur.obj, pl.fixnum.obj, pl.fixlat.obj, pl.sac.obj, pl.mem, cLegendObjects, cLimitsObjects)
+```
+
+```{r ANOVA memory, warning = TRUE, message = TRUE, echo = FALSE}
+
+# Recalled items
+# 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
+
+imem <- gl(2,1,labels=c("cued","uncued"))
+idata <- data.frame(imem)
+
+# Car
+carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
+#print(colnames(df.w.mem[c(3,4)]))
+#print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
+apa.anova.mem <- apa_print(Anova(carmod, idata=idata,
+                                 idesign=~imem, type="III"),
+                           correction="GG", mse = FALSE)
+
+
+rm(imem, idata, carmod)
+```
+
+An analysis of the recall data showed, that participants in the explicit encoding group remembered more items than participants from the other group (see Figure\ \@ref(fig:barplotsObjects)), `r apa.anova.mem$full_result$df_w_mem_bed`. Neither the main effect of object role, `r apa.anova.mem$full_result$imem` nor the interaction effect were statistically significant, `r apa.anova.mem$full_result$df_w_mem_bed_imem` (see Figure\ \@ref(fig:FigureMemory)).
+
+## Social prioritization
+```{r Descriptives fixations social, warining = FALSE, message = FALSE}
+
+# Descriptives for fixation chacracteristics for social attention
+
+dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face),
+                                     mean(fix.body), sd(fix.body),
+                                     mean(fixn.face), sd(fixn.face),
+                                     mean(fixn.body), sd(fixn.body),
+                                     mean(fixlat.face), sd(fixlat.face),
+                                     mean(fixlat.body), sd(fixlat.body))
+dscr.fixsoc.group <- df.w.et %>%
+  group_by(group) %>%
+  summarise(mean(fix.face), sd(fix.face),
+            mean(fix.body), sd(fix.body),
+            mean(fixn.face), sd(fixn.face),
+            mean(fixn.body), sd(fixn.body),
+            mean(fixlat.face), sd(fixlat.face),
+            mean(fixlat.body), sd(fixlat.body))
+```
+
+```{r Descrptives for Table Head, echo = FALSE}
+
+t6 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "face") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
+         Measurements = ifelse(fix == "fixlat", "Fixation latency (in ms)",
+                      ifelse(fix == "fix", "Fixation duration (in %)",
+                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
+  spread(key = "stat", value = "measure") %>%
+  select(Measurements:se)
+
+t7 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "body") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t8 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "face") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t9 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "body") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+
+# apa_table(t5,
+#           align = c("l", rep("c", 12)),
+#           caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, not gazed at",
+#           note = "here is space for a note.",
+#           #added_stub_head = "Variables",
+#           #col_spanners = list(`free viewing`= c(2,7), `explicit encoding`= c(8,13)),
+#           landscape = TRUE
+#           )
+
+```
+
+```{r Table Head, results = 'asis', echo = FALSE}
+
+t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
+
+t.fix.head <- kable(t10, format = "latex", longtable = F, booktabs = T,
+                        digits = 0, align =  c('l', rep("c",12)), escape = T,
+                        caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)") %>%
+    add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
+    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
+    footnote(general = "Here is a footnote.") %>%
+    landscape()
+
+rm(t6,t7,t8,t9,t10)
 
 ```
 
@@ -672,7 +843,7 @@ pl.fixdur.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = "Persons", labels = c("Head", "Body"),
                     values=cColors) +
-  labs(title = "", subtitle = "Fixation duration")
+  labs(title = "B", subtitle = "Fixation duration")
 
 cLegendHead <- get_legend(pl.fixdur.head)
 
@@ -706,7 +877,7 @@ pl.fixnum.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
                      breaks = c(.05, .10, .15, .20, .25)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation number") +
+  labs(title = "C", subtitle = "Fixation number") +
   cTheme
 
 pl.fixlat.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
@@ -733,12 +904,13 @@ pl.fixlat.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
                      expand = c(0,0)) +
   scale_x_discrete(name = element_blank(), labels=cLabels) +
   scale_fill_manual(name = element_blank(), values=cColors) +
-  labs(title = " ", subtitle = "Fixation latency") +
+  labs(title = "A", subtitle = "Fixation latency") +
   cTheme
 
 ```
 
-```{r Figure Head, fig.cap = "Bar plot of the different prioritization measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
+```{r FigureHead, fig.cap = "Bar plot of the different prioritization measures for the person in the scene for the head and body. Error bars represent standard error.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
+
 
 grid.pl.head <- grid.arrange(pl.fixlat.head, pl.fixdur.head,
                              pl.fixnum.head, cLegendHead,
@@ -747,114 +919,6 @@ grid.pl.head <- grid.arrange(pl.fixlat.head, pl.fixdur.head,
 rm(pl.fixdur.head, pl.fixnum.head, pl.fixlat.head, cLegendHead, cLimitsHeads,
    cTheme, cColors, cLabels)
 
-```
-
-```{r ANOVA fixations joint, echo = FALSE}
-
-# ANOVA Fixations characteristics for joint attention
-## 2 (Group) x 2 (Gaze) ANOVA
-
-icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
-idata <- data.frame(icond)
-
-for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
-  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
-  #print(colnames(df.w.et[,st:(st+1)]))
-  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("anova.",colnames(df.w.et)[st]),
-         Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
-         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
-                   correction="GG", mse = FALSE))
-  }
-
-rm(carmod, idata, icond, st)
-
-```
-
-## Gaze following
-<!-- #### Fixation latency -->
-<!-- (H1, H2) -->
-A significant main effect of object role in the analysis of fixation latencies indicates earlier fiations on cued compared to uncued objects, `r apa.anova.fixlat.gaze$full_result$icond`. The main effect of instruction group was also significant, `r apa.anova.fixlat.gaze$full_result$df_w_et_group`, with earlier fixations on both objects in the explicit encoding compared to the free viewing group. The interaction effect failed to reach statistical singificance, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`.
-
-<!--#### Fixation duration & number-->
-<!-- (H1, H2) -->
-Largely similar effects were obtained in the analyses of fixation durations and numbers (see Figure X). Significant main effects of object role indicate that  participants fixated the cued object longer (see Figure\ \@ref(fig:barplotsObjects)), `r apa.anova.fix.gaze$full_result$icond`, and more often then the uncued object, `r apa.anova.fixn.gaze$full_result$icond`. Explicit instructions also led to longer, `r apa.anova.fix.gaze$full_result$df_w_et_group`, and more fixations on the objects as compared to the free viewing condition, `r apa.anova.fixn.gaze$full_result$df_w_et_group`. The interaction effects of instruction group and object role were not statistically significant, neither for the durations, `r apa.anova.fix.gaze$full_result$df_w_et_group_icond`, nor for the number of fixations, `r apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
-
-<!--### Saccades-->
-
-```{r ANOVA saccades, warning = TRUE, message = TRUE}
-# ANOVA Saccades
-## 2 (Group) x 2 (Gaze) ANOVA
-
-icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
-idata <- data.frame(icond)
-
-for (st in 17:19) {
-  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
-  #print(colnames(df.w.et[,c(st,(st+3))]))
-  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("anova.",colnames(df.w.et)[st]),
-         Anova(carmod, idata=idata, idesign=~icond, type="III"))
-  assign(paste0("postHoc.",colnames(df.w.et)[st]),
-         lsmeans(carmod, specs = c(names(carmod$model[2]), "rep.meas")))
-  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
-         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
-                   correction="GG", mse = FALSE))
-}
-
-
-rm(carmod, idata, icond, st)
-```
-
-<!-- (H1, H2) -->
-Saccades leaving the head were more likely to land on the cued compared to the uncued object (see Figure\ \@ref(fig:barplotsObjects)) as confirmed by a significant main effect of object role, `r apa.anova.sac.fgaze$full_result$icond`. The main effect for group,  `r apa.anova.sac.fgaze$full_result$df_w_et_group`, shows that saccades of participants in the explicit encoding group were more often directed towards any of the objects as compared to the free viewing group. Again, the interaction effect of instruction group and object role fails to reach statistical singificance `r apa.anova.sac.fgaze$full_result$df_w_et_group_icond`.
-
-## Memory for objects
-<!-- (H3) -->
-
-```{r ANOVA memory, warning = TRUE, message = TRUE, echo = FALSE}
-
-# Recalled items
-# 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
-
-imem <- gl(2,1,labels=c("cued","uncued"))
-idata <- data.frame(imem)
-
-# Car
-carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
-#print(colnames(df.w.mem[c(3,4)]))
-#print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
-anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
-apa.anova.mem <- apa_print(Anova(carmod, idata=idata,
-                                 idesign=~imem, type="III"),
-                           correction="GG", mse = FALSE)
-
-
-rm(imem, idata, carmod)
-```
-
-An analysis of the recall data showed, that participants in the explicit encoding group remembered more items than participants from the other group (see Figure\ \@ref(fig:barplotsObjects)), `r apa.anova.mem$full_result$df_w_mem_bed`. Neither the main effect of object role, `r apa.anova.mem$full_result$imem` nor the interaction effect were statistically significant, `r apa.anova.mem$full_result$df_w_mem_bed_imem`.
-
-## Social prioritization
-```{r Descriptives fixations social, warining = FALSE, message = FALSE}
-
-# Descriptives for fixation chacracteristics for social attention
-
-dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face),
-                                     mean(fix.body), sd(fix.body),
-                                     mean(fixn.face), sd(fixn.face),
-                                     mean(fixn.body), sd(fixn.body),
-                                     mean(fixlat.face), sd(fixlat.face),
-                                     mean(fixlat.body), sd(fixlat.body))
-dscr.fixsoc.group <- df.w.et %>%
-  group_by(group) %>%
-  summarise(mean(fix.face), sd(fix.face),
-            mean(fix.body), sd(fix.body),
-            mean(fixn.face), sd(fixn.face),
-            mean(fixn.body), sd(fixn.body),
-            mean(fixlat.face), sd(fixlat.face),
-            mean(fixlat.body), sd(fixlat.body))
 ```
 
 ```{r ANOVA fixations social, warning = FALSE, message = FALSE}
@@ -880,10 +944,12 @@ rm(carmod, idata, icond, st)
 ```
 
 <!--#### Fixation latency-->
-Fixation latencies differed remarkably between the head and the body (see Figure\ \@ref(fig:barplotsHead)). Consequently, the ANOVA yielded a significant main effect of ROI, `r apa.anova.fixlat.face$full_result$icond` with earlier fixations of the head compared to the body. There was neither a statistically significant main effect of instruction group, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor an interaction between both factors, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
+Fixation latencies differed remarkably between the head and the body (see Figure\ \@ref(fig:barplotsHead)). Consequently, the ANOVA yielded a significant main effect of ROI, `r apa.anova.fixlat.face$full_result$icond` with earlier fixations of the head compared to the body. There was neither a statistically significant main effect of instruction group, `r apa.anova.fixlat.face$full_result$df_w_et_group` nor an interaction between both factors, `r apa.anova.fixlat.face$full_result$df_w_et_group_icond` (see Figure\ \@ref(fig:FigureHead) A).
 
 <!--#### Fixation duration & number-->
-Fixation duration and numbers showed a very similar pattern with longer, `r apa.anova.fix.face$full_result$icond`, as well as more fixations on the head thean the body ROI, `r apa.anova.fixn.face$full_result$icond` (see Figure\ \@ref(fig:barplotsHead)). Remarkably, the instruction group did not exhibit a statistically significant effect, neither for the fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group`, nor for the number of fixation, `r apa.anova.fixn.face$full_result$df_w_et_group`. Furthermore, the interaction effects of instruction group and ROI fialed to reach statistical significancefor fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group_icond` and fixation numbers, `r apa.anova.fixn.face$full_result$df_w_et_group_icond`. These findings indicate that the prioritization of social ROIs was unaffected by the explicit instruction to attend to objects depicted in the scene.
+Fixation duration and numbers showed a very similar pattern with longer, `r apa.anova.fix.face$full_result$icond`, as well as more fixations on the head thean the body ROI, `r apa.anova.fixn.face$full_result$icond` (see Figure\ \@ref(fig:barplotsHead)). Remarkably, the instruction group did not exhibit a statistically significant effect, neither for the fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group`, nor for the number of fixation, `r apa.anova.fixn.face$full_result$df_w_et_group`. Furthermore, the interaction effects of instruction group and ROI fialed to reach statistical significancefor fixation duration, `r apa.anova.fix.face$full_result$df_w_et_group_icond` and fixation numbers, `r apa.anova.fixn.face$full_result$df_w_et_group_icond`. These findings indicate that the prioritization of social ROIs was unaffected by the explicit instruction to attend to objects depicted in the scene (see Figure\ \@ref(fig:FigureHead) B & C).
+
+
 
 <!--### free viewing vs explicit encoding for face fixations (H5)-->
 ```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
