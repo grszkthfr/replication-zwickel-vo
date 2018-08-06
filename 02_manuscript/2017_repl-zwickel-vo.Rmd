@@ -43,8 +43,8 @@ lineno            : no
 documentclass     : "apa6"
 classoption       : "man"
 output            : 
-  papaja::apa6_pdf:
-    keep_tex: TRUE
+  papaja::apa6_docx:
+    #keep_tex: TRUE
     
 header-includes: # found at https://crsh.github.io/papaja_man/limitations.html#customizing-the-document-preamble
   - \raggedbottom
@@ -272,7 +272,7 @@ The memory test was scored manually by comparing the list of recalled objects to
 In order to analyze the influence of the experimental manipulations on eye-tracking and memory data, we carried out separate analyses of variance (ANOVAs) with the package *car* [@R-car]. The ANOVAs had the between-subject factor instruction group and the within-subject factor object role were conducted on the dependent variables fixation latency, fixation duration, number of fixation, proportion of saccades from the head towards the object and recalled items. To examine general effects of social attention, separate ANOVAs using the between-subject factor instruction group and the within-subject factor ROI (head vs. body region) were conducted on the dependent variables fixation latency, fixation duration and number of fixations.
 For all analysis the apriori significance level of $\alpha$ = 0.05 was used. As effect sizes generalized eta-square ($\eta^2_G$) for ANOVAS are reported, where guidelines suggest .26 as a large, .13 as a medium and .02 as a small effect [@Bakeman2005].
 
-[^Rpkg]: A comprehensive list of used R-packages can be found [here](r-references.bib).
+[^Rpkg]: A comprehensive list of used R packages can be found [here](r-references.bib).
 
 # Results
 
