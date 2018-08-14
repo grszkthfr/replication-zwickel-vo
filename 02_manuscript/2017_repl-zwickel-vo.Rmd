@@ -77,22 +77,6 @@ pathFB <- "../01_data/FB/"
 
 ```
 
-```{r Generate prot}
-
-```
-
-```{r Check stimuli}
-
-```
-
-```{r Check baseline quality}
-
-```
-
-```{r Analyze fixations}
-
-```
-
 ```{r Reading eye tracking data in, warning = FALSE, message = FALSE}
 
 # ALL EYE TRACKING DATA
@@ -228,17 +212,17 @@ The most frequently used paradigm to investigate such attentional shifts is the 
 However, even though gaze cues are crucial for joint attention, this standard gaze cueing paradigm can be criticized for lacking ecological validity. Whereas in the real world, gaze signals ocur within a rich context of competing visual inforamtion, gaze cueing studies typically used isolated heads [@Friesen1998; @Langton2000] or even cartoon faces [@Driver1999; @Ristic2005] as gaze cues [for an overview see: @Risko2012]. Consequently, in a recent study in which @Hayward2017 compared attentional measures of gaze following from laboratory (classical gaze cueing) and real world (real social engagement) settings, they did not find reliable links between those measures.
 
   <!-- social attention -->
-<!--Birmingham2008 und Birmingham2009b als vormacher und grundsätzliche Idee das problem anzugehen, weitere Ansätze-->As a compromise between rich but also less controlled field conditions and standardized but impoverished laboratory gaze cueing studies, @Zwickel2010 used pictures of a full person (instead of isolated heads or faces) as a directional cue within a naturalistic scene. In this study, the authors used a free viewing instruction, meaning that participants had no explicit task to fulfill but should just freely explore the pictures.
+As a compromise between rich but also less controlled field conditions and standardized but impoverished laboratory gaze cueing studies, @Zwickel2010 used pictures of a full person (instead of isolated heads or faces) as a directional cue within a naturalistic scene. In this study, the authors used a free viewing instruction, meaning that participants had no explicit task to fulfill but should just freely explore the pictures.
 <!--out?!-->@Zwickel2010 argued that the lack of a specific task puts gaze following to a stricter test since previous studies frequently used target detection tasks [e.g. @Langton2017] or comprised specific instructions such as asking participants to understand a scene [@Castelhano2007]. Consequently, it remains unclear to what degree gaze following occurred spontaneously or was caused by the specific task at hand.
 In detail, @Zwickel2010 presented participants multiple 3D rendered outdoor and indoor scenes for several seconds that always included two clearly visible objects as well as either a person or a loudspeaker that was directed towards one of these objects. The loudspeaker, that also represents an object with a clear spatial orientation, served as a control condition to ensure that gaze cueing effects are due to the social meaning (i.e., the direction of the depicted person’s gaze) as compared to a mere following triggered by any directional cue.  
-The results of the study showed that participants fixated the cued object remarkably earlier, more often and longer than the uncued object. By showing that leaving saccades from the head most often landed onto the cued object, the results gave further evidence for the direct influence of eye gaze on attentional guidance. <!-- and highlight therefore the innewohnende relevance of gaze cues-->  
-Crucially, similar effects were not obtained for the loudspeaker as a non-social directional cue. The cued objects were not just focused because they might have been salient by themselves (e.g. due to positioning), or because they were cued by another object, but became more salient by the person's reference.<!--detailierter?!--> <!--Additionally finding is in line with general predictions from the social attention approach. First, that social stimuli are prioritized was confirmed by the results, the most prioritized region was still the head of the shown person.-->  
+The results of the study showed that participants fixated the cued object remarkably earlier, more often and longer than the uncued object. By showing that leaving saccades from the head most often landed onto the cued object, the results gave further evidence for the direct influence of eye gaze on attentional guidance.  
+Crucially, similar effects were not obtained for the loudspeaker as a non-social directional cue. The cued objects were not just focused because they might have been salient by themselves (e.g. due to positioning), or because they were cued by another object, but became more salient by the person's reference.  
 To sum up, @Zwickel2010 provide convincing evidence that joint attention is a direct consequence of gaze cues and gaze following, it happens spontaneously and has high relevance even in situations that are more naturalistic (i.e., involve complex scenes and the absence of explicit tasks) than classical gaze cueing studies based on variations of the Posner paradigm.<!--softerer übergang pls-->
 
   <!-- Hypothesis -->
 In the current study, we were first interested in whether the previously reported effects hold when using a different set of stimuli. Due to their low resolution and reduced richness of details, the originally used 3D rendered scenes did not allow for an assessment of the depicted person’s gaze direction. As a consequence, the observed cueing effects could be rather due to directional information inferred from both the body and head of the person.
 We therefore developed a new set of photographic stimuli that had sufficient resolution to also allow for perceiving gaze direction with clearly visible eyes of the depicted person. These photos always included a human being who directed his/her gaze towards one of two objects that were placed within reaching distance. In order to be consistent with the study of @Zwickel2010, the depicted person’s head and body were congruently aligned with his/her eye gaze.  
-Second, in order to extend this line of research, we manipulated top-down attentional processes by task instruction to explore the susceptibility of gaze following effects in naturalistic scenes. Earlier research showed that social attention can be influenced by multiple factors like social status of the observed persons [@Foulsham2010] or action-related expectations [@Perez-Osorio2015]. Together with @Zwickel2010, these studies have in common that they manipulate viewing behavior of the participant by manipulating the stimuli. <!--For example, @Foulsham2010 build the stimulus set from stimuli that were previously rated for social status and confirmed the predicted shift towards hi in attention with eye-tracking measures. @Perez-Osorio2015, for example, showed stronger gaze following for action-congruent stimuli. @Zwickel2010 manipulated the source of the reference towards the objects, and showed that objects were prioritized only when cued by a person but not when cued by loudspeaker. -->  
+Second, in order to extend this line of research, we manipulated top-down attentional processes by task instruction to explore the susceptibility of gaze following effects in naturalistic scenes. Earlier research showed that social attention can be influenced by multiple factors like social status of the observed persons [@Foulsham2010] or action-related expectations [@Perez-Osorio2015]. Together with @Zwickel2010, these studies have in common that they manipulate viewing behavior of the participant by manipulating the stimuli.  
 In contrast, in the present study, we tried to modulate viewing behavior via task instructions. Specifically, half of the participants received an instruction before the viewing task, that they should try to remember as many objects from the scenes as possible (explicit encoding group). For the other half of the participants (free viewing group), the memory test that was accomplished after the experiment was unannounced and therefore reflected spontaneous encoding of the respective scene details.  
 The motivation for this manipulation was twofold. First, it was thought to test the robustness of gaze following against top-down processes. Second, it allowed for examining gaze following effects on memory.  
 
@@ -250,7 +234,6 @@ Finally, as previous studies showed a strong preference of fixating the head ove
 Additionally, we hypothesized that the prioritization for the head decreases when participants follow specific exploration goals such as in the explicit encoding group of the current study [cf., @Flechsenhar2017].
 
 # Methods
-<!-- We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
 
@@ -408,7 +391,6 @@ dscr.fixsoc.group <- df.w.et %>%
 
 ## Gaze following
 <!-- #### Fixation latency -->
-<!-- (H1, H2) -->
 
 ```{r Prerequisits Table Objects, echo = FALSE}
 
@@ -944,8 +926,6 @@ rm(msd, teststat, st)
 
 ```
 
-<!--A post Hoc t-test between head prioritization measures for each instruction group provides information whether heads are differently processed dependent on the instruction participants get. It reveals, that only fixation latency differed significantly between groups, `r apa.ttest.fixlat.face$full_result`, with faster fixations for the free viewing group compared to the explicit encoding group (see Table\ \@ref(tab:tableHead) and\ \@ref(tab:tableHead)). For fixation duration there was only a trend for difference between groups, `r apa.ttest.fix.face$full_result` with longer fixations for participants in the free viewing group. In addition, fixation number did not differ, `r apa.ttest.fixn.face$full_result`.-->
-
 # Discussion
 <!-- Main motivation -->
 By using naturalistic scenes with rich detail, this study aimed at conceptually replicating previous findings of a general prioritization of social cues [i.e. heads and bodies, @Birmingham2008; @End2017; @Flechsenhar2017] as well as previously reported gaze cueing effects elicited by a person being directed towards a specific object in the scene [@Zwickel2010]. Both effects could be replicated.  
@@ -956,7 +936,7 @@ Additionally, in line with @Zwickel2010, cued objects were preferred over uncued
 <!-- saccacades -->
 Moreover, the prioritization of the head and the preference for the cued object indirectly suggest a link between these two regions. To investigate this relationship in more detail, we examined saccades leaving the head towards the cued and uncued object, respectively. Saccades leaving the head were significantly more likely to end on the cued than on the uncued object directly linking fiations of the head and the cued object.
 Thereby, current results fully replicate the findings of  @Zwickel2010 with a more naturalistic set of stimuli.  
-<!--Although it remains unclear how the pictures changed the results compared to the computer rendered scenes, the higher power lead to more precise estimation of the effect sizes.--> As often, by using more naturalistic material experimental control is reduced. We tried to minimize unsystematic effects by producing the stimuli in the same way as @Zwickel2010 but using real as compared to 3D rendered scenes. In particular, each scene was photographed four times with gaze direction an object placement being fully counterbalanced. Since four individual photographs of each scene were taken in the current study, we could not fully control all stimulus aspects. However, the full replication of the effects previously obtained with a different set of virtual scenes indicates that these effects generalize to naturalistic conditions and are stable against small variations in scene layout and presentation.
+As often, by using more naturalistic material experimental control is reduced. We tried to minimize unsystematic effects by producing the stimuli in the same way as @Zwickel2010 but using real as compared to 3D rendered scenes. In particular, each scene was photographed four times with gaze direction an object placement being fully counterbalanced. Since four individual photographs of each scene were taken in the current study, we could not fully control all stimulus aspects. However, the full replication of the effects previously obtained with a different set of virtual scenes indicates that these effects generalize to naturalistic conditions and are stable against small variations in scene layout and presentation.
 
 <!-- top-down -->
 Besides replicating previous findings, this study also aimed at extending the line of research by testing the robustness of gaze following against top-down modulations.  
@@ -977,51 +957,6 @@ An additional critique might be that we did not control for directional informat
 
 <!-- Conclusio -->
 Overall, the current results provide additional support for previous findings that attention is shifted reflexively to locations where other persons are looking at [e.g., @Ristic2005;  @Hayward2017]. This evidence, which was previously extended to free viewing of more complex static scenes by @Zwickel2010, was shown to be valid in more naturalistic scenes and robust against top-down modulation. Even when explicitly directing attention away from depicted individuals by making objects task-relevant, social and joint attention were still affected by the mere presence of a person, comparable to the unbiased free viewing condition. These results indicate that the mere presence of other human beings as well as their gaze orientation have a strong impact on attentional exploration.
-
-<!--# Reste Rampe-->
-
-<!--**Nach der kognitiven Relevanz-Hypothese werden top-down- Prozesse kontrolliert über Ziele und Intentionen gesteuert (goal-driven), wohingegen bottom-up- Prozesse nach der Salienz-Hypothese durch Stimuli automatisch ausgelöst werden (stimuli-driven), wodurch die Aufmerksamkeit auf einen bestimmten Ort gelenkt wird (Borji & Itti, 2014). End & Gamer, 2017**-->
-
-<!--The relevance of ecologically valid stimuli is a core aspect of social attention research. Social attention research describes attentional consequences of social interactions and focuses often on similarities and differences of different types of social stimuli [@Risko2012], from real human interactions [for example: @Laidlaw2011; @Freeth2013a] to highly controlled laboratory settings with isolated faces as stimuli [for example: @Langton2017].The main finding of this research line is, that some research findings related to social stimuli do not extend to the real world. Researches must be sensible to these differences when generalizing laboratory findings [@Jarick2015; @Hayward2017; for an overview see: @Risko2016].
-Additionally, laboratory studies showed, that joint attention cannot only be induced by the gaze [for an detailed overview see: @Frischen2007a], but also from the body or the head itself [@Lawson2016].-->
-
-<!--In the given study, the motivation for the manipulation of the instructions for the memory test was twofold. First, it is thought to test robustness of the social and joint attention effects and second joint attentional effects on memory can be observed. The influence of the manipulation is expected to reduce spontaneous viewing behavior and foster a more systematic processing of the scene. It is important to note, that it is not expected that the influence of the presence of the person vanishes completely for social and joint attentional effects due to top-down modulation. It is supposed to be weaker, because it does not represent the optimal strategy for the participant. Therefore, the voluntary part of the scene processing might be overwritten. However, as social and joint attentional effects are expected to be (partially) independent of volition and occur spontaneously and reflexive the effects should still be visible regardless for the social attention part and for the joint attention part of this study. Specifically, prioritization effects for the head should be smaller but still visible in the *explicit encoding group*. For the joint attention measures a decreased prioritization for the referenced object is expected for the *explicit encoding group* is decreased compared with the uncued object. An optimal strategy for participant in the *explicit encoding group* would be to ignore completely the person in the scene, resulting in smaller differences in attentional prioritization between the two object roles.
-Additionally, memory effects sensitive for the role of the object were examined, to answer the question whether more attentional resources on an object pays off with enhanced memorability. This is mainly interesting for the free viewing group with the unbiased viewing behavior, as it is expected that both objects bind comparable amount of attention due to the more systematic processing in the explicit encoding group.-->
-<!-- participants from the free viewing group who did not receive any instruction in advance should provide an unaffected viewing behavior. Both groups had to recall as many as things as possible from the scenes in a free-recall memory test. With this manipulation it is thought to demonstrate top-down influence on social attention aspects, but also its influence on joint attention. As @Zwickel2010 showed, a person in a scene influences the viewing behavior of participants spontaneously and without further instruction or manipulation.-->
-<!--*H4*. Additionally to the joint attentional effects stated in H1, the basic effects of social attention are expected. This means, that the head will be prioritized over the body. This prioritization can be measured, in multiple ways. Again, it is expected, that first fixation fall earlier on the head, that it is fixated longer and more often than the body. Additionally, fixations occur earlier on the head, than on the cued object, because the gaze cue needs to be processed in advance.--><!--gibt's gar keine Analyse für!!!-->
-<!--*H5*. Due to the instruction of the memory test, and the assumed change in processing the scene, the viewing behavior should change for social stimuli. Due to explicit encoding, it is expected that natural viewing behavior that is known to prioritize the head is reduced and therefore the head loses some of its salience. As a consequence, the head should be prioritized stronger in the *free viewing group* compared to the *explicit encoding group*, resulting in longer fixations, faster fixations and more fixations.-->
-
-<!--However, this replication included a top-down modulation, used photographic scenes and had considerably more power than the original study.-->
-
-<!--Besides that, manipulation all participant did exactly the same experiment (with balanced and randomized stimuli). By instruction objects became relevant for succeeding in the memory task. Conclusively, attention towards the person would be inefficient.-->
-
-<!--Unlike @Zwickel2010, naturalistic photographic are used, in contrast to computer rendered scenes.-->
-
-<!--Note, however, that this was not a direct but a conceptual replication, showing that @Zwickel2010 findings can be generalized from computer rendered to naturalistic scenes.-->
-
-<!--However, it is presumed that the effect showed by @Zwickel2010 is genuine for social stimuli. Therefore, no non-social condition comparable to the loudspeaker-condition was tested. -->
-
-<!--#Schrott
-Zwickel struktur: 1: general (social atteniton/head), 2: gaze cueing, 3(2a): diskutiert, 4(2b): diskutiert, 5: Leaving saccades, 6: head body, 7: surprising data, 8: vergleich mit unpassender studie, 9: conclusio
-Meine struktur: 1: general (social attention/head) finding, 2: gaze cueing (object), 3: saccades (head -> object), 4: (kurzes oder detailliertes?!) fazit replication, 5: top down-modulation, 6: ?! DENK NACH! ?!, 7: conclusio
-<!-- was will ich erzählen?! Replikation -> Kopf-prio, gazed-prio, sac-prio! --> 
-<!-- was ist relevant?! --> 
-<!-- was überrascht nicht?! topdown-modulatioon verändert blickverhalten--> 
-<!-- was überrascht? Obwohl (!) top-down modulation, blickverhalten ändert, bleiben Effekte bestehen! --> 
-
-
-
-<!-- alt: 
-
-For genuine social stimuli like the person, and more specifically the head and the body, a similar pattern can be observed. The head had the lowest latency until first fixation, so it is even shorter than the latency till first fixation for the cued object. Under the light of joint attention this makes sense, since it is assumed, that the head in the first place leads the gaze of the participant to the cued object. Additionally, the head was also fixated longer and more often than the body.
-
-The extension of this line of research, namely whether the gaze behavior can be influenced by top-down modulation. Consequently, this research is extended by the given study by an explicit task concerning the given scene. this modulation has an impact on gaze behavior.
-
--->
-
-<!-- List bibtex errors:
-
--->
 
 \newpage
 
