@@ -20,3 +20,8 @@ draft*
 .Rproj.user
 #2017_sfb-presentation/libs/
 #2017_sfb-presentation/2017_SFB_repl-zwickel-vo_files
+01_data/*
+03_manuscript/submissions/*
+desktop.ini
+03_manuscript/2017_repl-zwickel-vo_files/*
+03_manuscript/co-authors/*
