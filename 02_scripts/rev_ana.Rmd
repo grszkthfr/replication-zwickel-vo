@@ -1,0 +1,196 @@
+
+source("../02_scripts/01-libraries.R", encoding = "utf-8")
+source("02-paths.R", encoding = "utf-8")
+source("04-reading_memory_data.R", encoding = "utf8")
+
+
+df_eyetracking <-
+    dir_ls("../01_data/prot/fixations_raw/", glob = "*.csv") %>%
+    map_df(
+        read_delim,
+        col_types = cols(
+            vp = col_character(),
+            trial = col_double(),
+            timest = col_double(),
+            timeend = col_double(),
+            x = col_double(),
+            y = col_double(),
+            duration = col_double(),
+            roi = col_double()),
+        delim = ";",
+        locale = locale(decimal_mark = ",", grouping_mark = ".")) %>%
+    select(
+        subject_id = vp,
+        trial_id = trial,
+        fix_start = timest,
+        fix_end = timeend,
+        fix_roi = roi,
+        fix_dur = duration
+    ) %>%
+    drop_na(fix_roi) %>%
+    mutate(
+      # fix some fix_roi colors
+      fix_roi = 
+            case_when(
+                fix_roi == 225225000 ~ 255255000,
+                fix_roi == 250000000 ~ 255000000,
+                fix_roi == 250       ~ 255,
+                fix_roi == 25525500 | 255000000 | 255000 | 255 | 0 ~ fix_roi),
+        fix_id =
+            case_when(
+                fix_roi == 255255000 ~ "object_uncued", # yellow
+                fix_roi == 255000000 ~ "body", # red
+                fix_roi == 255000 ~ "head", # green
+                fix_roi == 255 ~ "object_cued", # blue
+                fix_roi == 0 ~ "background") %>% # black
+            as_factor(),
+      subject_id = str_remove(subject_id, "vpja")
+      ) %>%
+    mutate_if(is.double, as.numeric) %>%
+    group_by(subject_id, trial_id) %>%
+    mutate(
+        fix_n = 1:n()
+    ) %>%
+    select(subject_id, trial_id, fix_n, fix_start, fix_end, fix_dur, fix_id, fix_roi) %>%
+    ungroup()
+
+
+## Including Plots
+
+# set trial start
+trial_start = 0  # in ms
+
+# set trial end
+trial_end = 10000
+
+# set bin size
+bin_size = 500
+
+# create bins, from trial start to trial end in bins of size ...
+bins <- seq(trial_start, trial_end, by = bin_size)
+
+# nest each fixation to add rows for each bin the fixation touchs
+df_nested <-
+
+    df_eyetracking %>%
+
+    group_by(subject_id, trial_id, fix_n) %>%
+
+    group_nest(.key = "fixations", keep = TRUE)
+
+# https://dplyr.tidyverse.org/reference/progress_estimated.html
+# pb <- progress_estimated(nrow(df_nested), 0)
+
+df_nested$bins <-
+
+    map(
+        df_nested$fixations,
+        ~{
+
+            fixation <- .
+
+            # add rows for each bin (n_bins), starting with second (first is
+            # already present)
+            fixation <- fixation %>%
+
+                mutate(
+                    bin_fix_start = findInterval(fix_start, bins),
+                    bin_fix_end = findInterval(fix_end, bins),
+                    # normally: 9999 = bin 20, 10.000 = bin 21, but pretend to 
+                    # end in bin 20 (adds a extra ms to last bin)
+                    bin_fix_end = case_when(bin_fix_end == length(bins) ~ bin_fix_end - 1L,
+                                            bin_fix_end != length(bins) ~ bin_fix_end),
+                    # if 0, fixation is within one bin, if 1 fixation is across
+                    # 2 bins, ...
+                    max_bin_n = bin_fix_end - bin_fix_start + 1,
+                    bin_id = NA)
+
+            # add row for each bin
+            fixation <- add_row(
+                fixation,
+                bin_id = fixation$bin_fix_start:fixation$bin_fix_end) %>%
+
+                # fill rows with trial information
+                fill(subject_id:max_bin_n, .direction = "down") %>%
+
+                # remove placeholder bin_id row
+                drop_na(bin_id)
+
+            fixation
+        }
+    )
+
+
+df_bin <-
+
+    map_df(df_nested$bins, unnest) %>%
+
+    mutate_if(is.integer, as.numeric) %>%
+
+    mutate(
+
+        # bin_end in ms
+        bin_start = bin_id * bin_size - bin_size,
+
+        # bin_start in ms
+        bin_end = bin_id * bin_size,
+
+        bin_id_start = findInterval(bin_start, bins),
+
+        bin_id_end = findInterval(bin_end, bins),
+
+        bin_dur = case_when(
+
+            # fixation duration, when fix ends before or on bin ends and fix
+            # starts after bin starts
+            fix_end < bin_end & fix_start >= bin_start ~ fix_dur,
+
+            # bin size, when fix ends after or on bin ends and fix starts before
+            # or on bin starts
+            fix_end >= bin_end & fix_start <= bin_start ~ bin_size,
+
+            # difference, when fix ends before bin ends and fix starts before bin
+            # starts
+            fix_end < bin_end & fix_start <= bin_start ~ fix_end - bin_start,
+
+            # difference, when fix ends after bin ends and fix starts after bin
+            # starts
+            fix_end >= bin_end & fix_start > bin_start ~ bin_end - fix_start)) %>%
+  
+    # count bins per subject and trial
+    group_by(subject_id, trial_id) %>% 
+    mutate(bin_n = 1:n()) %>%  ungroup() %>% 
+  
+    # when fixation ends on bin start
+    filter( bin_dur != 0)
+
+# test:
+# sum of all bins must be equal to sum of all fixations
+
+df_bin  %>% summarise(sum = sum(bin_dur)) ==
+    df_eyetracking  %>% summarise(fix_dur = sum(fix_dur))
+
+df_bin %>% group_by(bin_n, fix_id) %>% summarise(m_fix_dur = mean(bin_dur, na.rm = T)) %>%
+ggplot(aes(x=bin_n, y=m_fix_dur, color=fix_id)) +
+  geom_line()+
+  geom_point()
+
+df_bin_plot <-
+  left_join(
+    df_bin,
+    df.w.mem %>%
+      select(subject_id, trial_id, iti, condition),
+    by= c("subject_id", "trial_id") ) %>% 
+  left_join(df.w.mem %>%
+              select(subject_id, trial_id, cueing, object_id, recalled),
+            by= c("subject_id", "trial_id", "fix_id" = "cueing"))
+
+df_bin_plot %>%
+  group_by(bin_id, fix_id, condition) %>%
+  filter( fix_id != "background", bin_id <= 4) %>%
+  summarise(m_fix_dur = mean(bin_dur, na.rm = T)) %>%
+  ggplot(aes(x=bin_id, y=m_fix_dur, color=fix_id)) +
+  geom_line()+
+  geom_point() +
+  facet_wrap(~condition)
+

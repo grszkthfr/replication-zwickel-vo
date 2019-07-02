@@ -1,0 +1,1470 @@
+---
+title             : "Gaze cueing in naturalistic scenes under top-down modulation - Effects on gaze behavior and memory performance"
+shorttitle        : "Gaze cueing in naturalistic scenes"
+
+author:
+  - name          : "Jonas D. Großekathöfer"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Marcusstraße 9-11, 97070 Würzburg"
+    email         : "jonas.grossekathoefer@uni-wuerzburg.de"
+  - name          : "Kristina Suchotzki"
+
+  - name          : "Matthias Gamer"
+
+
+affiliation:
+  - id            : ""
+    institution   : "Department of Psychology, University of Würzburg"
+
+author_note: |
+  Department of Psychology, Julius Maximilians University of Würzburg,
+  Würzburg, Germany.
+
+  Enter author note here.
+
+abstract: |
+  Humans as social beings rely on information provided by
+  conspecifics. One important signal in social communication is eye
+  gaze. The current study (*n* = 93) sought to replicate and extend
+  previous findings of attentional guidance by eye gaze in complex
+  everyday scenes. In line with previous studies, longer, more and
+  earlier fixations for objects cued by gaze compared to objects that
+  were not cued were observed in free viewing conditions. To
+  investigate how robust this prioritization is against top-down
+  modulation, half of the participants received a memory task that
+  required scanning the whole scene instead of exclusively focusing on
+  cued objects. Interestingly, similar gaze cueing effects occurred in
+  this group. Moreover, the human beings depicted in the scene
+  received a large amount of attention even though they were
+  irrelevant to the current task. These results indicate that the mere
+  presence of other human beings as well as their gaze orientation
+  have a strong impact on attentional exploration.
+
+
+keywords          : "Gaze Cueing, Joint Attention, Social Attention, Eye-Tracking, Top-Down Control, Memory Performace"
+wordcount         : "5325"
+
+bibliography      :
+  - "r-references.bib"
+  - "../2017_repl-zwickel-vo.bib"
+
+figsintext        : yes
+figurelist        : no
+tableintext       : no
+tablelist         : no
+footnotelist      : no
+lineno            : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            :
+  papaja::apa6_pdf:
+    #keep_tex: TRUE
+
+header-includes: # found at https://crsh.github.io/papaja_man/limitations.html#customizing-the-document-preamble
+  - \raggedbottom
+
+---
+
+```{r load_packages, include = FALSE}
+
+library(tidyverse)
+#library(ggsignif)
+library(car)
+library(knitr)
+library(kableExtra)
+library(scales)
+library(ggpubr)
+library(gridExtra)
+library(lsmeans)
+library(ggplot2)
+library(papaja)
+
+```
+
+```{r Paths}
+
+pathMEM <- "../01_data/Memory/"
+pathET <- "../01_data/prot/"
+pathFB <- "../01_data/FB/"
+
+```
+
+```{r Reading eye tracking data in, warning = FALSE, message = FALSE}
+
+# ALL EYE TRACKING DATA
+vpn <- paste0(
+    "vpja",
+    ifelse(
+        c(1:78,81:96)<10,
+        "0",
+        ""),
+    c(1:78,81:96))
+
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- paste0("vpja",ifelse(c(1:78)<10,"0",""),c(1:78))
+#bed <- rep(c("free","mem"),39)
+
+bed <- bed[!(vpn %in% "vpja23")]  # missing data
+vpn <- vpn[!(vpn %in% "vpja23")]
+
+# Loop over subjects
+erg <- numeric()
+nvalid <- numeric()
+cleantime <- numeric()
+
+for (vp in vpn) {
+  #  print(vp)
+
+  prot <- read.csv2(paste0(pathET,vp,"_Fixations.csv"))
+
+  # Restrict to trials with valid baseline?
+  nvalid <- c(nvalid,sum(prot$blok==1))
+  prot <- prot[prot$blok==1,]
+
+  cleantime <- c(cleantime,mean(prot$cleantime))
+
+  erg <- rbind(erg,apply(prot[,8:ncol(prot)],2,mean,na.rm=TRUE))
+}
+
+df.w.et <- data.frame(code=vpn,group=bed,nvalid,cleantime,erg) %>%
+  mutate(
+    code = as.factor(unlist(map(strsplit(as.character(code),"ja"), ~.x[2])))) %>%
+  rename(vp = code)
+
+
+
+df.l.et <- gather(df.w.et, key, value, fix.face:sac.bnongaze, factor_key=TRUE) %>%
+  mutate(
+    key = as.character(key),
+    fixations =
+      as.factor(
+        ifelse(startsWith(key, "fix."), "fix",
+             ifelse(startsWith(key, "fixn."), "fixn",
+                    ifelse(startsWith(key, "fixlat."), "fixlat",
+                           ifelse(startsWith(key, "sac."), "sac", NA))))),
+    region =
+      as.factor(
+        ifelse(endsWith(key, ".face"), "face",
+               ifelse(endsWith(key, ".body"), "body",
+                      ifelse(endsWith(key, ".gaze"), "gaze",
+                             ifelse(endsWith(key, ".nongaze"), "nongaze",
+                                    ifelse(endsWith(key, ".pgaze"), "pgaze",
+                                           ifelse(endsWith(key, ".fgaze"), "fgaze",
+                                                  ifelse(endsWith(key, ".bgaze"), "bgaze",
+                                                         ifelse(endsWith(key, ".pnongaze"), "pnongaze",
+                                                                ifelse(endsWith(key, ".fnongaze"), "fnongaze",
+                                                                       ifelse(endsWith(key, ".bnongaze"), "bnongaze",NA)))))))))))) %>%
+  arrange(vp)
+
+rm(prot, bed, cleantime, nvalid, vp, vpn, erg)
+
+```
+
+```{r Reading memory data in, warning = FALSE, message = FALSE}
+
+# ALL MEMORY DATA
+vpn <- paste0("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96))
+bed <- rep(c("free","mem"),47)
+
+# ORIGINALLY ACQUIRED DATA
+#vpn <- pasteo("vpja",ifelse(c(1:78)<10,"0",""),c(1:78))
+#bed <- rep(c("free","mem"),39)
+
+# Loop over subjects
+erg <- numeric()
+for (vp in vpn) {
+  # print(vp)
+
+  prot <- read.csv2(paste0(pathMEM,vp,".csv"))
+
+  # Item recalled
+  gaze <- sum(prot$memgazedat)
+  nogaze <- sum(prot$memnongazedat)
+
+  erg <- rbind(erg,c(gaze,nogaze))
+}
+
+df.w.mem <- data.frame(code=vpn,bed,erg) %>%
+  mutate(
+    code = as.factor(unlist(map(strsplit(
+      as.character(code),"ja"), ~.x[2])))) %>%
+  rename(vp = code)
+
+names(df.w.mem) <- c("code","bed","memgaze","memnogaze")
+
+
+rm(gaze, nogaze, erg, prot, bed, vp, vpn)
+
+```
+
+```{r Reading questionnaire data in, warning = FALSE, message = FALSE}
+
+df.w.demo <- read_csv2(
+  paste0(
+    pathFB,
+    "Projektarbeit_Dateneingabemaske.csv")) %>%
+  # AQ-K
+  mutate_at(
+    vars(AQK_1, AQK_3, AQK_5, AQK_6, AQK_7, AQK_9, AQK_10, AQK_11, AQK_14,
+         AQK_16, AQK_17, AQK_18, AQK_20, AQK_22, AQK_23, AQK_24, AQK_26, AQK_28,
+         AQK_31, AQK_32, AQK_33),
+    funs(5 - .)) %>% # reverse variables
+  mutate_at(
+    vars(AQK_1:AQK_33),
+    funs(ifelse(. <= 2, 1, ifelse(. <= 4, 0, NA)))) %>% # recode variable
+   mutate_at(
+     vars(AQK_1:AQK_33),
+     funs(ifelse(is.na(.), round(mean(., na.rm = T),0), .))) %>% # replace NAs with mean
+  # ISKK
+  mutate_at(vars(ISKK_09, ISKK_11, ISKK_18, ISKK_21, ISKK_23, ISKK_31,  ISKK_10,
+                 ISKK_32,  ISKK_03, ISKK_07, ISKK_12, ISKK_16, ISKK_25, ISKK_33,
+                 ISKK_17),
+            funs(5- .)) %>% # reverse variables
+  mutate_at(
+     vars(ISKK_01:ISKK_33),
+     funs(ifelse(is.na(.), round(mean(., na.rm = T),0), .))) %>% # replace NAs with mean
+  transmute(
+    vp = as.factor(ifelse(VP_Nr < 10,
+                          paste0("0",VP_Nr),
+                          VP_Nr)),
+    sex = as.factor(Demo_Sex),
+    age = Demo_Alter,
+    aqk_social = (AQK_1 + AQK_7 + AQK_8 + AQK_10 + AQK_11 + AQK_13 + AQK_14
+                  + AQK_20 + AQK_24 + AQK_28 + AQK_31),
+    aqk_imagination = (AQK_3 + AQK_5 + AQK_6 + AQK_9 + AQK_16 + AQK_17 + AQK_18
+                       + AQK_22 + AQK_23 + AQK_26 + AQK_32 + AQK_33),
+    aqk_communication = (AQK_2 + AQK_4 + AQK_12 + AQK_15 + AQK_19 + AQK_21
+                         + AQK_25 + AQK_27 + AQK_29 + AQK_30),
+    aqk_sumscore = (aqk_social + aqk_imagination + aqk_communication),
+    isk_1 = (ISKK_01 + ISKK_05 + ISKK_09 + ISKK_11 + ISKK_14 + ISKK_18 + ISKK_21
+             + ISKK_23 + ISKK_27 + ISKK_31),
+    isk_2 = (ISKK_02 + ISKK_06 + ISKK_10 + ISKK_15 + ISKK_19 + ISKK_24
+             + ISKK_28 + ISKK_32),
+    isk_3 = (ISKK_03 + ISKK_07 + ISKK_12 + ISKK_16 + ISKK_20 + ISKK_25
+             + ISKK_29 + ISKK_33),
+    isk_4 = (ISKK_04 + ISKK_08 + ISKK_13 + ISKK_17 + ISKK_22 + ISKK_26
+             + ISKK_30))
+
+```
+
+# Introduction
+
+Humans in their social environment rely on the information
+conspecifics provide. This does not only hold for reading explicit
+signals, such as verbal communication, but also for implicit signals,
+such as eye gaze or nonverbal cues. Specifically, if an individual
+looks into a certain direction, this information is often read
+spontaneously by an observer who redirects his or her attention
+towards the referred object or location. Such guidance of someone
+else’s attention is called gaze following. As a consequence, joint
+attention is established.
+
+  <!-- gaze cuing to joint attenion & social attention -->
+
+The most frequently used paradigm to investigate such attentional
+shifts is the so-called gaze cueing paradigm [@Friesen1998;
+@Driver1999; @Langton2000; for a review see @Frischen2007a]. This
+paradigm has been inspired by classical studies on spatial attention
+by @Posner1980 and consists of a centrally presented face with varying
+gaze directions. This face is then followed by a subsequently
+presented target at either the cued location (i.e., the location that
+the face is looking at) or an uncued location (i.e., a location that
+is not being looked at by the face). Studies using this gaze cueing
+paradigm have demonstrated that gaze cues facilitate target processing
+as evident in smaller reaction times to targets at cued as compared to
+uncued locations [@Frischen2007a].  However, even though gaze cues are
+crucial for joint attention, this standard gaze cueing paradigm can be
+criticized for lacking ecological validity. Whereas in the real world,
+gaze signals occur within a rich context of competing visual
+information, gaze cueing studies typically used isolated heads
+[@Friesen1998; @Langton2000] or even cartoon faces [@Driver1999;
+@Ristic2005] as gaze cues [for an overview see:
+@Risko2012]. Consequently, in a recent study in which @Hayward2017
+compared attentional measures of gaze following from laboratory
+(classical gaze cueing) and real world (real social engagement)
+settings, they did not find reliable links between those measures.
+
+  <!-- social attention -->
+
+As a compromise between rich but also less controlled field conditions
+and standardized but impoverished laboratory gaze cueing studies,
+@Zwickel2010 used pictures of a full person (instead of isolated heads
+or faces) as a directional cue within a naturalistic scene. In this
+study, the authors used a free viewing instruction, meaning that
+participants had no explicit task to fulfill but should just freely
+explore the pictures.  <!--out?!-->@Zwickel2010 argued that the lack
+of a specific task puts gaze following to a stricter test since
+previous studies frequently used target detection tasks
+[e.g. @Langton2017] or comprised specific instructions such as asking
+participants to understand a scene [@Castelhano2007]. Consequently, it
+remains unclear to what degree gaze following occurred spontaneously
+or was caused by the specific task at hand.  In detail, @Zwickel2010
+presented participants multiple 3D rendered outdoor and indoor scenes
+for several seconds that always included two clearly visible objects
+as well as either a person or a loudspeaker that was directed towards
+one of these objects. The loudspeaker, that also represents an object
+with a clear spatial orientation, served as a control condition to
+ensure that gaze cueing effects are due to the social meaning (i.e.,
+the direction of the depicted person’s gaze) as compared to a mere
+following triggered by any directional cue.  The results of the study
+showed that participants fixated the cued object remarkably earlier,
+more often and longer than the uncued object. By showing that leaving
+saccades from the head most often landed onto the cued object, the
+results gave further evidence for the direct influence of eye gaze on
+attentional guidance.  Crucially, similar effects were not obtained
+for the loudspeaker as a non-social directional cue. The cued objects
+were not just focused because they might have been salient by
+themselves (e.g. due to positioning), or because they were cued by
+another object, but became more salient by the person's reference.  To
+sum up, @Zwickel2010 provide convincing evidence that joint attention
+is a direct consequence of gaze cues and gaze following, it happens
+spontaneously and has high relevance even in situations that are more
+naturalistic (i.e., involve complex scenes and the absence of explicit
+tasks) than classical gaze cueing studies based on variations of the
+Posner paradigm.<!--softerer übergang pls-->
+
+  <!-- Hypothesis -->
+
+In the current study, we were first interested in whether the
+previously reported effects hold when using a different set of
+stimuli. Due to their low resolution and reduced richness of details,
+the originally used 3D rendered scenes did not allow for an assessment
+of the depicted person’s gaze direction. As a consequence, the
+observed cueing effects could be rather due to directional information
+inferred from both the body and head of the person.  We therefore
+developed a new set of photographic stimuli that had sufficient
+resolution to also allow for perceiving gaze direction with clearly
+visible eyes of the depicted person. These photos always included a
+human being who directed his/her gaze towards one of two objects that
+were placed within reaching distance. In order to be consistent with
+the study of @Zwickel2010, the depicted person’s head and body were
+congruently aligned with his/her eye gaze.  Second, in order to extend
+this line of research, we manipulated top-down attentional processes
+by task instruction to explore the susceptibility of gaze following
+effects in naturalistic scenes. Earlier research showed that social
+attention can be influenced by multiple factors like social status of
+the observed persons [@Foulsham2010] or action-related expectations
+[@Perez-Osorio2015]. Together with @Zwickel2010, these studies have in
+common that they manipulate viewing behavior of the participant by
+manipulating the stimuli.  In contrast, in the present study, we tried
+to modulate viewing behavior via task instructions. Specifically, half
+of the participants received an instruction before the viewing task,
+that they should try to remember as many objects from the scenes as
+possible (explicit encoding group). For the other half of the
+participants (free viewing group), the memory test that was
+accomplished after the experiment was unannounced and therefore
+reflected spontaneous encoding of the respective scene details.  The
+motivation for this manipulation was twofold.  First, it was thought
+to test the robustness of gaze following against top-down processes
+[4] by discouraging observers to utilize the information provided by
+the gaze.  Second, it allowed for examining gaze following effects on
+memory.
+
+We expected to replicate the findings of @Zwickel2010 in the free
+viewing group. Specifically, we anticipated to observe an early
+fixation bias towards cued objects, an enhanced exploration of these
+details (i.e., more fixations and longer dwell times) and more
+saccades leaving the head towards the cued as compared to the uncued
+object.<!--Main effect icond, ANOVA--> The instruction in the explicit
+encoding group was thought to induce a more systematic exploration of
+the presented scenes resulting in higher prioritization of the uncued
+object.  Furthermore, we anticipated a generally enhanced recall
+performance in the explicit encoding group.  Due to the expected
+difference in attentional resources spent on the cued and uncued
+object in the free viewing group, memory performance of the cued
+object is expected to be better compared to memory performance of the
+uncued object.  Finally, as previous studies showed a strong
+preference of fixating the head over body and background regions in
+static images [@End2017; @Freeth2013; @Zwickel2010], we expected to
+see a similar bias in the current study regarding dwell times, number
+of fixations and fixation latency.  Additionally, we hypothesized that
+the prioritization for the head decreases when participants follow
+specific exploration goals such as in the explicit encoding group of
+the current study [cf., @Flechsenhar2017].
+
+# Methods
+
+## Participants
+
+The cueing effects in fixations and saccades that were obtained by
+@Zwickel2010 can be considered large (Cohen's d~z~ > 0.70). However,
+since effects of the top-down modulation implemented in the current
+study might be smaller, we used a medium effect size for estimating
+the current sample size. When assuming an effect size of Cohen's $f$ =
+0.25 at an $\alpha$ level of .05 and a moderate correlation of .40
+between factor levels of the within-subjects manipulation object role
+(cued vs. uncued), a sample size of 66 participants is needed to
+reveal main effects of the object role or interaction effects between
+group and object role at a power of .95. Under such conditions, the
+power for detecting main effects of group is smaller (1-$\beta$ =
+.67). As a compromise, we aimed at examining 90 participants (plus
+eventual drop outs) to achieve a power of .80 for the main effect of
+group and > .95 for main and interaction effects involving the
+within-subjects manipulation object role.
+
+Finally, `r length(df.w.demo$vp)` subjects participated voluntarily. All
+participant had normal or corrected vision and were recruited via the
+University of Würzburg's online subject pool or by
+blackboard. Participants received course credit or a financial
+compensation of 5€. All participants gave written informed
+consent. One participant was excluded due to missing data, resulting
+in *n* = `r length(df.w.et$vp)` for the eye tracking analysis with `r
+df.w.demo %>% filter(vp != 23) %>% summarise(n_female = sum(sex=="1"))
+%>% .$n_female` female and `r df.w.demo %>% filter(vp != 23) %>%
+summarise(n_male = sum(sex=="0"))%>% .$n_male` male participants
+between `r df.w.demo %>% filter(vp != 23) %>% summarise(min_age =
+min(age)) %>% .$min_age` and `r df.w.demo %>% filter(vp != 23) %>%
+summarise(max_age = max(age)) %>% .$max_age` years (*M* = `r df.w.demo %>%
+filter(vp != 23) %>% summarise(mean_age = round(mean(age),2)) %>%
+.$mean_age` years, *SD* = `r df.w.demo %>% filter(vp != 23) %>%
+summarise(sd_age = round(sd(df.w.demo$age),2)) %>% .$sd_age`
+years). [11] Overall, participants scored very low for Autism traits
+in the Autism-Spectrum Quotient scale [AQ-k, German version,
+@Freitag2007 *M* = `r df.w.demo %>% filter(vp != 23) %>%
+summarise(m_aqk_sumscore = mean(aqk_sumscore)) %>% .$m_aqk_sumscore`,
+*SD* = `r df.w.demo %>% filter(vp != 23) %>% summarise(sd_aqk_sumscore =
+sd(aqk_sumscore)) %>% .$sd_aqk_sumscore`]. Only, one participant
+actually exceeded the proposed cut-off value of >= 17 for Autistic
+disorders (*Max* = `r df.w.demo %>% filter(vp != 23) %>%
+summarise(max_aqk_sumscore = max(aqk_sumscore)) %>%
+.$max_aqk_sumscore`, *Min* = `r df.w.demo %>% filter(vp != 23) %>%
+summarise(min_aqk_sumscore = min(aqk_sumscore)) %>%
+.$min_aqk_sumscore`).
+
+## Stimuli and Apparatus
+
+The experimental stimuli consisted of 26 different indoor and outdoor
+scenes. In each scene a single individual was looking at one of two
+objects that were placed within reaching distance. The direction of
+the gaze (left/right) and the placement of the objects (object A and B
+left/right) were balanced by taking 4 photographs of each scene (see
+Figure \ \@ref(fig:ExampleStimulusset) for an example). [3] The
+position of the individual in the photograph, was comparable to
+@Zwickel2010 stimuli not controlled for, as a consequence participants
+could not expect a specific spatial structure of the scene and the
+gaze cue.  This created 104 unique naturalistic pictures in total. For
+each participant, a set was randomly taken from this pool containing
+one version of each scene, resulting in 26 trials. Eye movements were
+tracked with the corneal reflection method and were recorded with an
+EyeLink1000plus tower system at, a sampling rate of 1000 Hz. The
+stimulation was controlled via Presentation® (Neurobehavioral
+Systems). All stimuli had a resolution of 1280 x 960 pixels and were
+displayed on a 24" LG 24MB65PY-B screen (resolution: 1920 x 1200
+pixels, display size: 516.9 x 323.1 mm) with a refresh rate of 60
+Hz. The viewing distance amounted to 50 cm thus resulting in a visual
+angle of 38.03° x 28.99° for the photographs.
+
+```{r ExampleStimulusset, fig.cap = "Example photographs of a single scene, not from the experimental set of stimulus but taken post-hoc, illustrating how stimuli were generated such that eye gaze and object position were counterbalanced across image versions. Gaze direction and objects were balanced over participants. In total 104 photographs of 26 scenes were used. [5] Due to missing rights to publish original photographs, above photographs were recreated.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
+#The individual depicted in this figure has given written informed consent to publish these pictures.
+knitr::include_graphics("2017_repl-zwickel-vo_files/example-stimuli/example.png")
+
+```
+
+## Design and Procedure
+
+The experimental design was a 2 x 2 mixed design. First, as a
+two-level between-subject factor each participant was either assigned
+to the free viewing or the explicit encoding group (instruction
+group).  Additionally, as a two-level within subject factor object
+role was manipulated, with objects being cued or uncued by the
+depicted individual in the scene.
+
+After arriving at the laboratory individually, participants were asked
+to give full informed consent. Then the eye-tracker was calibrated for
+each participant using a 9-point grid. According to the manipulation,
+half of the participants were told that there was a follow-up memory
+test for objects that were part of the depicted scenes. All
+participants were then told to look at the following scenes freely
+without specifying further exploration goals or mentioning the content
+of the scenes. The presentation of the pictures was randomized. Each
+trial started with the presentation of a fixation cross for one
+second, followed by the scene for 10 seconds [12] comparable to
+@Zwickel2010 and earlier studies [@End2017; @Flechsenhar2017]. The
+inter-trial interval varied randomly between 1 and 3 seconds. After
+the last trial, participants filled in demographic questionnaires and
+completed the [11] AQ-k.  [6]~~The~~ Questionnaires were also introduced
+to reduce recency effects in the memory task that was accomplished
+afterwards. Participants were asked to recall as many objects from the
+scene as possible and write them down on a blank sheet of paper. No
+time limit was given but after 10 minutes, the experimenter asked
+participants to come to an end. In fact, most participants stopped
+earlier and indicated that they did not recall further objects.
+Finally, participants received course credit or payment and were
+debriefed.
+
+## Data analysis
+
+For data processing and statistical analysis, the open-source
+statistical programming language *R* [@R-base][^Rpkg] was used with
+the packages *tidyverse* [@R-tidyverse] and *knitr* [@R-knitr] and
+*papaja* [@R-papaja] for reproducible reporting.  For the analysis of
+the eye-tracking data, EyeLink's standard configuration was used to
+parse eye movements into saccades and fixations. Saccades were defined
+as eye movements exceeding a velocity threshold of 30°/sec or an
+acceleration threshold of 8.000°/sec². Fixations were defined as time
+periods between saccades.
+
+We determined the following regions of interest (ROI) by color coding
+respective images regions by hand using GIMP (GNU Image Manipulation
+Program): the cued object, the uncued object, the head and the body of
+the depicted person. Gaze variables of interest were calculated in a
+largely similar fashion as in @Zwickel2010. Specifically, we
+determined the cumulative duration and number of fixations on each ROI
+per trial. These values were divided by the total time or number of
+fixations, respectively, to yield proportions. As an additional
+measure of prioritization, particularly for early attentional
+allocation, we determined the latency of the first fixation that was
+directed towards each ROI. These measures allow for effective
+comparisons of prioritization between the two relevant objects and
+between the head and the body. To reveal direct relations between the
+head and the relevant objects, we calculated the proportion of
+saccades that left the head region of the depicted individual and
+landed on the cued and uncued objects, respectively.  The memory test
+was scored manually by comparing the list of recalled objects to the
+objects that appeared in the scenes. We separately scored whether cued
+or uncued objects were recalled and ignored any other reported
+details. Afterwards, we calculated the sum of recalled objects
+separately for cued and uncued details.
+
+In order to analyze the influence of the experimental manipulations on
+eye-tracking and memory data, we carried out separate analyses of
+variance (ANOVAs) with the package *car* [@R-car]. The ANOVAs had the
+between-subject factor instruction group and the within-subject factor
+object role and were conducted on the dependent variables fixation
+latency, relative fixation duration, relative numbers of fixations,
+proportion of saccades from the head towards the object and recalled
+items. To examine general effects of social attention, separate ANOVAs
+using the between-subject factor instruction group and the
+within-subject factor ROI (head vs. body region) were conducted on the
+dependent variables fixation latency, fixation duration and number of
+fixations.  For all analysis the apriori significance level of
+$\alpha$ = 0.05 was used. As effect sizes generalized eta-square
+($\eta^2_G$) for ANOVAs are reported, where guidelines suggest .26 as
+a large, .13 as a medium and .02 as a small effect [@Bakeman2005].
+
+[^Rpkg]: A comprehensive list of used R packages can be found
+[here](r-references.bib).
+
+# Results
+
+```{r Layout plots, echo = FALSE}
+
+cTheme = theme(
+    title = element_text(
+      size = 8,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    text=element_text(
+      size=10,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.title=element_text(
+      size=12,
+      #family = "Times New Roman", #excluded due to warnings
+      color = "black"),
+    axis.line = element_line(
+      colour = "black"),
+    panel.grid = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(
+      size = .01,
+      colour = "grey"),
+    panel.background = element_blank(),
+    legend.text = element_text(
+      size=12,
+      color = "black"),
+    legend.position = "none")
+cColorsCU = c("#fdb863", "#b2abd2") #cued | uncued
+cColorsHB = c("#abdda4","#2b83ba")  #head | body
+cLabels = c("free\nviewing", "explicit\nencoding")
+
+```
+
+```{r Descriptives fix*, echo = FALSE}
+
+# Descriptives for fixation chacracteristics for joint attention
+
+dscr.fix.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(fix.face:fixlat.nongaze),
+               funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, fix.face_mean:fixlat.nongaze_se) %>% # ins longformat
+  mutate(fix = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[1]) %>%
+                           unlist()),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>%
+           unlist(),
+         gazed = as.factor(substring(gazed,1)),
+         stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>%
+                            unlist()),
+         key = as.factor("replication"),
+         measure = ifelse(as.character(fix) != "fixlat", round(measure, 3),
+                          round(measure, 0))) %>%
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.fix.rpl$gazed <- factor(dscr.fix.rpl$gazed, levels=c("face", "body",
+                                                          "gaze", "nongaze"))
+
+dscr.fix.zwckl <- data.frame(group="free",fix=c("fix","fix","fix","fix","fixn",
+                                                "fixn","fixn","fixn","fixlat",
+                                                "fixlat","fixlat","fixlat"),
+                             gazed=c("gaze","gaze", "nongaze", "nongaze"),
+                             stat=c("mean","se"),
+                             measure=c(0.08,.01,.07,.01,5.89,.37,5.24,.34,3588,
+                                       133,4008,166)) # free = person
+
+```
+
+```{r Descriptives saccade, echo = FALSE}
+dscr.sac.rpl <- df.w.et %>%
+  group_by(group) %>%
+  summarise_at(vars(sac.pgaze:sac.bnongaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>% # mit den funs() die variablen vars(von:bis) berechnen
+  gather(key, measure, sac.pgaze_mean:sac.bnongaze_se) %>% # ins longformat
+  mutate(stat = as.factor(map(strsplit(key,"[[:punct:]]"), ~.x[3]) %>% unlist()),
+         area = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         area = as.factor(substring(area,1,1)),
+         gazed = map(strsplit(key,"[[:punct:]]"), ~.x[2]) %>% unlist(),
+         gazed = as.factor(substring(gazed,2)),
+         key = as.factor("replication")) %>% #rausnehmen, zur kontrolle, ob alles passt, was oben läuft.
+  select(-measure, everything()) %>% # neusortieren der variablen
+  select(key, everything())
+
+dscr.sac.zwckl <- data.frame(key=c("zwickel","zwickel"),group=c("free", "free"),
+                             gazed=c("gaze", "gaze", "nongaze", "nongaze"),
+                             stat=c("mean", "se"),measure=c(.14,0.01,.09,0.01)) # free = person
+
+```
+
+```{r Descriptives memory, echo = FALSE}
+
+dscr.mem <- df.w.mem %>% rename( group = bed) %>%
+  group_by(group) %>%
+  summarise_at(vars(memgaze:memnogaze), funs(mean,sd,se=sd(.)/sqrt(n()))) %>%
+  gather(key, value, memgaze_mean: memnogaze_se, factor_key = T) %>%
+  separate(key, c("key", "stat"), sep = "\\_", extra = "merge") %>%
+  spread(stat, value) %>%
+  mutate(lowerSE = mean - se,
+         upperSE = mean + se)
+
+```
+
+```{r Descriptives fixations social, warining = FALSE, message = FALSE}
+
+# Descriptives for fixation chacracteristics for social attention
+
+dscr.fixsoc <- df.w.et %>% summarise(mean(fix.face), sd(fix.face),
+                                     mean(fix.body), sd(fix.body),
+                                     mean(fixn.face), sd(fixn.face),
+                                     mean(fixn.body), sd(fixn.body),
+                                     mean(fixlat.face), sd(fixlat.face),
+                                     mean(fixlat.body), sd(fixlat.body))
+dscr.fixsoc.group <- df.w.et %>%
+  group_by(group) %>%
+  summarise(mean(fix.face), sd(fix.face),
+            mean(fix.body), sd(fix.body),
+            mean(fixn.face), sd(fixn.face),
+            mean(fixn.body), sd(fixn.body),
+            mean(fixlat.face), sd(fixlat.face),
+            mean(fixlat.body), sd(fixlat.body))
+```
+
+## Gaze following
+<!-- #### Fixation latency -->
+
+```{r Prerequisits Table Objects, echo = FALSE}
+
+t1 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "gaze") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
+         Measurements = ifelse(fix == "fixlat", "Fixation latency\n(in ms)",
+                      ifelse(fix == "fix", "Fixation duration (in %)",
+                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
+  spread(key = "stat", value = "measure") %>%
+  select(Measurements:se)
+
+t2 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "nongaze") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t3 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "gaze") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t4 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "nongaze") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+# apa_table(t5,
+#           align = c("l", rep("c", 12)),
+#           caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, not gazed at",
+#           note = "here is space for a note.",
+#           #added_stub_head = "Variables",
+#           #col_spanners = list(`free viewing`= c(2,7), `explicit encoding`= c(8,13)),
+#           landscape = TRUE
+#           )
+
+```
+
+```{r Table Objects, results = 'asis', echo = FALSE}
+
+t5 <- cbind(t1,t2[-1],t3[-1],t4[-1]) # only objects
+
+t.fix.obj <- kable(t5, format = "latex", longtable = F, booktabs = T,
+                           digits = 0, align =  c('l', rep("c",12)), escape = T,
+                           caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, uncued)") %>%
+   add_header_above(c(" ", "cued" = 3, "uncued" = 3, "cued" = 3, "uncued" = 3)) %>%
+   add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
+   footnote(general = "Here is a footnote.") #%>%
+   #landscape()
+
+rm(t1,t2,t3,t4,t5)
+
+```
+
+```{r Plots for Barplot Objects, echo = FALSE}
+
+cLimitsObjects = c(0,0.17)
+
+pl.fixdur.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                               & gazed %in% c("gaze", "nongaze")),
+                        aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                & gazed %in% c("gaze", "nongaze"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fix"
+                  & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                & gazed %in% c("gaze", "nongaze"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fix"
+                  & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(accuracy = 1),
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = "Objects", labels = c("cued", "uncued"),
+                    values=cColorsCU) +
+  labs(title = "Object fixations", subtitle = "Fixation duration\n(in %)")
+
+cLegendObjects <- get_legend(pl.fixdur.obj)
+
+pl.fixdur.obj <- pl.fixdur.obj +
+  labs(title = "B", subtitle = "Fixation duration\n(in %)") +
+  cTheme
+
+pl.fixnum.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                               & gazed %in% c("gaze", "nongaze")),
+                        aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                & gazed %in% c("gaze", "nongaze"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixn"
+                  & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                & gazed %in% c("gaze", "nongaze"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixn"
+                  & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  ## Significanes from duration!!!
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(accuracy = 1),
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColorsCU) +
+  labs(title = "C", subtitle = "Fixation number\n(in %)") +
+  cTheme
+
+pl.fixlat.obj <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                               & gazed %in% c("gaze", "nongaze")),
+                        aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                &  gazed %in% c("gaze", "nongaze"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixlat"
+                  & gazed %in% c("gaze", "nongaze"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                &  gazed %in% c("gaze", "nongaze"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixlat"
+                  & gazed %in% c("gaze", "nongaze"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+  scale_y_continuous(name = element_blank(), limits = c(0,3400),
+                     expand = c(0,0)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColorsCU) +
+  labs(title = "A", subtitle = "Fixation latency\n(in ms)") +
+  cTheme
+
+pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
+                     aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure - subset(
+      dscr.sac.rpl, stat == "se" & area == "f" )$measure,
+    ymax=subset(dscr.sac.rpl, stat == "mean" & area == "f")$measure + subset(
+      dscr.sac.rpl, stat == "se" & area == "f")$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.15, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p = .002
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=.13, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .001
+  #geom_signif(annotation="***", y_position=.13, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p = .001
+  scale_y_continuous(name = element_blank(), labels = percent_format(accuracy = 1),
+                     limits = cLimitsObjects, expand = c(0,0),
+                     breaks = c(.05, .10, .15)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values = cColorsCU) +
+  labs(title = "D", subtitle = "Saccades leaving head\n(in %)") +
+  cTheme
+
+```
+
+```{r ANOVA fixations joint, echo = FALSE}
+
+# ANOVA Fixations characteristics for joint attention
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(7,16,4)) { # Variables 7:16, every 4th: fix.gaze and fix.nogaze; fixn.gaze and ...
+  carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,st:(st+1)]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]),
+         Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
+         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
+                   correction="GG", mse = FALSE))
+  }
+
+rm(carmod, idata, icond, st)
+
+```
+
+A significant main effect of object role in the analysis of fixation
+latencies indicates earlier fixations on cued compared to uncued
+objects, `r apa.anova.fixlat.gaze$full_result$icond`. The main effect of
+instruction group was also significant, `r
+apa.anova.fixlat.gaze$full_result$df_w_et_group`, with earlier
+fixations on both objects in the explicit encoding compared to the
+free viewing group. The interaction effect failed to reach statistical
+significance, `r apa.anova.fixlat.gaze$full_result$df_w_et_group_icond`
+(see Figure \ \@ref(fig:FigureObjects) A).
+
+```{r FigureObjects, fig.cap = "Bar plots of the different prioritization measures for the attentional orienting towards the cued and uncued objects as a function of instruction group. Error bars represent standard errors of the mean.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+
+grid.pl.obj <- grid.arrange(pl.fixlat.obj, pl.fixdur.obj, pl.fixnum.obj,
+                            pl.sac.obj, cLegendObjects,
+                            layout_matrix = rbind(c(1, 2, 3, 4, 5)))
+
+#rm(pl.fixdur.obj, pl.fixnum.obj, pl.fixlat.obj, pl.sac.obj, pl.mem, cLegendObjects, cLimitsObjects)
+
+```
+
+<!--#### Fixation duration & number-->
+<!-- (H1, H2) -->
+
+Largely similar effects were obtained in the analyses of fixation
+duration and numbers (see Figure\ \@ref(fig:FigureObjects) B &
+C). Significant main effects of object role indicated that
+participants fixated the cued object longer, `r
+apa.anova.fix.gaze$full_result$icond`, and more often, `r
+apa.anova.fixn.gaze$full_result$icond`, than the uncued object.
+Explicit instructions also led to longer, `r
+apa.anova.fix.gaze$full_result$df_w_et_group`, and more fixations, `r
+apa.anova.fixn.gaze$full_result$df_w_et_group`, on the objects as
+compared to the free viewing condition. The interaction effects of
+instruction group and object role were not statistically significant,
+neither for the duration, `r
+apa.anova.fix.gaze$full_result$df_w_et_group_icond`, nor for the
+number of fixations, `r
+apa.anova.fixn.gaze$full_result$df_w_et_group_icond`.
+
+<!--### Saccades-->
+
+```{r ANOVA saccades, warning = TRUE, message = TRUE}
+
+# ANOVA Saccades
+## 2 (Group) x 2 (Gaze) ANOVA
+
+icond <- gl(2,1,labels=c("cued","uncued")) # within-factor
+idata <- data.frame(icond)
+
+for (st in 17:19) {
+  carmod <- lm(as.matrix(df.w.et[,c(st,(st+3))]) ~ df.w.et$group)
+  #print(colnames(df.w.et[,c(st,(st+3))]))
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]),
+         Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  # assign(paste0("postHoc.",colnames(df.w.et)[st]),
+  #        lsmeans(carmod, specs = c(names(carmod$model[2]), "rep.meas")))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
+         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
+                   correction="GG", mse = FALSE))
+}
+
+rm(carmod, idata, icond, st)
+
+```
+
+<!-- (H1, H2) -->
+
+Saccades leaving the head were more likely to land on the cued
+compared to the uncued object as confirmed by a significant main
+effect of object role, `r apa.anova.sac.fgaze$full_result$icond`. The
+main effect for group, `r
+apa.anova.sac.fgaze$full_result$df_w_et_group`, showed that saccades
+of participants in the explicit encoding group were more often
+directed towards any of the objects as compared to the free viewing
+group. Again, the interaction effect of instruction group and object
+role failed to reach statistical significance `r
+apa.anova.sac.fgaze$full_result$df_w_et_group_icond` (see Figure\
+\@ref(fig:FigureObjects) D).
+
+## Memory for objects
+<!-- (H3) -->
+
+```{r Plot memory}
+
+pl.mem <- dscr.mem %>%
+  ggplot(aes(x = group, y=mean, fill = key)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=lowerSE,
+    ymax=upperSE),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=10.5, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="n.s.", y_position=11, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=11, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), breaks = seq(0,10, by = 5),
+                     limits = c(0,11), expand = c(0,0)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColorsCU) +
+  labs(title = " ", subtitle = "Memory performance\n(in total)") +
+  cTheme
+
+```
+
+```{r ANOVA memory, warning = TRUE, message = TRUE, echo = FALSE}
+
+# Recalled items
+# 2 (Condition) x 2 (Gaze) ANOVA (auf erinnerte Details)
+
+imem <- gl(2,1,labels=c("cued","uncued"))
+idata <- data.frame(imem)
+
+# Car
+carmod <- lm(as.matrix(df.w.mem[,3:4]) ~ df.w.mem$bed)
+#print(colnames(df.w.mem[c(3,4)]))
+#print(Anova(carmod, idata=idata, idesign=~imem, type="III"))
+anova.mem <- Anova(carmod, idata=idata, idesign=~imem, type="III")
+apa.anova.mem <- apa_print(Anova(carmod, idata=idata,
+                                 idesign=~imem, type="III"),
+                           correction="GG", mse = FALSE)
+
+
+rm(imem, idata, carmod)
+```
+
+An analysis of the recall data showed, that participants in the
+explicit encoding group remembered more items than participants from
+the free viewing group, `r
+apa.anova.mem$full_result$df_w_mem_bed`. Neither the main effect of
+object role, `r apa.anova.mem$full_result$imem` nor the interaction
+effect were statistically significant, `r
+apa.anova.mem$full_result$df_w_mem_bed_imem` (see Figure\
+\@ref(fig:FigureMemory)).
+
+```{r FigureMemory, fig.cap = "Bar plot of the memory performance for the cued and uncued objects as a function fo instruction group. Error bars represent standard errors of the mean.", echo = FALSE, dev.args = list(bg = 'white'), fig.height=3, fig.width= 3}
+
+grid.pl.mem <- grid.arrange(pl.mem, cLegendObjects,
+                            layout_matrix = rbind(c(1,2)))
+
+```
+
+## Social prioritization
+
+```{r Prerequisits Table Head, echo = FALSE}
+
+t6 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "face") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure),
+         Measurements = ifelse(fix == "fixlat", "Fixation latency\n(in ms)",
+                      ifelse(fix == "fix", "Fixation duration (in %)",
+                      ifelse( fix == "fixn", "Fixation number (in %)",NA)))) %>%
+  spread(key = "stat", value = "measure") %>%
+  select(Measurements:se)
+
+t7 <- dscr.fix.rpl %>%
+  filter(group == "free", gazed == "body") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t8 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "face") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+t9 <- dscr.fix.rpl %>%
+  filter(group == "mem", gazed == "body") %>%
+  select(fix, stat, measure) %>%
+  mutate(measure = ifelse(fix != "fixlat", measure*100, measure)) %>%
+  spread(key = "stat", value = "measure")
+
+# apa_table(t5,
+#           align = c("l", rep("c", 12)),
+#           caption = "Mean Fixation Latency (in Milliseconds), relative fixation number (FF), and fixation duration as a function of Group (explicit encoding, free viewing) and object (cued, not gazed at",
+#           note = "here is space for a note.",
+#           #added_stub_head = "Variables",
+#           #col_spanners = list(`free viewing`= c(2,7), `explicit encoding`= c(8,13)),
+#           landscape = TRUE
+#           )
+
+```
+
+```{r Table Head, results = 'asis', echo = FALSE}
+
+t10 <- cbind(t6, t7[-1],t8[-1], t9[-1])
+
+t.fix.head <- kable(t10, format = "latex", longtable = F, booktabs = T,
+                        digits = 0, align =  c('l', rep("c",12)), escape = T,
+                        caption = "Mean Fixation Latency (in Milliseconds), relative fixation number, and fixation duration as a function of Group (explicit encoding, free viewing) and person (head and body)") %>%
+    add_header_above(c(" ", "head" = 3, "body" = 3, "head" = 3, "body" = 3)) %>%
+    add_header_above(c(" ", "free viewing" = 6, "explicit encoding" = 6)) %>%
+    footnote(general = "Here is a footnote.") %>%
+    landscape()
+
+rm(t6,t7,t8,t9,t10)
+
+```
+
+```{r Plots for Barplot Heads, echo = FALSE}
+
+cLimitsHeads = c(0,0.28)
+
+pl.fixdur.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                                & gazed %in% c("face", "body")),
+                         aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                & gazed %in% c("face", "body"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fix"
+                  & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fix"
+                & gazed %in% c("face", "body"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fix"
+                  & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(accuracy = 1),
+                     limits = cLimitsHeads, expand = c(0,0),
+                     breaks = c(.05, .10, .15, .20, .25)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = "Persons", labels = c("Head", "Body"),
+                    values=cColorsHB) +
+  labs(title = "B", subtitle = "Fixation duration\n(in %)")
+
+cLegendHead <- get_legend(pl.fixdur.head)
+
+pl.fixdur.head <- pl.fixdur.head +
+  cTheme
+
+
+pl.fixnum.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                                & gazed %in% c("face", "body")),
+                         aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                & gazed %in% c("face", "body"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixn"
+                  & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixn"
+                & gazed %in% c("face", "body"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixn"
+                  & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  ## Significanes from duration!!!
+  #geom_signif(annotation="***", y_position=.19, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="**", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .003
+  #geom_signif(annotation="*", y_position=.17, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p = .01
+  #geom_signif(annotation="n.s.", y_position=.17, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0) + # gazed mem - not gazed mem: p = .679
+  scale_y_continuous(name = element_blank(), labels = percent_format(accuracy = 1),
+                     limits = cLimitsHeads, expand = c(0,0),
+                     breaks = c(.05, .10, .15, .20, .25)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColorsHB) +
+  labs(title = "C", subtitle = "Fixation number\n(in %)") +
+  cTheme
+
+pl.fixlat.head <- ggplot(subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                                & gazed %in% c("face", "body")),
+                         aes(x= group, y= measure, fill = gazed)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(
+    ymin=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                &  gazed %in% c("face", "body"))$measure - subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixlat"
+                  & gazed %in% c("face", "body"))$measure,
+    ymax=subset(dscr.fix.rpl, stat == "mean" & fix == "fixlat"
+                &  gazed %in% c("face", "body"))$measure + subset(
+                  dscr.fix.rpl, stat == "se" & fix == "fixlat"
+                  & gazed %in% c("face", "body"))$measure),
+    width=.2,
+    position=position_dodge(.9)) +
+  #geom_signif(annotation="***", y_position=3300, xmin=1, xmax=2, tip_length = 0.01, vjust = 0.5) + # free - mem: p < .001
+  #geom_signif(annotation="***", y_position=.42, xmin=1.188, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # not-gazed free - not-gazed mem: p < .001,
+  #geom_signif(annotation="***", y_position=.40, xmin=0.81, xmax=1.81, tip_length = 0.01, vjust = 0.5) + # gazed free - gazed mem: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=0.81, xmax=1.188, tip_length = 0.01, vjust = 0.5) + # gazed free - not gazed free: p < .001
+  #geom_signif(annotation="***", y_position=3100, xmin=1.81, xmax=2.188, tip_length = 0.01, vjust = 0.5) + # gazed mem - not gazed mem: p < .001
+  scale_y_continuous(name = element_blank(), limits = c(0,2800),
+                     expand = c(0,0)) +
+  scale_x_discrete(name = element_blank(), labels=cLabels) +
+  scale_fill_manual(name = element_blank(), values=cColorsHB) +
+  labs(title = "A", subtitle = "Fixation latency\n(in ms)") +
+  cTheme
+
+```
+
+```{r ANOVA fixations social, warning = FALSE, message = FALSE}
+# ANOVA Fixations characteristics
+## 2 (Group) x 2 (Face/Body) ANOVA
+
+icond <- gl(2,1,labels=c("head","body")) # within-factor
+idata <- data.frame(icond)
+
+for (st in seq(5,16,4)) { # Variables 5:16, every 4th: fix.face and fix.noface; fixn.face and ...
+    carmod <- lm(as.matrix(df.w.et[,st:(st+1)]) ~ df.w.et$group)
+  #print(Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("anova.",colnames(df.w.et)[st]),
+         Anova(carmod, idata=idata, idesign=~icond, type="III"))
+  assign(paste0("apa.anova.",colnames(df.w.et)[st]),
+         apa_print(Anova(carmod, idata=idata, idesign=~icond, type="III"),
+                   correction="GG", mse = FALSE))
+  }
+
+rm(carmod, idata, icond, st)
+
+```
+
+<!--#### Fixation latency-->
+
+Fixation latencies differed remarkably between the head and the body
+(see Figure\ \@ref(fig:FigureHead) A). Consequently, the ANOVA yielded
+a significant main effect of ROI, `r
+apa.anova.fixlat.face$full_result$icond` with earlier fixations of the
+head compared to the body. There was neither a statistically
+significant main effect of instruction group, `r
+apa.anova.fixlat.face$full_result$df_w_et_group` nor an interaction of
+both factors, `r
+apa.anova.fixlat.face$full_result$df_w_et_group_icond`.
+
+```{r FigureHead, fig.cap = "Bar plot of the different prioritization measures for attentional orienting towards and visual exploration of the depcited person's head and body as a function of instruction group. Error bars represent standard errors of the mean.", echo = FALSE, dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
+
+grid.pl.head <- grid.arrange(pl.fixlat.head, pl.fixdur.head,
+                             pl.fixnum.head, cLegendHead,
+                             layout_matrix = rbind(c(1,2,3,4)))
+
+rm(pl.fixdur.head, pl.fixnum.head, pl.fixlat.head, cLegendHead, cLimitsHeads,
+   cTheme, cColorsCU,cColorsHB, cLabels)
+
+```
+
+<!--#### Fixation duration & number-->
+
+Fixation duration and numbers showed a very similar pattern with
+longer, `r apa.anova.fix.face$full_result$icond`, as well as more
+fixations, `r apa.anova.fixn.face$full_result$icond`, on the head than
+the body ROI.  Remarkably, the instruction group did not exhibit a
+statistically significant main effect, neither for the fixation
+duration, `r apa.anova.fix.face$full_result$df_w_et_group`, nor for
+the number of fixation, `r
+apa.anova.fixn.face$full_result$df_w_et_group`. Furthermore, the
+interaction effects of instruction group and ROI failed to reach
+statistical significance for fixation duration, `r
+apa.anova.fix.face$full_result$df_w_et_group_icond` and fixation
+numbers, `r apa.anova.fixn.face$full_result$df_w_et_group_icond` (see
+Figure\ \@ref(fig:FigureHead) B & C). These findings indicate that the
+prioritization of social ROIs was unaffected by the explicit
+instruction to attend to objects depicted in the scene.
+
+<!--### free viewing vs explicit encoding for face fixations (H5)-->
+```{r Plots free vs mem face fixations, warning = FALSE, message = FALSE}
+
+# # plots
+#
+# plot.face.free_vs_mem <- df.l.et %>%
+#   filter(fixations=="fix" & region=="face") %>%
+#   ggpubr::ggboxplot(x = "fixations", y = "value",
+#                 fill = "group", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
+#                 add = "jitter", shape = "group") #+
+#   #stat_compare_means()
+# #plot.face.free_vs_mem
+
+```
+
+```{r T-test face fixations, warning = FALSE, message = FALSE}
+
+# Fixations Face in Free Viewing vs. Explicit Encoding
+
+for (st in seq(5,16,4)) {
+  msd <- c(mean(df.w.et[df.w.et$group=="free",st]),
+           sd(df.w.et[df.w.et$group=="free",st]),
+           mean(df.w.et[df.w.et$group=="mem",st]),
+           sd(df.w.et[df.w.et$group=="mem",st]))
+  teststat <- t.test(df.w.et[,st] ~ df.w.et$group)
+
+  assign(paste0("ttest.",colnames(df.w.et)[st]),
+         data.frame(M.free=msd[1],SD.free=msd[2], M.mem=msd[3], SD.mem=msd[4],
+                    df=teststat$parameter, t=teststat$statistic,
+                    p=teststat$p.value))
+
+  assign(paste0("apa.ttest.",colnames(df.w.et)[st]),
+         apa_print(t.test(df.w.et[,st] ~ df.w.et$group)))
+  }
+
+rm(msd, teststat, st)
+
+```
+
+<!-- aditional analysis
+## Questionnaires
+
+```{r CORRELATION fixations, warning = TRUE, message = TRUE}
+
+for (st in seq(5,16,4)) { # variables 5 - 16, every 4th
+
+  assign(
+    paste0(
+      "cor.",
+      str_remove(
+        colnames(df.w.et)[st],
+        pattern = ".face")),
+    cor(df.w.et[,st:(st+3)], df.w.demo[-23, 3:11]))
+
+  }
+
+```
+
+No remarkable correlations have been found for any questionaire measure with the eye tracking data (for details see supplementary material). [11] -->
+
+# Discussion
+
+<!-- Main motivation -->
+
+By using naturalistic scenes with rich detail, this study aimed at
+conceptually replicating previous findings of a general prioritization
+of social cues [i.e. heads and bodies, @Birmingham2008; @End2017;
+@Flechsenhar2017] as well as previously reported gaze cueing effects
+elicited by a person being directed towards a specific object in the
+scene [@Zwickel2010]. Both effects could be replicated.
+
+In detail, heads of persons in the scene were fixated earlier and
+explored more extensively as compared to body regions but also cued
+and uncued objects.  Additionally, in line with @Zwickel2010, cued
+objects were preferred over uncued objects. They were fixated
+remarkably earlier, longer and more often. Thus, gaze following
+effects did not only occur with respect to a more thorough processing
+during the whole time of scene presentation but were also evident in
+an early allocation of attentional resources after stimulus onset. All
+these findings together indicate a strong and automatic bias of using
+gaze cues for attentional guidance.
+
+<!-- saccacades -->
+
+Moreover, the prioritization of the head and the preference for the
+cued object indirectly suggest a link between these two regions. To
+investigate this relationship in more detail, we examined saccades
+leaving the head towards the cued and uncued object,
+respectively. Saccades leaving the head were significantly more likely
+to end on the cued than on the uncued object directly linking
+fixations of the head and the cued object.  Thereby, current results
+fully replicate the findings of @Zwickel2010 with a more naturalistic
+set of stimuli.  As often, by using more naturalistic material
+experimental control is reduced. We tried to minimize unsystematic
+effects by producing the stimuli in the same way as @Zwickel2010 but
+using real as compared to 3D rendered scenes. In particular, each
+scene was photographed four times with gaze direction an object
+placement being fully counterbalanced. Since four individual
+photographs of each scene were taken in the current study, we could
+not fully control all stimulus aspects. However, the full replication
+of the effects previously obtained with a different set of virtual
+scenes indicates that these effects generalize to naturalistic
+conditions and are stable against small variations in scene layout and
+presentation.
+
+<!-- top-down -->
+
+Besides replicating previous findings, this study also aimed at
+extending the line of research by testing the robustness of gaze
+following against top-down modulations.  This was achieved by
+instructing half of the participants to memorize as many details of
+the presented scenes as possible. Since the depicted human were not
+relevant to this task, we expected a generally reduced attention
+towards head and body regions as well as a more systematic exploration
+pattern, potentially reducing gaze cueing effects in fixations on and
+saccades towards cued objects.  Unsurprisingly the memory task that
+was accomplished after the eye tracking experiment showed that
+participants, who knew about the free recall task in advance performed
+better in recalling items. More interestingly, however, social
+attention as well as cueing effects in viewing behavior were largely
+unaffected by the explicit instruction to remember as many objects
+from the scenes as possible.  Specifically, participants in the
+explicit recall group did not show reduced attention towards head and
+body regions as compared to the free viewing group. Moreover, whereas
+they paid more attention towards depicted objects in general, gaze
+cueing effects on fixation latencies and densities as well as the
+direction for saccades leaving the head region did not differ
+significantly between both experimental groups.
+
+These findings indicate that the prioritization of social information
+in general as well as of the cued objects in particular are largely
+unaffected by a manipulation of goal-driven attention. The attentional
+guidance of gaze was effective, even when participants investigated
+the scenes with an explicit (non-social) task goal.  This provides
+support for the automaticity and reflexivity of social attentional
+processes and is in line with previous studies on gaze cueing within
+highly controlled setups [e.g., @Ristic2005; @Hayward2017], more
+naturalistic laboratory studies [e.g., @Castelhano2007; @Zwickel2010]
+and real-life social situations [e.g., @Hayward2017;
+@Richardson2007]. Moreover, the current results are consistent with
+recent findings of an early attention bias towards social information
+[@End2017; @Roesler2017] that seems to be relatively resistant against
+specific task instructions [@Flechsenhar2017].
+
+As expected participants with specific recall instructions performed
+better in the subsequent memory task. However, the contribution of the
+automatic attentional processes to memory encoding remains unclear.
+In particular, although cued objects were prioritized in the
+attentional exploration, this did not increase their probability of
+being recalled. This is in contrast to studies on eye movements and
+memory performance showing that increased attention results in better
+memory performance [e.g., @Hollingworth2002] as [9] well as studies on
+(non-social) cueing [@Schmidt2002; @Belopolsky2008].  From that
+perspective, the cued object should have been recalled better than the
+uncued object [@Schmidt2002; @Belopolsky2008]. However, another study
+showed that if certain scene details have a special meaning (e.g., by
+being central to the content of a picture story), attention does no
+longer predict memory for these details [@Kim2013]. With respect to
+the current study, these findings may indicate that both objects that
+were placed within reaching distance of the depicted person conveyed
+such meaning and were therefore remembered with equal
+probability. Since we only tested for early memory effects, it would
+be very interesting to delay the memory test by at least 24h to
+examine whether memory consolidation differs between cued and uncued
+objects [@Squire1993].
+
+<!-- Limitations -->
+
+Although the current study has several strengths including the
+systematic generation of novel stimulus material and the large sample
+size, it also has some limitations that need to be mentioned.  First,
+although this study shows that humans follow other persons gaze
+implicitly in unconstrained situations, this was shown for situations
+without real interactions between humans. Research shows, that
+fixation patterns differ remarkably when a real interaction between
+persons is possible [e.g., @Hayward2017; @Laidlaw2011; for an overview
+see: @Risko2016]. However, our findings add evidence to the classic
+highly controlled laboratory approaches to social attention, yet at
+the same time approximates more ecological research [@Risko2012].  An
+additional critique might be that we did not control for directional
+information from the depicted person’s body in contrast to the
+head. Earlier studies show, that body orientation is relevant for
+cueing [@Hietanen1999; @Lawson2016] and the influence of body
+orientation on the cueing effects (e.g., through peripheral vision)
+cannot be dissociated by our study design. However, our results
+indicate a direct link between the head and the cued object, as does
+@Zwickel2010. In fact, overall the first fixation of the body occurs
+about 1 second after first fixation on the cued object.  <!--[3] A
+third limitation might be, that participants expected a specific
+structure for each scene, increasing reflexive shifts towards the
+head. Although we did not controll for head position in the scene, the
+head appeared most often in the center and everytime in the upper half
+of the scene. To test this expectancies in participants one might
+create scenes explicitly manipulating the position of the social
+stimulus.  --> <!--Did we? [4] [is to take the motivation to utilize
+the cueing information away from the observers]#Rev1 [7] erstaunlich
+bei unserer manipulation, top-down kein einfluss
+
+2 unterschiedliche dinge man macht person irrelevant oder vorteilhaft
+NICHT auf person zu achten vs irrelvant
+
+-->
+
+<!-- Conclusio -->
+
+Overall, the current results provide additional support for previous
+findings that attention is shifted reflexively to locations where
+other persons are looking at [e.g., @Ristic2005; @Hayward2017]. This
+evidence, which was previously extended to free viewing of more
+complex static scenes by @Zwickel2010, was shown to be valid in more
+naturalistic scenes and robust against top-down modulation. Even when
+explicitly directing attention away from depicted individuals by
+making objects task-relevant, social and joint attention were still
+affected by the mere presence of a person, comparable to the unbiased
+free viewing condition. These results indicate that the mere presence
+of other human beings as well as their gaze orientation have a strong
+impact on attentional exploration.
+
+\newpage
+
+# Acknowledgements
+
+The authors thank Michael Strunz for his help with data
+collection. This work was supported by the European Research Council
+(ERC-2013-StG #336305).
+
+
+# References
+```{r create_r-references, include=FALSE}
+r_refs(file = "r-references.bib")
+```
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
