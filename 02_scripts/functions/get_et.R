@@ -1,4 +1,5 @@
 # https://stackoverflow.com/a/47994870/7285920
+# https://www.tidyverse.org/articles/2019/06/rlang-0-4-0/
 # get_et_duration <- function(
 #     eyetracking_data, across_vars, by_vars, coi){
 #     
@@ -36,7 +37,7 @@ get_et_duration <-
                        prop_dur = abs_roi/abs_all) %>%
                 ungroup()
         } else if (coi=="bin_dur") {
-    
+            
             duration <-
                 eyetracking_data %>%
                 group_by(.dots=vars_group_sum) %>%
@@ -45,12 +46,12 @@ get_et_duration <-
                 mutate(abs_all = sum(abs_roi),
                        prop_dur = abs_roi/abs_all) %>%
                 ungroup()
-            }
-    
-    
-    duration
-    
-} 
+        }
+        
+        
+        duration
+        
+    } 
 
 
 
@@ -59,26 +60,26 @@ get_et_count <- function(eyetracking_data, across_vars, by_vars){
     # eyetracking_data <- df_et
     # across_vars <- "fix_id"
     # by_vars <- c("subject_id", "trial_id", "baseline_ok")
-
+    
     vars_group_sum <- c(by_vars, across_vars)
     vars_group_relative <- by_vars
-
+    
     count <- 
         eyetracking_data %>%
         mutate(fix_counter = ifelse(!is.na(fix_n), 1, 0)) %>% 
         group_by(.dots=vars_group_sum) %>%
         summarise(abs_roi = sum(fix_counter)) %>%
         mutate(abs_all = sum(abs_roi),
-               prop_cnt = abs_roi/abs_all) %>%
+               prop_num = abs_roi/abs_all) %>%
         ungroup()
-        
-        # # make sure every roi is represented in each bin.
-        # complete(
-        #     # vars
-        #     nesting(quos(alist(across_vars))), !!by_vars,
-        #     # fill bin duration with 0s, if fix_id  for roi is generated with complete
-        #     fill = list(prop_cnt = 0))
-        
+    
+    # # make sure every roi is represented in each bin.
+    # complete(
+    #     # vars
+    #     nesting(quos(alist(across_vars))), !!by_vars,
+    #     # fill bin duration with 0s, if fix_id  for roi is generated with complete
+    #     fill = list(prop_num = 0))
+    
     
     count
 }
@@ -93,7 +94,7 @@ get_et_latency <- function(eyetracking_data){
         summarise(latency = min(fix_start)) %>%
         group_by(subject_id, fix_id) %>%
         summarise(
-            mean_latency = mean(latency))%>%
+            m_lat = mean(latency))%>%
         ungroup()
     
     latency

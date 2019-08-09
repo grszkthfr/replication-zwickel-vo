@@ -25,3 +25,8 @@ draft*
 desktop.ini
 03_manuscript/2017_repl-zwickel-vo_files/*
 03_manuscript/co-authors/*
+/.here
+/.projectile
+*.png
+*.Rproj
+*.RDS

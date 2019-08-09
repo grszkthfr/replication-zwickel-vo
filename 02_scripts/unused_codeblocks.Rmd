@@ -1,0 +1,121 @@
+---
+title: "Unused code blocks"
+author: "Jonas Großekathöfer"
+date: "19 7 2019"
+output: html_document
+---
+
+# Tables
+
+```{r table fixations ja}
+
+tbl_ja <-     
+  rbind(
+      dscr_ja_lat %>%
+      select(group_id, fix_id, m=m_lat, sd=sd_lat) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure, 2)), "ms")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Latency") %>% 
+      column_to_rownames("id"),
+  
+      dscr_ja_dur %>%
+      select(group_id, fix_id, m=m_dur, sd=sd_dur) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure*100, 2)), "%")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Duration") %>%
+      column_to_rownames("id"),
+
+      dscr_ja_num %>%
+      select(group_id, fix_id, m=m_num, sd=sd_num) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure*100, 2)), "%")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Number") %>% 
+      column_to_rownames("id")
+  ) 
+
+
+```
+
+```{r TableJA, results = 'asis'}
+
+tbl_ja <- kable(
+    x = tbl_ja, format = "latex",
+    booktabs = T,
+    col.names = rep(c("m","sd"),4),
+    align = "c") %>%
+kable_styling(
+    position = "center") %>%
+add_header_above(
+    c(" " = 1, "object cued" = 2, "object uncued" = 2, "object cued" = 2, "object uncued" = 2)) %>%
+add_header_above(
+  c(" " = 1, "free viewing" = 4, "explicit encoding" = 4))%>%
+footnote(
+    general_title = "Note.",
+    general = "Here is a general comment of the table.")
+
+
+```
+
+```{r table fixations social}
+
+tbl_sa <-     
+  rbind(
+      dscr_sa_lat %>%
+      select(group_id, fix_id, m=m_lat, sd=sd_lat) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure, 2)), "ms")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Latency") %>% 
+      column_to_rownames("id"),
+  
+      dscr_sa_dur %>%
+      select(group_id, fix_id, m=m_dur, sd=sd_dur) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure*100, 2)), "%")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Duration") %>%
+      column_to_rownames("id"),
+
+      dscr_sa_num %>%
+      select(group_id, fix_id, m=m_num, sd=sd_num) %>%
+      gather(key="stat", "measure", m, sd) %>%
+      unite("key", group_id, fix_id, stat) %>%
+      mutate(measure = paste(as.character(round(measure*100, 2)), "%")) %>% 
+      spread(key, measure) %>% 
+      mutate(id = "Number") %>% 
+      column_to_rownames("id")
+  ) 
+
+```
+
+```{r TableSA, results = 'asis'}
+
+kable(
+    x = tbl_sa, format = "latex",
+    booktabs = T,
+    col.names = rep(c("m","sd"),4),
+    align = "c") %>%
+kable_styling(
+    position = "center") %>%
+add_header_above(
+    c(" " = 1,
+      "object cued" = 2, "object uncued" = 2,
+      "object cued" = 2, "object uncued" = 2)) %>%
+add_header_above(
+  c(" " = 1,
+    "free viewing" = 4,
+    "explicit encoding" = 4))%>%
+footnote(
+    general_title = "Note.",
+    general = "Here is a general comment of the table.")
+
+
+```
