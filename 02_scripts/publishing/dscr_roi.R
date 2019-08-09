@@ -1,49 +1,38 @@
 # source("02_scripts/01-libraries.R")
 # source("02_scripts/02-paths.R")
 # source(path(path_scripts_data, "rois.R"))
+# source(path(path_scripts_fun, "calc_roi.R"))
 
-distance <- function(a_x, a_y, b_x, b_y){
-    
-    distance <- sqrt((b_x - a_x)**2 + (b_y - a_y)**2)
-    return(distance)
-}
 
-### http://stephenrho.github.io/visual-angle.html
-visAngle <- function(size, distance){
-    # this function calculates visual angle
-    # size and distance must be in the same units
-    Rad = 2*atan(size/(2*distance))
-    Ang = Rad*(180/pi)
-    return(Ang)
-}
 
 ### convert px into cm
-    px_in_cm = 53.136 / 1920 # assumes square pixel!?
+px_in_cm = 53.136 / 1920 # assumes square pixel!?
 
 dscr_roi <- df_roi %>% 
     mutate(
-        roi_width_px = roi_max_x-roi_min_x,
-        roi_height_px = roi_max_y-roi_min_y,
-        roi_width_cm = roi_width_px * px_in_cm,
-        roi_height_cm = roi_height_px * px_in_cm,
-        roi_width_dg = visAngle(roi_width_cm, 53.136),
-        roi_height_dg = visAngle(roi_height_cm, 53.136)) %>% 
+        roi_w_px = roi_max_x-roi_min_x,
+        roi_h_px = roi_max_y-roi_min_y,
+        roi_w_cm = roi_w_px * px_in_cm,
+        roi_h_cm = roi_h_px * px_in_cm,
+        roi_w_dg = visAngle(roi_w_cm, 53.136),
+        roi_h_dg = visAngle(roi_h_cm, 53.136)) %>% 
     group_by(roi_id) %>% 
     summarise(
+        m_roi_size = mean(roi_size),
         m_roi_x = mean(roi_m_x),
         m_roi_y = mean(roi_m_y),
-        m_width_px = mean(roi_width_px),
-        sd_width_px = sd(roi_width_px),
-        m_height_px = mean(roi_height_px),
-        sd_height_px = sd(roi_height_px),
-        m_width_cm = mean(roi_width_cm),
-        sd_width_cm = sd(roi_width_cm),
-        m_height_cm = mean(roi_height_cm),
-        sd_height_cm = sd(roi_height_cm),  
-        m_width_dg = mean(roi_width_dg),
-        sd_width_dg = sd(roi_width_dg),
-        m_height_dg = mean(roi_height_dg),
-        sd_height_dg = sd(roi_height_dg),)
+        m_roi_w_px = mean(roi_w_px),
+        sd_roi_w_px = sd(roi_w_px),
+        m_roi_h_px = mean(roi_h_px),
+        sd_roi_h_px = sd(roi_h_px),
+        m_roi_w_cm = mean(roi_w_cm),
+        sd_roi_roi_w_cm = sd(roi_w_cm),
+        m_roi_h_cm = mean(roi_h_cm),
+        sd_roi_h_cm = sd(roi_h_cm),  
+        m_roi_w_dg = mean(roi_w_dg),
+        sd_roi_w_dg = sd(roi_w_dg),
+        m_roi_h_dg = mean(roi_h_dg),
+        sd_roi_h_dg = sd(roi_h_dg),)
 
 dscr_roi_dist <- 
     bind_rows(
@@ -113,15 +102,15 @@ dscr_roi_dist <-
                 sd_dist_cm = sd(dist_cm),
                 m_dist_dg = mean(dist_dg),
                 sd_dist_dg = sd(dist_dg))
-        )
+    )
 
 # dscr_roi %>% 
 #     group_by(roi_id) %>% 
 #     summarise(
-#         xmin = 1280 - (m_roi_x - m_width_px/2),
-#         xmax = 1280 - (m_roi_x + m_width_px/2),
-#         ymin = 960 - (m_roi_y - m_height_px/2),
-#         ymax = 960 - (m_roi_y + m_height_px/2)) %>% 
+#         xmin = 1280 - (m_roi_x - m_roi_w_px/2),
+#         xmax = 1280 - (m_roi_x + m_roi_w_px/2),
+#         ymin = 960 - (m_roi_y - m_h_px/2),
+#         ymax = 960 - (m_roi_y + m_h_px/2)) %>% 
 #     # filter(roi_id != "background") %>% 
 # ggplot() +
 #     geom_rect(
