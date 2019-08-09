@@ -326,24 +326,36 @@ received course credit or payment and were debriefed.
 ```{r stim characterstics }
 
 source(path(path_scripts_publ, "glmm_mem.R"))
-source(path(path_scripts_publ, "dscr_stim.R"))
+source(path(path_scripts_publ, "dscr_roi.R"))
 
-m_stim_cued <- round(dscr_stim[dscr_stim$fix_id == "object_cued",]$m_size*100, 1) %>% 
-    as.character()
-sd_stim_cued <- round(dscr_stim[dscr_stim$fix_id == "object_cued", ]$sd_size*100, 1) %>% 
-    as.character()
-m_stim_uncued <- round(dscr_stim[dscr_stim$fix_id == "object_uncued", ]$m_size*100, 1) %>% 
-    as.character()
-sd_stim_uncued <- round(dscr_stim[dscr_stim$fix_id == "object_uncued", ]$sd_size*100, 1) %>% 
-    as.character()
-m_stim_head <- round(dscr_stim[dscr_stim$fix_id == "head", ]$m_size*100, 1) %>% 
-    as.character()
-sd_stim_head <- round(dscr_stim[dscr_stim$fix_id == "head", ]$sd_size*100, 1) %>% 
-    as.character()
-m_stim_body <- round(dscr_stim[dscr_stim$fix_id == "body", ]$m_size*100, 1) %>% 
-    as.character()
-sd_stim_body <- round(dscr_stim[dscr_stim$fix_id == "body", ]$sd_size*100, 1) %>% 
-    as.character()
+# means and sds for proportional roi size
+m_stim_cued <- 
+    dscr_roi[dscr_roi$fix_id == "object_cued", ]$m_size/(1280*960)*100 %>%
+    round(1)
+sd_stim_cued <-
+    dscr_roi[dscr_roi$fix_id == "object_cued", ]$sd_size/(1280*960)*100 %>%
+    round(1)
+
+m_stim_uncued <- 
+    dscr_roi[dscr_roi$fix_id == "object_uncued", ]$m_size*100 %>%
+    round(1)
+sd_stim_uncued <- 
+    dscr_roi[dscr_roi$fix_id == "object_uncued", ]$sd_size/(1280*960)*100 %>%
+    round(1)
+
+m_stim_head <- 
+    dscr_roi[dscr_roi$fix_id == "head", ]$m_size/(1280*960)*100 %>%
+    round(1)
+sd_stim_head <-
+    dscr_roi[dscr_roi$fix_id == "head", ]$sd_size/(1280*960)*100 %>% 
+    round(1)
+
+m_stim_body <-
+    dscr_roi[dscr_roi$fix_id == "body", ]$m_size/(1280*960)*100 %>% 
+    round(1)
+sd_stim_body <-
+    dscr_roi[dscr_roi$fix_id == "body", ]$sd_size/(1280*960)*100 %>% 
+    round(1)
 
 ```
 
