@@ -482,59 +482,75 @@ apa_aov_sac_fgaze <- apa_print(aov_sac.fgaze, correction="GG", mse = FALSE)$full
 
 # object role
 m_ja_lat_cued <-
-    round(mean(dscr_ja_lat[dscr_ja_lat$fix_id == "object_cued",]$m_lat), 4) * 100
+    mean(dscr_ja_lat[dscr_ja_lat$fix_id == "object_cued",]$m_lat) %>% 
+    round(0)
 m_ja_lat_uncued <-
-    round(mean(dscr_ja_lat[dscr_ja_lat$fix_id == "object_uncued",]$m_lat), 4) * 100
+    mean(dscr_ja_lat[dscr_ja_lat$fix_id == "object_uncued",]$m_lat) %>% 
+    round(0)
 
 m_ja_dur_cued <-
-    round(mean(dscr_ja_dur[dscr_ja_dur$fix_id == "object_cued",]$m_dur), 4) * 100
+    mean(dscr_ja_dur[dscr_ja_dur$fix_id == "object_cued",]$m_dur) %>% 
+    round(4) * 100
 m_ja_dur_uncued <-
-    round(mean(dscr_ja_dur[dscr_ja_dur$fix_id == "object_uncued",]$m_dur), 4) * 100
+    mean(dscr_ja_dur[dscr_ja_dur$fix_id == "object_uncued",]$m_dur) %>% 
+    round(4) * 100
 
 m_ja_num_cued <-
-    round(mean(dscr_ja_num[dscr_ja_num$fix_id == "object_cued",]$m_num), 4) * 100
+    mean(dscr_ja_num[dscr_ja_num$fix_id == "object_cued",]$m_num) %>% 
+    round(4) * 100
 m_ja_num_uncued <-
-    round(mean(dscr_ja_num[dscr_ja_num$fix_id == "object_uncued",]$m_num), 4) * 100
+    mean(dscr_ja_num[dscr_ja_num$fix_id == "object_uncued",]$m_num) %>% 
+    round(4) * 100
 
 # group
 m_ja_lat_free <-
-    round(mean(dscr_ja_lat[dscr_ja_lat$group_id == "free",]$m_lat), 4) * 100
+    mean(dscr_ja_lat[dscr_ja_lat$group_id == "free",]$m_lat) %>% 
+    round(0)
 m_ja_lat_mem <-
-    round(mean(dscr_ja_lat[dscr_ja_lat$group_id == "mem",]$m_lat), 4) * 100
+    mean(dscr_ja_lat[dscr_ja_lat$group_id == "mem",]$m_lat) %>% 
+    round(0)
 
 m_ja_dur_free <-
-    round(mean(dscr_ja_dur[dscr_ja_dur$group_id == "free",]$m_dur), 4) * 100
+    mean(dscr_ja_dur[dscr_ja_dur$group_id == "free",]$m_dur) %>% 
+    round(4) * 100
 m_ja_dur_mem <-
-    round(mean(dscr_ja_dur[dscr_ja_dur$group_id == "mem",]$m_dur), 4) * 100
+    mean(dscr_ja_dur[dscr_ja_dur$group_id == "mem",]$m_dur) %>% 
+    round(4) * 100
 
 m_ja_num_free <-
-    round(mean(dscr_ja_num[dscr_ja_num$group_id == "free",]$m_num), 4) * 100
+    mean(dscr_ja_num[dscr_ja_num$group_id == "free",]$m_num) %>% 
+    round(4) * 100
 m_ja_num_mem <-
-    round(mean(dscr_ja_num[dscr_ja_num$group_id == "mem",]$m_num), 4) * 100
+    mean(dscr_ja_num[dscr_ja_num$group_id == "mem",]$m_num) %>% 
+    round(4) * 100
 
 # saccades
 # object role
 m_sac_cued <-
-    round(mean(dscr_sac[dscr_sac$fix_id == "object_cued",]$m_sac), 4) * 100
+    mean(dscr_sac[dscr_sac$fix_id == "object_cued",]$m_sac) %>% 
+    round(4) * 100
 m_sac_uncued <-
-    round(mean(dscr_sac[dscr_sac$fix_id == "object_uncued",]$m_sac), 4) * 100
+    mean(dscr_sac[dscr_sac$fix_id == "object_uncued",]$m_sac) %>% 
+    round(4) * 100
 
 # group
 m_sac_free <-
-    round(mean(dscr_sac[dscr_sac$group_id == "free",]$m_sac), 4) * 100
+    mean(dscr_sac[dscr_sac$group_id == "free",]$m_sac) %>% 
+    round(4) * 100
 m_sac_mem <-
-    round(mean(dscr_sac[dscr_sac$group_id == "mem",]$m_sac), 4) * 100
+    mean(dscr_sac[dscr_sac$group_id == "mem",]$m_sac) %>% 
+    round(4) * 100
 
 ```
 
 A significant main effect of object role in the analysis of fixation latencies
 indicates earlier fixations on cued compared to uncued **(
-`r apa_aov_ja_lat$fix_id`; $M_{lat,cued} = `r m_ja_dur_cued`$, $M_{lat,uncued} 
-= `r m_ja_dur_uncued`$)** objects. The main effect of instruction group was also
+`r apa_aov_ja_lat$fix_id`; $M_{lat,cued} = `r m_ja_lat_cued` ms$, $M_{lat,uncued} 
+= `r m_ja_lat_uncued` ms$)** objects. The main effect of instruction group was also
 significant, with earlier fixations on both objects
 in the explicit encoding **(`r apa_aov_ja_lat$group_id`; $M_{lat,mem} = 
-`r m_ja_dur_mem`$)** compared to the free viewing group **($M_{lat,free} = 
-`r m_ja_dur_free`$)**. The interaction effect failed to reach statistical
+`r m_ja_lat_mem` ms$)** compared to the free viewing group **($M_{lat,free} = 
+`r m_ja_lat_free` ms$)**. The interaction effect failed to reach statistical
 significance (`r apa_aov_ja_lat$group_id_fix_id`; see Figure
 \ \@ref(fig:FigFixObjects) A).
 
@@ -717,35 +733,47 @@ apa_emm_sa_num <- apa_print(emm_sa_num$contrasts)$statistic
 
 # head vs body
 m_sa_lat_head <-
-    round(mean(dscr_sa_lat[dscr_sa_lat$fix_id == "head",]$m_lat))
+    mean(dscr_sa_lat[dscr_sa_lat$fix_id == "head",]$m_lat) %>%
+    round()
 m_sa_lat_body <-
-    round(mean(dscr_sa_lat[dscr_sa_lat$fix_id == "body",]$m_lat))
+    mean(dscr_sa_lat[dscr_sa_lat$fix_id == "body",]$m_lat) %>% 
+    round()
 
 m_sa_dur_head <-
-    round(mean(dscr_sa_dur[dscr_sa_dur$fix_id == "head",]$m_dur), 4) * 100
+    mean(dscr_sa_dur[dscr_sa_dur$fix_id == "head",]$m_dur) %>% 
+    round(4) * 100
 m_sa_dur_body <-
-    round(mean(dscr_sa_dur[dscr_sa_dur$fix_id == "body",]$m_dur), 4) * 100
+    mean(dscr_sa_dur[dscr_sa_dur$fix_id == "body",]$m_dur) %>% 
+    round(4) * 100
 
 m_sa_num_head <-
-    round(mean(dscr_sa_num[dscr_sa_num$fix_id == "head",]$m_num), 4) * 100
+    mean(dscr_sa_num[dscr_sa_num$fix_id == "head",]$m_num) %>% 
+    round(4) * 100
 m_sa_num_body <-
-    round(mean(dscr_sa_num[dscr_sa_num$fix_id == "body",]$m_num), 4) * 100
+    mean(dscr_sa_num[dscr_sa_num$fix_id == "body",]$m_num) %>% 
+    round(4) * 100
 
 # group
 m_sa_lat_free <-
-    round(mean(dscr_sa_lat[dscr_sa_lat$group_id == "free",]$m_lat), 4) * 100
+    mean(dscr_sa_lat[dscr_sa_lat$group_id == "free",]$m_lat) %>% 
+    round(4) * 100
 m_sa_lat_mem <-
-    round(mean(dscr_sa_lat[dscr_sa_lat$group_id == "mem",]$m_lat), 4) * 100
+    mean(dscr_sa_lat[dscr_sa_lat$group_id == "mem",]$m_lat) %>% 
+    round(4) * 100
 
 m_sa_dur_free <-
-    round(mean(dscr_sa_dur[dscr_sa_dur$group_id == "free",]$m_dur), 4) * 100
+    mean(dscr_sa_dur[dscr_sa_dur$group_id == "free",]$m_dur) %>% 
+    round(4) * 100
 m_sa_dur_mem <-
-    round(mean(dscr_sa_dur[dscr_sa_dur$group_id == "mem",]$m_dur), 4) * 100
+    mean(dscr_sa_dur[dscr_sa_dur$group_id == "mem",]$m_dur) %>% 
+    round(4) * 100
 
 m_sa_num_free <-
-    round(mean(dscr_sa_num[dscr_sa_num$group_id == "free",]$m_num), 4) * 100
+    mean(dscr_sa_num[dscr_sa_num$group_id == "free",]$m_num) %>% 
+    round(4) * 100
 m_sa_num_mem <-
-    round(mean(dscr_sa_num[dscr_sa_num$group_id == "mem",]$m_num), 4) * 100
+    mean(dscr_sa_num[dscr_sa_num$group_id == "mem",]$m_num) %>% 
+    round(4) * 100
 
 ```
 
