@@ -1,5 +1,5 @@
-# source(path(path_scripts_publ, "dscr_et.R"))
-# source(path(path_scripts_publ, "plt_cosmetics.R"))
+# source(path(path_scripts_analysis, "dscr_et.R"))
+# source(path(path_scripts_analysis, "plt_cosmetics.R"))
 
 plt_sa_dur <- 
     dscr_sa_dur %>% 
@@ -80,8 +80,8 @@ plt_sa_lat <-
     labs(title = "Fixation latency\n(in ms)") +
     cTheme
 
-# plt_sa_dur_bin <- 
-#     dscr_et_dur_bin %>% 
+# plt_sa_dur_t <- 
+#     dscr_et_dur_t %>% 
 #     filter(fix_id == "head" |fix_id == "body") %>%  
 #     ggplot(aes(x=bin_id, y=m_dur, color=fix_id)) +
 #     geom_line()+
@@ -106,7 +106,7 @@ plt_sa_lat <-
 #     labs(title = "B", subtitle = "Temporal relative fixation duration for social attention") +
 #     cTheme
 # 
-# plt_sa_num_bin <-
+# plt_sa_num_t <-
 #     dscr_et_dur %>% 
 #     filter(fix_id == "head" |fix_id == "body") %>%  
 #     ggplot(aes(x=bin_id, y=m_num, color=fix_id)) +

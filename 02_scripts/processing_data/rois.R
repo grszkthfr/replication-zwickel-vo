@@ -2,7 +2,15 @@
 # source("02_scripts/02-paths.R")
 
 df_roi <-
-    read_csv2(path(path_prep_save, "rois.csv")) %>% 
+  read_delim(
+    path(path_prep_save, "rois.csv"),
+    delim = ";",
+    locale = locale(
+      decimal_mark = ",",
+      grouping_mark = "."),
+    col_types = cols(
+      .default = col_double(),
+      stimulus = col_character())) %>%
     gather(roi_id, values, background.size:nongaze.max_y, factor_key=TRUE) %>% 
     separate(roi_id, c("roi_id", "statistic"), sep = "\\.") %>% 
     spread(statistic, values) %>%

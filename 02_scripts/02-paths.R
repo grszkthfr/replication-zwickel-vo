@@ -5,7 +5,7 @@ library(fs)
 # paths scripts
 path_scripts <- path(here(), "02_scripts")
 path_scripts_data <- path(path_scripts, "processing_data")
-path_scripts_publ <- path(path_scripts, "publishing")
+path_scripts_analysis <- path(path_scripts, "analysis")
 path_scripts_stat <- path(path_scripts, "statistics")
 path_scripts_fun <- path(path_scripts, "functions")
 

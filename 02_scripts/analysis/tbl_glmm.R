@@ -1,10 +1,13 @@
-tbl_glmm_results <- tibble(Estimate = NA, `Std..Error` = NA, `z.value` = NA, `Pr...z..` = NA, AIC = NA, BIC = NA, logLik = NA, deviance = NA, df.resid = NA) %>%
-    bind_rows(
+tbl_glmm_results <-
+  tibble(
+    Estimate = NA, `Std..Error` = NA, `z.value` = NA, `Pr...z..` = NA,
+    AIC = NA, BIC = NA, logLik = NA, deviance = NA, df.resid = NA) %>%
+  bind_rows(
         data.frame(
             model = "Model 1",
             rbind(summary(glmm_mem_basic)$AICtab)) %>%
             rownames_to_column()) %>%
-    bind_rows(
+  bind_rows(
         data.frame(
             model = "Model 1",
             summary(glmm_mem_basic)$coefficients) %>%
@@ -40,11 +43,11 @@ tbl_glmm_results <- tibble(Estimate = NA, `Std..Error` = NA, `z.value` = NA, `Pr
             Coefficient == "prop_dur_z" ~ "    DURATION",
             Coefficient == "prop_num_z" ~ "    NUMBER",
             Coefficient == "fix_idobject_uncued" ~ "    OBJECT ROLE",
-            Coefficient == "group_idmem:prop_dur_z" ~ "    GROUP*DURATION",
-            Coefficient == "group_idmem:prop_num_z" ~ "    GROUP*NUMBER",
-            Coefficient == "group_idmem:fix_idobject_uncued" ~ "    GROUP*OBJECT ROLE",
-            Coefficient == "prop_num_z:fix_idobject_uncued" ~ "    NUMBER*OBJECT ROLE",
-            Coefficient == "group_idmem:prop_num_z:fix_idobject_uncued" ~ "    GROUP*NUMBER*OBJECT ROLE"),
+            Coefficient == "group_idmem:prop_dur_z" ~ "    GROUP x DURATION",
+            Coefficient == "group_idmem:prop_num_z" ~ "    GROUP x NUMBER",
+            Coefficient == "group_idmem:fix_idobject_uncued" ~ "    GROUP x OBJECT ROLE",
+            Coefficient == "prop_num_z:fix_idobject_uncued" ~ "    NUMBER x OBJECT ROLE",
+            Coefficient == "group_idmem:prop_num_z:fix_idobject_uncued" ~ "    GROUP x NUMBER x OBJECT ROLE"),
         Coefficient = ifelse(is.na(Coefficient), model, Coefficient),
         p = case_when(p < .001 ~ "< .001",
                       p < .01 ~ "< .01",

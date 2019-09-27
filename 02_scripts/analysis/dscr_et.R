@@ -29,18 +29,18 @@
 #               u_se_lat = m_lat + se_lat)
 
 # Descriptives for temporal dynamics (bins)
-dscr_et_dur_bin <-
-    df_et_dur_bin %>%
-    group_by(bin_id, group_id, fix_id) %>% 
+dscr_et_dur_t <-
+    df_et_dur_t %>%
+    group_by(bin_id, group_id, fix_id) %>%
     summarise(m_dur = mean(prop_dur),
               sd_dur = sd(prop_dur),
               se_dur = sd_dur/sqrt(n()),
               l_se_dur = m_dur - se_dur,
               u_se_dur = m_dur + se_dur)
 
-dscr_et_num_bin <-
-    df_et_num_bin %>%
-    group_by(bin_id, group_id, fix_id) %>% 
+dscr_et_num_t <-
+    df_et_num_t %>%
+    group_by(bin_id, group_id, fix_id) %>%
     summarise(m_num = mean(prop_num),
               sd_num = sd(prop_num),
               se_num = sd_num/sqrt(n()),

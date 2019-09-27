@@ -1,8 +1,8 @@
-## source(path(path_scripts_publ, "dscr_et.R"))
-## source(path(path_scripts_publ, "plt_cosmetics.R"))
+## source(path(path_scripts_analysis, "dscr_et.R"))
+## source(path(path_scripts_analysis, "plt_cosmetics.R"))
 
-plt_et_dur_bin <-
-    dscr_et_dur_bin  %>%
+plt_et_dur_t <-
+    dscr_et_dur_t  %>%
     filter(fix_id != "background") %>%
     ggplot(aes(x=bin_id, y=m_dur, color=fix_id, shape = fix_id)) +
     geom_line() +
@@ -12,7 +12,7 @@ plt_et_dur_bin <-
             ymin=l_se_dur,
             ymax=u_se_dur),
         width = .1) +
-    scale_x_continuous(name = "time pointss") +
+    scale_x_continuous(name = "time points") +
     scale_y_continuous(name = element_blank(),
                        labels = percent_format(accuracy = 1),
                        limits = c(0, .47),
@@ -34,15 +34,15 @@ plt_et_dur_bin <-
                    group_id = c(
                        free = "free viewing",
                        mem = "explicit encoding"))) +
-    labs(title = "Fixation duration as a function of ROI and time points") 
+    labs(title = "Fixation duration")
 
-cLegendTemp <- get_legend(plt_et_dur_bin)
+cLegendTemp <- get_legend(plt_et_dur_t)
 
-plt_et_dur_bin <- plt_et_dur_bin +
+plt_et_dur_t <- plt_et_dur_t +
     cTheme
 
-plt_et_num_bin <-
-    dscr_et_num_bin %>%
+plt_et_num_t <-
+    dscr_et_num_t %>%
     filter(fix_id != "background") %>%
     ggplot(aes(x=bin_id, y=m_num, color=fix_id, shape = fix_id)) +
     geom_line()+
@@ -51,7 +51,7 @@ plt_et_num_bin <-
         aes(ymin=l_se_num,
             ymax=u_se_num),
         width = .1) +
-    scale_x_continuous(name = "time pointss") +
+    scale_x_continuous(name = "time points") +
     scale_y_continuous(name = element_blank(),
                        labels = percent_format(accuracy = 1),
                        limits = c(0, .47),
@@ -73,6 +73,6 @@ plt_et_num_bin <-
                    group_id = c(
                        free = "free viewing",
                        mem = "explicit encoding"))) +
-    labs(title = "Number of fixation as a function of ROI and time points") +
+    labs(title = "Number of fixation") +
     cTheme
 

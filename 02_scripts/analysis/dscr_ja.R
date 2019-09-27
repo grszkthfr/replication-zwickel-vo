@@ -2,7 +2,7 @@
 
 # Descriptives for fixation characteristics for joint attention
 dscr_ja_dur <-
-    df_et_dur %>%
+    df_et_dur_t %>%
     group_by(group_id, fix_id) %>% 
     summarise(m_dur = mean(prop_dur),
               sd_dur = sd(prop_dur),
@@ -11,9 +11,8 @@ dscr_ja_dur <-
               u_se_dur = m_dur + se_dur) %>% 
     filter(fix_id == "object_cued" | fix_id == "object_uncued")
 
-
 dscr_ja_num <-
-    df_et_num %>%
+    df_et_num_t %>%
     group_by(group_id, fix_id) %>% 
     summarise(m_num = mean(prop_num),
               sd_num = sd(prop_num),
@@ -34,8 +33,8 @@ dscr_ja_lat <-
     select(group_id, fix_id, m_lat, sd_lat, se_lat, l_se_lat, u_se_lat )
 
 # Descriptives for temporal dynamics (bins)
-dscr_ja_dur_bin <-
-    df_et_dur_bin %>%
+dscr_ja_dur_t <-
+    df_et_dur_t %>%
     group_by(bin_id, group_id, fix_id) %>% 
     summarise(m_dur = mean(prop_dur),
               sd_dur = sd(prop_dur),
@@ -44,8 +43,8 @@ dscr_ja_dur_bin <-
               u_se_dur = m_dur + se_dur) %>% 
     filter(fix_id=="object_cued"| fix_id == "object_uncued")
 
-dscr_ja_num_bin <-
-    df_et_num_bin %>%
+dscr_ja_num_t <-
+    df_et_num_t %>%
     group_by(bin_id, group_id, fix_id) %>% 
     summarise(m_num = mean(prop_num),
               sd_num = sd(prop_num),

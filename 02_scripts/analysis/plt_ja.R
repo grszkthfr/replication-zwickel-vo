@@ -1,5 +1,5 @@
-# source(path(path_scripts_publ, "dscr_et.R"))
-# source(path(path_scripts_publ, "plt_cosmetics.R"))
+# source(path(path_scripts_analysis, "dscr_et.R"))
+# source(path(path_scripts_analysis, "plt_cosmetics.R"))
 
 
 plt_ja_dur <- 
@@ -95,8 +95,8 @@ pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
     labs(title = "Saccades leaving head\n(in %)") +
     cTheme
 
-# plt_ja_dur_bin <- 
-#     dscr_et_dur_bin  %>% 
+# plt_ja_dur_t <- 
+#     dscr_et_dur_t  %>% 
 #     filter(fix_id == "object_cued" | fix_id == "object_uncued") %>% 
 #     ggplot(aes(x=bin_id, y=m_dur, color=fix_id)) +
 #     geom_line() +
@@ -126,8 +126,8 @@ pl.sac.obj <- ggplot(subset(dscr.sac.rpl, stat == "mean" & area == "f"),
 #     cTheme
 # 
 # 
-# plt_ja_num_bin <-
-#     dscr_et_num_bin %>% 
+# plt_ja_num_t <-
+#     dscr_et_num_t %>% 
 #     filter(fix_id == "object_cued" | fix_id == "object_uncued") %>% 
 #     ggplot(aes(x=bin_id, y=m_num, color=fix_id)) +
 #     geom_line()+
