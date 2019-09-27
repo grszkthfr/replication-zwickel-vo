@@ -1,10 +1,10 @@
 # source("02_scripts/01-libraries.R")
 # source("02_scripts/02-paths.R")
 
-df_que <- 
+df_que <-
     read_delim(
         path(path_postp_fb,
-             "Projektarbeit_Dateneingabemaske.csv"),
+             "questionnaires.csv"),
         col_types = cols(
             .default = col_double(),
             Demo_Abschluss = col_character(),
@@ -19,7 +19,7 @@ df_que <-
             EXP_6_Anmerkung = col_character()),
         delim = "\t",
         locale = locale(grouping_mark = ".", decimal_mark = ",")) %>%
-  
+
     # AQ-K
     mutate_at(
         vars(AQK_1, AQK_3, AQK_5, AQK_6, AQK_7, AQK_9, AQK_10, AQK_11, AQK_14,
@@ -32,7 +32,7 @@ df_que <-
     mutate_at(
         vars(AQK_1:AQK_33),
         funs(ifelse(is.na(.), round(mean(., na.rm = T),0), .))) %>% # replace NAs with mean
-    
+
     # ISKK
     mutate_at(
         vars(

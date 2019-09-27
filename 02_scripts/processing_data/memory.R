@@ -58,29 +58,28 @@ df_mem <-
 
 ##############################################################################
 
-# ALL MEMORY DATA
-vpn <- paste0("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96))
-bed <- rep(c("free","mem"),47)
+## # ALL MEMORY DATA
+## vpn <- paste0("vpja",ifelse(c(1:78,81:96)<10,"0",""),c(1:78,81:96))
+## bed <- rep(c("free","mem"),47)
 
-# Loop over subjects
-erg <- numeric()
-for (vp in vpn) {
-  # print(vp)
+## # Loop over subjects
+## erg <- numeric()
+## for (vp in vpn) {
+##   # print(vp)
 
-  prot <- read.csv2(path(path_postp_mem, paste0(vp,".csv")))
+##   prot <- read.csv2(path(path_postp_mem, paste0(vp,".csv")))
 
-  # Item recalled
-  gaze <- sum(prot$memgazedat)
-  nogaze <- sum(prot$memnongazedat)
+##   # Item recalled
+##   gaze <- sum(prot$memgazedat)
+##   nogaze <- sum(prot$memnongazedat)
 
-  erg <- rbind(erg,c(gaze,nogaze))
-}
+##   erg <- rbind(erg,c(gaze,nogaze))
+## }
 
-df.w.mem <- data.frame(code=vpn,bed,erg) %>%
-  mutate(
-    code = as.factor(unlist(map(strsplit(
-      as.character(code),"ja"), ~.x[2])))) %>%
-  rename(vp = code)
+## df.w.mem <- data.frame(code=vpn,bed,erg) %>%
+##   mutate(
+##     code = as.factor(unlist(map(strsplit(
+##       as.character(code),"ja"), ~.x[2])))) %>%
+##   rename(vp = code)
 
-names(df.w.mem) <- c("code","bed","memgaze","memnogaze")
-
+## names(df.w.mem) <- c("code","bed","memgaze","memnogaze")
