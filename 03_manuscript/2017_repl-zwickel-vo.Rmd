@@ -403,11 +403,12 @@ sd_dg_body <-
 For data processing and statistical analysis, the open-source statistical
 programming language *R* [@R-base] was used with the packages *tidyverse*
 [@R-tidyverse], *knitr* [@R-knitr] and *papaja* [@R-papaja] for reproducible
-reporting. For the analysis of the eye-tracking data, EyeLink's standard
-configuration was used to parse eye movements into saccades and fixations.
-Saccades were defined as eye movements exceeding a velocity threshold of 30 °/s
-or an acceleration threshold of 8.000 °/s². Fixations were defined as time
-periods between saccades.
+reporting. All analysis and data is available at
+[osf.io/jk9s4/](https://osf.io/jk9s4/). For the analysis of the eye-tracking
+data, EyeLink's standard configuration was used to parse eye movements into
+saccades and fixations. Saccades were defined as eye movements exceeding a
+velocity threshold of 30 °/s or an acceleration threshold of 8.000 °/s².
+Fixations were defined as time periods between saccades.
 
 We determined the following regions of interest (ROI) by color coding respective
 images regions by hand using GIMP (GNU Image Manipulation Program): **the cued
