@@ -83,7 +83,7 @@ df_et <-
         fix_roi == 255000 ~ "head", # green
         fix_roi == 255 ~ "object_cued", # blue
         fix_roi == 0 ~ "background") %>% # white
-      as_factor(),
+      as_factor() %>% fct_relevel("head", "body", "object_cued", "object_uncued"),
 
     # fix subject_id
     subject_id = str_remove(subject_id, "vpja"),

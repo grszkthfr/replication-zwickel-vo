@@ -17,8 +17,8 @@ affiliation:
 
 abstract: |
   Humans as social beings rely on information provided by conspecifics. One
-  important signal in social communication is eye gaze. The current study (*n* =
-  93) sought to replicate and extend previous findings of attentional guidance
+  important signal in social communication is eye gaze. The current study (*n*
+  = 93) sought to replicate and extend previous findings of attentional guidance
   by eye gaze in complex everyday scenes. In line with previous studies, longer,
   more and earlier fixations for objects cued by gaze compared to objects that
   were not cued were observed in free viewing conditions. To investigate how
@@ -26,15 +26,15 @@ abstract: |
   participants received a memory task that required scanning the whole scene
   instead of exclusively focusing on cued objects. Interestingly, similar gaze
   cueing effects occurred in this group. Moreover, the human beings depicted in
-  the scene received a large amount of attention even though they were
-  irrelevant to the current task, **especially during early phases of visual
-  attention**. These results indicate that the mere presence of other human
+  the scene received a large amount of attention, **especially during early
+  phases of visual attention**, even though they were irrelevant to the current
+  task. These results indicate that the mere presence of other human
   beings as well as their gaze orientation have a strong impact on attentional
   exploration.
 
 
 keywords          : "Gaze Cueing, Joint Attention, Social Attention, Eye-Tracking, Top-Down Control, Memory Performance"
-wordcount         : "5325"
+wordcount         : "6456"
 
 bibliography      :
   - "../2017_repl-zwickel-vo.bib"
@@ -130,76 +130,78 @@ did not find reliable links between those measures.
 <!-- social attention -->
 
 As a compromise between rich but also less controlled field conditions and
-standardized but **impoverished laboratory studies complex naturalistic scenes
-were used to investigate gaze behavior [e.g. @Fletcher-Watson2008;
-@Zwickel2010; @Perez-Osorio2015]. To specifically investigate gaze cues,
-@Zwickel2010 and @Perez-Osorio2015 used pictures of a person (instead of
-isolated heads or faces) as a directional cue within a naturalistic scene.
-@Zwickel2010 [in contrast to the gaze cueing task chosen by @Perez-Osorio2015]**
-used a free viewing instruction, meaning that participants had no explicit task
-to fulfill but should just freely explore the pictures. @Zwickel2010 argued that
-the lack of a specific task puts gaze following to a stricter test since
-previous studies frequently used target detection tasks [e.g. @Langton2017] or
-comprised specific instructions such as asking participants to understand a
-scene [@Castelhano2007]. Consequently, it remains unclear to what degree gaze
-following occurred spontaneously or was caused by the specific task at hand. In
-detail, @Zwickel2010 presented participants multiple 3D rendered outdoor and
-indoor scenes for several seconds that always included two clearly visible
-objects as well as either a person or a loudspeaker that was directed towards
-one of these objects. The loudspeaker, that also represents an object with a
-clear spatial orientation, served as a control condition to ensure that gaze
-cueing effects are due to the social meaning (i.e., the direction of the
-depicted person’s gaze) as compared to a mere following triggered by any
-directional cue. The results of the study showed that participants fixated the
-cued object remarkably earlier, more often and longer than the uncued object. By
-showing that leaving saccades from the head most often landed onto the cued
-object, the results gave further evidence for the direct influence of eye gaze
-on attentional guidance. Crucially, similar effects were not obtained for the
-loudspeaker as a non-social directional cue. The cued objects were not just
-focused because they might have been salient by themselves (e.g. due to
-positioning), or because they were cued by another object, but became more
-salient by the person's reference. To sum up, @Zwickel2010 provide convincing
-evidence that joint attention is a direct consequence of gaze cues and gaze
-following, it happens spontaneously and has high relevance even in situations
-that are more naturalistic (i.e., involve complex scenes and the absence of
-explicit tasks) than classical gaze cueing studies based on variations of the
-Posner paradigm.
+standardized but **impoverished laboratory studies, complex naturalistic scenes
+were used to investigate gaze behavior in laboratory settings [e.g.,
+@Fletcher-Watson2008; @Zwickel2010; @Perez-Osorio2015]. To specifically explore
+the influence of gaze cues, @Zwickel2010 and @Perez-Osorio2015 used pictures of
+a person (instead of isolated heads or faces) as a directional cue within a
+naturalistic scene. @Zwickel2010 [in contrast to the gaze cueing task chosen by
+@Perez-Osorio2015]** used a free viewing instruction, meaning that participants
+had no explicit task to fulfill but should just freely explore the pictures. The
+authors argued that the lack of a specific task puts gaze following to a
+stricter test since previous studies frequently used target detection tasks
+[e.g., @Langton2017] or comprised specific instructions such as asking
+participants to understand a scene [@Castelhano2007]. Consequently, in those
+latter studies, it remains unclear to what degree gaze following occurred
+spontaneously or was caused by the specific task at hand. In detail,
+@Zwickel2010 presented participants multiple 3D rendered outdoor and indoor
+scenes for several seconds that always included two clearly visible objects as
+well as either a person or a loudspeaker that was directed towards one of these
+objects. The loudspeaker, which also represents an object with a clear spatial
+orientation, served as a control condition to ensure that gaze cueing effects
+are due to the social meaning (i.e., the direction of the depicted person’s
+gaze) as compared to a mere following of any directional cue. The results of the
+study showed that participants fixated the cued object remarkably earlier, more
+often and longer than the uncued object. By showing that leaving saccades from
+the head most often landed onto the cued object, the results gave further
+evidence for the direct influence of eye gaze on attentional guidance.
+Crucially, similar effects were not obtained for the loudspeaker. The cued
+objects were not just focused because they might have been salient by themselves
+(e.g., due to positioning), or because they were cued by another object, but
+became more salient by the person's reference. To sum up, @Zwickel2010 provide
+convincing evidence that joint attention is a direct consequence of gaze cues
+and gaze following, it happens spontaneously and has high relevance even in
+situations that are more naturalistic (i.e., involve complex scenes and the
+absence of explicit tasks) than classical gaze cueing studies based on
+variations of the Posner paradigm.
 
 <!-- research question -->
 
 In the current study, we were first interested in whether the previously
 reported effects hold when using a different set of stimuli. **Replication in
-itself is a core concept of scientific progress [@Schmidt2009], nevertheless our
-motivation was also to improve certain aspects of the study and at the same time
-extending the line of research.** Due to their low resolution and reduced
-richness of details, the originally used 3D rendered scenes did not allow for an
-assessment of the depicted person’s gaze direction. As a consequence, the
-observed cueing effects could be rather due to directional information inferred
-from both the body and head of the person. We therefore developed a new set of
-photographic stimuli that had sufficient resolution to also allow for perceiving
-gaze direction with clearly visible eyes of the depicted person. These photos
-always included a human being who directed his/her gaze towards one of two
-objects that were placed within reaching distance. In order to be consistent
-with the study of @Zwickel2010, the depicted person’s head and body were
-congruently aligned with his/her eye gaze. Second, in order to extend this line
-of research, we manipulated top-down attentional processes by task instruction
-to explore the susceptibility of gaze following effects in naturalistic scenes.
-**Earlier research showed that social attention can be influenced by multiple
-factors like social status of the observed persons [@Foulsham2010], possibility
-to interact [@Laidlaw2011; @Hayward2017] or social content [@Birmingham2008a]**.
-Together with @Zwickel2010, these studies have in common that they manipulate
-viewing behavior of the participant by manipulating the stimuli or environment.
-In contrast, in the present study, we tried to modulate viewing behavior via
-task instructions **[for a similar procedure see @Flechsenhar2017]**.
-Specifically, half of the participants received an instruction before the
-viewing task, that they should try to remember as many objects from the scenes
-as possible (explicit encoding group). For the other half of the participants
-(free viewing group), the memory test that was accomplished after the experiment
-was unannounced and therefore reflected spontaneous encoding of the respective
-scene details. The motivation for this manipulation was twofold. First, it was
-thought to test the robustness of gaze following against top-down processes by
-discouraging observers to utilize the information provided by the gaze. Second,
-it allowed for examining gaze following effects on memory.
+itself is a core concept of scientific progress [@Schmidt2009] and thus relevant
+for assessing the stability of effects. Nevertheless, our motivation was also to
+improve certain aspects of the study and at the same time extending this line of
+research.** Due to their low resolution and reduced richness of details, the 3D
+rendered scenes used by @Zwickel2010 did not allow for an assessment of the
+depicted person’s gaze direction. As a consequence, the observed cueing effects
+could be due to directional information inferred from both the body and head of
+the person. We therefore developed a new set of photographic stimuli that had
+sufficient resolution to also allow for perceiving gaze direction with clearly
+visible eyes of the depicted person. These photos always included a human being
+who directed his/her gaze towards one of two objects that were placed within
+reaching distance. In order to be consistent with the study of @Zwickel2010, the
+depicted person’s head and body were congruently aligned with his/her eye gaze.
+Second, in order to extend this line of research, we manipulated top-down
+attentional processes by task instruction to explore the susceptibility of gaze
+following effects in naturalistic scenes. **Earlier research showed that social
+attention can be influenced by multiple factors like social status of the
+observed persons [@Foulsham2010], possibility to interact [@Laidlaw2011;
+@Hayward2017] or social content [@Birmingham2008a]**. Together with
+@Zwickel2010, these studies have in common that they manipulate viewing behavior
+of the participant by manipulating the stimuli or environment. In contrast, in
+the present study, we tried to modulate viewing behavior via task instructions
+**[for a similar procedure see @Flechsenhar2017]**. Specifically, half of the
+participants received an instruction before the viewing task, that they should
+try to remember as many objects from the scenes as possible (explicit encoding
+group). The other half of the participants (free viewing group) merely received
+the instruction to freely explore the pictures and the memory test that was
+accomplished after the experiment was unannounced and therefore reflected
+spontaneous encoding of the respective scene details. The motivation for this
+manipulation was twofold. First, it was thought to test the robustness of gaze
+following against top-down processes by discouraging observers to utilize the
+information provided by eye gaze. Second, it allowed for examining gaze
+following effects on memory.
 
 <!-- hypothesis -->
 
@@ -209,18 +211,18 @@ objects, an enhanced exploration of these details (i.e., more fixations and
 longer dwell times) and more saccades leaving the head towards the cued as
 compared to the uncued object. The instruction in the explicit encoding group
 was thought to induce a more systematic exploration of the presented scenes
-resulting in higher prioritization of the uncued object. Furthermore, we
-anticipated a generally enhanced recall performance in the explicit encoding
-group. Due to the expected difference in attentional resources spent on the cued
-and uncued object in the free viewing group, memory performance of the cued
-object **was** expected to be better compared to memory performance of the
-uncued object. Finally, as previous studies showed a strong preference of
-fixating the head over body and background regions in static images [@End2017;
-@Freeth2013], we expected to see a similar bias in the current study regarding
-dwell times, number of fixations and fixation latency. Additionally, we
-hypothesized that the prioritization for the head decreases when participants
-follow specific exploration goals such as in the explicit encoding group of the
-current study [cf., @Flechsenhar2017].
+resulting in higher prioritization of both objects and reduced cueing effect.
+Furthermore, we anticipated a generally enhanced recall performance in the
+explicit encoding group. Due to the expected difference in attentional resources
+spent on the cued and uncued object in the free viewing group, memory
+performance of the cued object **was** expected to be better compared to memory
+performance of the uncued object. Finally, as previous studies showed a strong
+preference of fixating the head over body and background regions in static
+images [@End2017; @Freeth2013], we expected to see a similar bias in the current
+study regarding dwell times, number of fixations and fixation latency.
+Additionally, we hypothesized that the prioritization for the head decreases
+when participants follow specific exploration goals such as in the explicit
+encoding group of the current study [cf., @Flechsenhar2017].
 
 # Methods
 
@@ -265,7 +267,7 @@ consent. **One participant was excluded due to problems with the eye-tracking
 data acquisition, resulting in a final sample of $n = `r final_sample`$** for
 the analysis with $`r n_female`$ female and $`r n_male`$ male participants
 between $`r min_age`$ and $`r max_age`$ years ($M = `r m_age`$ years, $SD = 
-`r sd_age`$ years). Overall, participants scored very low for **autism** traits 
+`r sd_age`$ years). Overall, participants scored very low for **autism** traits
 in the Autism-Spectrum Quotient scale [AQ-k, German version, @Freitag2007, Range
 0 to 23, $M = `r m_aqk`$, $SD = `r sd_aqk`$]. **In the final sample, one
 participant had an overall score higher than 17 which might reflect the presence
@@ -276,12 +278,12 @@ in the sample.**
 ## Stimuli and Apparatus
 
 The experimental stimuli consisted of 26 different indoor and outdoor scenes. In
-each scene a single individual was looking at one of two objects that were
-placed within reaching distance. Thus, there was a total of 52 different objects
-across all scenes (see online supplement Table S1 for a complete list of all
-objects). The direction of the gaze (left/right) and the placement of the
+each scene, a single individual was looking at one of two objects that were
+placed within reaching distance. **Thus, there was a total of 52 different
+objects across all scenes (see online supplement Table S1 for a complete list of
+all objects).** The direction of the gaze (left/right) and the placement of the
 objects (object A and B left/right) were balanced by taking 4 photographs of
-each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an example). **Similar
+each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an outdoor example). **Similar
 to @Zwickel2010, we did not restrict the position of the individual in the
 photograph (i.e., the person could appear in the center or more peripherally)
 such that** participants could not expect a specific spatial structure of the
@@ -290,7 +292,7 @@ For each participant, a set was randomly taken from this pool containing one
 version of each scene, resulting in 26 trials. **The number of stimuli with
 leftward and rightward gaze of the depicted person, respectively, was balanced
 within each participant.** Eye movements were tracked with the corneal
-reflection method and were recorded with an EyeLink1000plus tower system at, a
+reflection method and were recorded with an EyeLink1000plus tower system at a
 sampling rate of 1000 Hz. The stimulation was controlled via Presentation®
 (Neurobehavioral Systems). All stimuli had a resolution of 1280 x 960 pixels and
 were displayed on a 24" LG 24MB65PY-B screen (resolution: 1920 x 1200 pixels,
@@ -298,10 +300,10 @@ display size: 516.9 x 323.1 mm) with a refresh rate of 60 Hz. The viewing
 distance amounted to 50 cm thus resulting in a visual angle of 38.03° x 28.99°
 for the photographs.
 
-```{r FigExampleStimulus, include = TRUE, fig.cap = "Example photographs of a single scene. Gaze direction and objects were balanced over participants. In total 104 photographs of 26 scenes were used. Since we did not obtain permission for publishing the original stimuli, this image shows an example that was not used in the experiment but taken post-hoc in order to illustrate the generation of the stimulus set.", dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
+```{r FigExampleStimulus, include = TRUE, fig.cap = "Example photographs of a single scene. Gaze direction and objects were balanced over participants. In total 104 photographs of 26 scenes were used. Please note that since we did not obtain permission for publishing the original stimuli, this image shows an example that was not used in the experiment but taken post-hoc in order to illustrate the generation of the stimulus set.", dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
 
 # The individual depicted in this figure has given written informed consent to publish these pictures.
-knitr::include_graphics("2017_repl-zwickel-vo_with-scripts_runing_files/example-stimuli/example.png")
+knitr::include_graphics("2017_repl-zwickel-vo_files/example.png")
 
 ```
 
@@ -319,17 +321,18 @@ using a 9-point grid. According to the manipulation, half of the participants
 were told that there was a follow-up memory test for objects that were part of
 the depicted scenes. All participants were then told to look at the following
 scenes freely without specifying further exploration goals or mentioning the
-content of the scenes. The presentation order of the pictures was randomized. Each
-trial started with the presentation of a fixation cross for one second, followed
-by the scene for 10 seconds. This interval was chosen based on our previous
-studies on social attention [@End2017; @Flechsenhar2017] and was slightly longer
-than the interval (7 s) that was used by @Zwickel2010. The inter-trial interval
-varied randomly between 1 and 3 seconds. After the last trial, participants
-filled in demographic questionnaires and completed the AQ-k. These
-questionnaires were used for characterizing the current sample of participants,
-but they were also introduced to reduce recency effects in the memory task that
-was accomplished afterwards. Participants then were asked to recall as many
-objects from the scene as possible and write them down on a blank sheet of
+content of the scenes. The presentation order of the pictures was randomized.
+Each trial started with the presentation of a fixation cross for one second,
+followed by the scene for 10 seconds. This interval was chosen based on our
+previous studies on social attention [@End2017; @Flechsenhar2017] and was
+slightly longer than the interval (7 s) that was used by @Zwickel2010. The
+inter-trial interval varied randomly between 1 and 3 seconds. After the last
+trial, participants filled in demographic questionnaires and completed the AQ-k.
+These questionnaires were used for characterizing the current sample of
+participants, but they were also introduced to reduce recency effects in the
+memory task that was accomplished afterwards. It took approximately 5-10 minutes
+to complete the questionnaires. Participants then were asked to recall as many
+objects from the scenes as possible and write them down on a blank sheet of
 paper. No time limit was given but after 10 minutes, the experimenter asked
 participants to come to an end. In fact, most participants stopped earlier and
 indicated that they did not recall further objects. Finally, participants
@@ -345,55 +348,55 @@ source(path(path_scripts_analysis, "dscr_roi.R"))
 # means and sds for proportional roi size
 m_size_cued <-
     (dscr_roi[dscr_roi$roi_id == "object_cued", ]$m_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 sd_size_cued <-
     (dscr_roi[dscr_roi$roi_id == "object_cued", ]$sd_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 m_dg_cued <-
   dscr_roi[dscr_roi$roi_id == "object_cued", ]$m_roi_h_dg %>%
-  round(1)
+  round(2)
 sd_dg_cued <-
   dscr_roi[dscr_roi$roi_id == "object_cued", ]$sd_roi_h_dg %>%
-  round(1)
+  round(2)
 
 m_size_uncued <-
     (dscr_roi[dscr_roi$roi_id == "object_uncued", ]$m_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 sd_size_uncued <-
   (dscr_roi[dscr_roi$roi_id == "object_uncued", ]$sd_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 m_dg_uncued <-
   dscr_roi[dscr_roi$roi_id == "object_uncued", ]$m_roi_h_dg %>%
-  round(1)
+  round(2)
 sd_dg_uncued <-
   dscr_roi[dscr_roi$roi_id == "object_uncued", ]$sd_roi_h_dg %>%
-  round(1)
+  round(2)
 
 m_size_head <-
     (dscr_roi[dscr_roi$roi_id == "head", ]$m_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 sd_size_head <-
     (dscr_roi[dscr_roi$roi_id == "head", ]$sd_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 m_dg_head <-
   dscr_roi[dscr_roi$roi_id == "head", ]$m_roi_h_dg %>%
-  round(1)
+  round(2)
 sd_dg_head <-
   dscr_roi[dscr_roi$roi_id == "head", ]$sd_roi_h_dg %>%
-  round(1)
+  round(2)
 
 m_size_body <-
     (dscr_roi[dscr_roi$roi_id == "body", ]$m_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 sd_size_body <-
     (dscr_roi[dscr_roi$roi_id == "body", ]$sd_roi_size/(1280*960)*100) %>%
-    round(1)
+    round(2)
 m_dg_body <-
   dscr_roi[dscr_roi$roi_id == "body", ]$m_roi_h_dg %>%
-  round(1)
+  round(2)
 sd_dg_body <-
   dscr_roi[dscr_roi$roi_id == "body", ]$sd_roi_h_dg %>%
-  round(1)
+  round(2)
 
 ```
 
@@ -402,8 +405,8 @@ programming language *R* [@R-base] was used with the packages *tidyverse*
 [@R-tidyverse], *knitr* [@R-knitr] and *papaja* [@R-papaja] for reproducible
 reporting. For the analysis of the eye-tracking data, EyeLink's standard
 configuration was used to parse eye movements into saccades and fixations.
-Saccades were defined as eye movements exceeding a velocity threshold of 30 °/sec
-or an acceleration threshold of 8.000 °/sec². Fixations were defined as time
+Saccades were defined as eye movements exceeding a velocity threshold of 30 °/s
+or an acceleration threshold of 8.000 °/s². Fixations were defined as time
 periods between saccades.
 
 We determined the following regions of interest (ROI) by color coding respective
@@ -421,7 +424,7 @@ $M_{dg} = `r m_dg_head ` °$, $SD_{dg} = `r sd_dg_head ` °$)
 and the body
 ($M_{size} = `r m_size_body ` \%$, $SD_{size} = `r sd_size_body ` \%$,
 $M_{dg} = `r m_dg_body ` °$, $SD_{dg} = `r sd_dg_body ` °$)
-of the depicted person**.
+of the depicted person.**
 
 Gaze variables of interest were calculated in a largely similar fashion as in
 @Zwickel2010. Specifically, we determined the cumulative duration and number of
@@ -433,32 +436,29 @@ These measures allow for effective comparisons of prioritization between the two
 relevant objects and between the head and the body. To reveal direct relations
 between the head and the relevant objects, we calculated the proportion of
 saccades that left the head region of the depicted individual and landed on the
-cued and uncued objects, respectively.
+cued and uncued objects, respectively. In order to analyze the influence of the
+experimental manipulations on the eye-tracking data, we carried out separate
+analyses of variance (ANOVAs) including the between-subject factor instruction
+group and the within-subject factor object role. ANOVAs were conducted on the
+dependent variables fixation latency and proportion of saccades from the head
+towards the object. To examine general effects of social attention, a separate
+ANOVA with the between-subject factor instruction group and the within-subject
+factor ROI (head vs. body region) was conducted on fixation latency.
 
-In order to analyze the influence of the experimental manipulations on
-eye-tracking and memory data, we carried out separate analyses of variance
-(ANOVAs) with the package *afex* [@R-afex]. The ANOVAs had the between-subject
-factor instruction group and the within-subject factors object role. **To assess
-the temporal attentional allocation for relative fixation durations as well as
-relative numbers of fixations we included a within-subject factor time points
-with 5 levels into the ANOVA for fixation duration and number of fixations. Time
-points were bins for the sum of durations and numbers of fixations for two
-seconds, resulting in 5 time points across 10 seconds of stimulus
-presentation.** ANOVAs were conducted on the dependent variables fixation
-latency, relative fixation duration, relative numbers of fixations, proportion
-of saccades from the head towards the object and recalled items.
-To examine general effects of social attention, separate ANOVAs with
-between-subject factor instruction group and the within-subject factor ROI (head
-vs. body region) were conducted on the dependent variables fixation latency,
-fixation duration and number of fixations. **Again, the ANOVAs for fixation
-duration, as well as for numbers of fixation was extended by a factor time (see
-above). To follow up the main analysis on gaze following, we calculated
-contrasts using *emmeans* [@R-emmeans] for cued vs. uncued object for
-instruction group and time points to assess the change of gaze following over
-time and for instruction groups. For social prioritization, the ANOVA was
-followed by contrasts for free viewing group vs explicit encoding group for head
-(and body) and time points. Here we were mainly interested in whether
-prioritization between instruction groups differed for the head over time.**
+**Fixation durations and numbers of fixations were analyzed in more detail by
+additionally considering the temporal progression of effects. To this aim, we
+calculated relative fixation durations as well as relative numbers of fixations
+on each ROI for 5 time bins of 2 s each spanning the whole viewing duration.
+These data were analyzed using separate ANOVAs on relative fixation durations
+and numbers, respectively. The first analyses focused on the temporal
+progression of cueing effects and included the between-subject factor
+instruction group and the within-subject factors object role and time point.
+Subsequent analyses on general effects of social attention included the
+between-subject factor instruction group and the within-subject factors ROI
+(head vs. body region) and time point. In case of significant interaction
+effects, we calculated contrasts using *emmeans* [@R-emmeans] as post-hoc tests
+with $p$ values adjusted according to Tukey’s honest significant difference
+method.**
 
 The memory test was scored manually by comparing the list of recalled objects to
 the objects that appeared in the scenes. We separately scored whether cued or
@@ -467,7 +467,7 @@ we calculated the sum of recalled objects separately for cued and uncued
 details. These data were analyzed using an ANOVA including the between-subject
 factor instruction group and the within-subject factor object role. **To further
 assess the influence of visual attention on memory, we used a generalized linear
-mixed model approach implemented via *lme4* [@R-lme4]. Based on the ANOVA
+mixed model (GLMM) approach implemented via *lme4* [@R-lme4]. Based on the ANOVA
 results (see below), we used a sequential model building strategy starting with
 model 1 including only instruction group as the main predictor of subsequent
 recall performance. In the second step we added z-standardized relative fixation
@@ -479,13 +479,13 @@ approach to examine if relative fixation duration and/or relative number of
 fixations had incremental value beyond group membership or interacted with
 object role in predicting recall performance.**
 
-For all analyses the a priori significance level was set to $\alpha$ = 0.05. As
-effect sizes generalized eta-square ($\hat{\eta}^2_G$) for ANOVAs are reported,
-where guidelines suggest .26 as a large, .13 as a medium and .02 as a small
-effect [@Bakeman2005]. Greenhouse-Geisser correction was applied in all
-repeated-measures ANOVAs containing more than one degree of freedom in the
-numerator to account for potential violations of the sphericity assumption
-[@Greenhouse1959].
+For all analyses the a priori significance level was set to $\alpha$ = .05.
+ANOVAs were computed with the package [@R-afex]. As effect sizes, generalized
+eta-square ($\hat{\eta}^2_G$) values are reported, where guidelines suggest .26
+as a large, .13 as a medium and .02 as a small effect [@Bakeman2005].
+Greenhouse-Geisser correction was applied in all repeated-measures ANOVAs
+containing more than one degree of freedom in the numerator to account for
+potential violations of the sphericity assumption [@Greenhouse1959].
 
 # Results
 
@@ -510,7 +510,7 @@ source(path(path_scripts_analysis, "plt_et.R"))    # plot temporal
 
 ## Gaze following
 
-```{r anova ja}
+```{r ANOVA ja}
 
 # perform ANOVAs
 source(path(path_scripts_analysis, "aov_ja.R"))
@@ -518,7 +518,7 @@ source(path(path_scripts_analysis, "aov_sac.R"))
 
 ```
 
-```{r results anova ja}
+```{r results ANOVA ja}
 # latency
 apa_aov_ja_lat <-
     apa_print(aov_ja_lat, mse = FALSE)$full_result
@@ -626,20 +626,23 @@ m_sac_mem <-
 ```
 
 <!-- #### Fixation latency -->
+
 A significant main effect of object role in the analysis of fixation latencies
-indicates earlier fixations on cued compared to uncued
+indicates earlier fixations on cued compared to uncued objects
 **(`r apa_aov_ja_lat$fix_id`;
 $M_{lat,cued} = `r m_ja_lat_cued` ms$,
-$M_{lat,uncued} = `r m_ja_lat_uncued` ms$)**
-objects. The main effect of instruction group was also significant, with earlier
+$M_{lat,uncued} = `r m_ja_lat_uncued` ms$)**.
+The main effect of instruction group was also significant, with earlier
 fixations on both objects in the explicit encoding
 **(`r apa_aov_ja_lat$group_id`;
-$M_{lat,mem} = `r m_ja_lat_mem` ms$)** compared to the free viewing group
-**($M_{lat,free} = `r m_ja_lat_free` ms$)**. The interaction effect failed to
-reach statistical significance
-(`r apa_aov_ja_lat$group_id_fix_id`; see Figure\ \@ref(fig:FigFixObjects) A).
+$M_{lat,mem} = `r m_ja_lat_mem` ms$)**
+compared to the free viewing group
+**($M_{lat,free} = `r m_ja_lat_free` ms$)**.
+The interaction effect failed to reach statistical significance
+(`r apa_aov_ja_lat$group_id_fix_id`;
+see Figure\ \@ref(fig:FigFixObjects) A).
 
-```{r FigFixObjects, include =TRUE, fig.cap = "Bar plots of the different prioritization measures for the attentional orienting towards the cued and uncued objects as a function of instruction group. Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+```{r FigFixObjects, include =TRUE, fig.cap = "Bar plots of the different prioritization measures for the attentional orienting towards the cued and uncued objects as a function of instruction group. Note that data were aggregated across time bins for fixation duration and numbers. Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
 plot_grid(
   plt_ja_lat, plt_ja_dur, plt_ja_num,
@@ -650,64 +653,78 @@ plot_grid(
 
 ```
 
+<!--### Saccades-->
+
+<!-- (H1, H2) -->
+
+Comparable effects were obtained for saccades leaving the head which were more
+likely to land on the cued compared to the uncued object as confirmed by a
+significant main effect of object role,
+**(`r apa_aov_sac_fgaze$icond`;
+$M_{sac,cued} = `r m_sac_cued` \%$,
+$M_{sac,uncued} = `r m_sac_uncued` \%$)**.
+The main effect for group showed that saccades of participants in the explicit
+encoding group were more often directed towards any of the objects as compared
+to the free viewing group
+**(`r apa_aov_sac_fgaze$df_w_et_group`;
+$M_{sac,free} = `r m_sac_free` \%$,
+$M_{sac,mem} = `r m_sac_mem` \%$)**.
+Again, the interaction effect of instruction group and object role failed to
+reach statistical significance
+(`r apa_aov_sac_fgaze$df_w_et_group_icond`;
+see Figure\ \@ref(fig:FigFixObjects) B).
+
+
 <!-- #### Fixation duration & number --> <!-- (H1, H2) -->
 <!-- ##### fix_id, group_id -->
 
-Overall, we obtained largely similar effects in the analyses of fixation
-duration and numbers (see Figure\ \@ref(fig:FigFixObjects) B & C). Significant
-main effects of object role indicated that participants fixated the cued object
+**The time course of fixation durations and numbers on all four ROIs is depicted
+in Figure \ \@ref(fig:FigFixTmp). In the corresponding ANOVA focusing on the
+temporal progression of gaze cueing effects, we obtained significant main
+effects of object role, indicating that participants fixated the cued object
 longer
-**(`r apa_aov_ja_dur_t$fix_id`;
-$M_{dur,cued} = `r m_ja_dur_cued` \%$, $M_{dur,uncued} = `r m_ja_dur_uncued` \%$)**,
-and more often
-**(`r apa_aov_ja_num_t$fix_id`;
-$M_{num,cued} = `r m_ja_num_cued` \%$, $M_{num,uncued} = `r m_ja_num_uncued` \%$)**,
-than the uncued object. Explicit instructions also led to longer
-**(`r apa_aov_ja_dur_t$group_id`;
-$M_{dur,mem} = `r m_ja_dur_mem` \%$, $M_{dur,free} = `r m_ja_dur_free` \%$)**,
-and more fixations
-**(`r apa_aov_ja_num_t$group_id`;
-$M_{num,cued} = `r m_ja_num_mem` \%$, $M_{num,free} = `r m_ja_num_free` \%$)**,
-on the objects as compared to the free viewing condition.
+(`r apa_aov_ja_dur_t$fix_id`;
+$M_{dur,cued} = `r m_ja_dur_cued` \%$,
+$M_{dur,uncued} = `r m_ja_dur_uncued` \%$), and more often
+(`r apa_aov_ja_num_t$fix_id`;
+$M_{num,cued} = `r m_ja_num_cued` \%$,
+$M_{num,uncued} = `r m_ja_num_uncued` \%$), than the uncued object. Explicit
+instructions also led to longer
+(`r apa_aov_ja_dur_t$group_id`;
+$M_{dur,mem} = `r m_ja_dur_mem` \%$,
+$M_{dur,free} = `r m_ja_dur_free` \%$), and more fixations
+(`r apa_aov_ja_num_t$group_id`;
+$M_{num,cued} = `r m_ja_num_mem` \%$,
+$M_{num,free} = `r m_ja_num_free` \%$), on the objects as compared to the
+free viewing condition (see Figure\ \@ref(fig:FigFixObjects) B & C)**.
 
 <!-- ##### fix_id * group_id -->
 
-**Surprisingly, the interaction effects of instruction group and object
-role was only statistically significant for number of fixations
+**The interaction effect of instruction group and object
+role was only statistically significant for the number of fixations
 (`r apa_aov_ja_num_t$group_id_fix_id`),
 but failed statistical significance for the duration of fixations
-(`r apa_aov_ja_num_t$group_id_fix_id`).
-However, post-hoc t-test for both reveal a significant difference for object
-role only in the free viewing group (duration:
+(`r apa_aov_ja_dur_t$group_id_fix_id`).
+However, contrasts of the estimated marginal means for both fixations measures
+revealed a statistically significant difference for object role only in the free
+viewing group (duration:
 `r apa_emm_ja_dur_t_fix_id_group_id$object_cued_object_uncued_free`,
 number:
 `r apa_emm_ja_num_t_fix_id_group_id$object_cued_object_uncued_free`),
 with more and longer fixations on the cued object. In the explicit encoding
-group post-hoc comparisons of object role did not reach significance (both $p >
-.5$).**
-
-<!-- #### Temporal dynamics duration & number -->
-
-**To assess the time course of attentional resources on gaze following ANOVAs
-for fixation duration and fixation number were extended with a factor for time
-(see Figure \ \@ref(fig:FigFixTmp)). For gaze following the three-way
-interaction for both measures was not significant (duration:
-`r add_epsilon(apa_aov_ja_dur_t$group_id_fix_id_bin_id, gg_ja_dur_t$group_id_fix_id_bin_id)`,
-number:
-`r add_epsilon(apa_aov_ja_num_t$group_id_fix_id_bin_id, gg_ja_num_t$group_id_fix_id_bin_id)`),
-indicating no time dependencies across instruction group and object role for
-gaze following.**
+group, contrasts of object role did not reach statisitical significance (both $p
+> .5$).**
 
 <!-- ##### fix_id * bin_id -->
 
-**The two way interactions for both measures between object role and time points
-were both significant (duration:
+**The two way interactions between object role and time points were
+statistically significant for both measures (duration:
 `r add_epsilon(apa_aov_ja_dur_t$fix_id_bin_id, gg_ja_dur_t$fix_id_bin_id)`,
 number:
 `r add_epsilon(apa_aov_ja_num_t$fix_id_bin_id, gg_ja_num_t$fix_id_bin_id)`).
-Pairwise t-test reveal that the interaction was mainly driven by more fixations
-on the cued object than on the uncued object during first and last time point
-(first time point: duration:
+Pairwise contrasts on estimated marginal means revealed that the interaction was
+mainly driven by more fixations on the cued object than on the uncued object
+during first and last time point (first: duration:
 `r apa_emm_ja_dur_t_fix_id_bin_id$object_cued_object_uncued_X1`,
 number:
 `r apa_emm_ja_num_t_fix_id_bin_id$object_cued_object_uncued_X1`,
@@ -725,9 +742,9 @@ interactions between instruction group and time points for both measures
 `r add_epsilon(apa_aov_ja_dur_t$group_id_bin_id, gg_ja_dur_t$group_id_bin_id)`,
 number:
 `r add_epsilon(apa_aov_ja_num_t$group_id_bin_id, gg_ja_num_t$group_id_bin_id)`).
-Pairwise t-test indicate significant differences with longer duration and more
-fixations for the explicit encoding group during all except the second time
-point (first: duration:
+Pairwise contrasts on estimated marginal means indicate significant differences
+with longer duration and more fixations on both objects for the explicit
+encoding group during all except the second time point (first: duration:
 `r apa_emm_ja_dur_t_group_id_bin_id$free_mem_X1`,
 numbers:
 `r apa_emm_ja_num_t_group_id_bin_id$free_mem_X1`,
@@ -744,7 +761,7 @@ and last time point: duration:
 numbers:
 `r apa_emm_ja_num_t_group_id_bin_id$free_mem_X5`).**
 
-```{r FigFixTmp, include = TRUE, fig.cap = "Temporal course of fixation durations and numbers as a function of the region of interest (ROI). Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+```{r FigFixTmp, include = TRUE, fig.cap = "Time course of fixation durations and numbers as a function of the region of interest (ROI). Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
 plot_grid(
     plt_et_dur_t,
@@ -756,23 +773,13 @@ plot_grid(
 
 ```
 
-<!--### Saccades-->
+<!-- #### Temporal dynamics duration & number -->
 
-<!-- (H1, H2) -->
-
-Saccades leaving the head were more likely to land on the cued compared to the
-uncued object as confirmed by a significant main effect of object role,
-**(`r apa_aov_sac_fgaze$icond`;
-$M_{sac,cued} = `r m_sac_cued` \%$, $M_{sac,uncued} = `r m_sac_uncued` \%$)**.
-The main effect for group showed that saccades of participants in the explicit
-encoding group were more often directed towards any of the objects as compared
-to the free viewing group
-**(`r apa_aov_sac_fgaze$df_w_et_group`;
-$M_{sac,free} = `r m_sac_free` \%$, $M_{sac,mem} = `r m_sac_mem` \%$)**.
-Again, the interaction effect of instruction group and object role failed to
-reach statistical significance
-(`r apa_aov_sac_fgaze$df_w_et_group_icond`;
-see Figure\ \@ref(fig:FigFixObjects) D).
+**The three-way interaction of instruction group, object role and time point
+failed to reach statistical significance for fixations durations
+(`r add_epsilon(apa_aov_ja_dur_t$group_id_fix_id_bin_id, gg_ja_dur_t$group_id_fix_id_bin_id)`)
+and numbers 
+(`r add_epsilon(apa_aov_ja_num_t$group_id_fix_id_bin_id, gg_ja_num_t$group_id_fix_id_bin_id)`).**
 
 ## Memory for objects
 <!-- (H3) -->
@@ -790,9 +797,9 @@ apa_aov_mem <- apa_print(aov_mem, correction="GG", mse = FALSE)$full_result
 
 # group
 m_mem_free <-
-    round(mean(dscr_mem[dscr_mem$group_id == "free",]$m_recall), 2)
+    round(sum(dscr_mem[dscr_mem$group_id == "free",]$m_recall), 2)
 m_mem_mem <-
-    round(mean(dscr_mem[dscr_mem$group_id == "mem",]$m_recall), 2)
+    round(sum(dscr_mem[dscr_mem$group_id == "mem",]$m_recall), 2)
 
 ```
 
@@ -800,7 +807,8 @@ An analysis of the recall data showed, that participants in the explicit
 encoding group remembered more items than participants from the free viewing
 group
 **(`r apa_aov_mem$group_id`;
-$M_{recall,free} = `r m_mem_free`$, $M_{recall,mem} = `r m_mem_mem`$)**.
+$M_{recall,free} = `r m_mem_free`$,
+$M_{recall,mem} = `r m_mem_mem`$)**.
 Neither the main effect of object role
 (`r apa_aov_mem$stim_cued`)
 nor the interaction effect were statistically significant
@@ -844,26 +852,26 @@ apa_aov_mem_3.4 <-  # n.s.
 
 ```
 
-**For the follow-up analysis of recall performance, we started with the first
-model where only group assignment was entered. This model revealed a significant
-effect for group as shown by the ANOVA previously (see Table\ \@ref(tab:tblGLMM)
-for model parameters and model selection criteria). Next, we built two extended
-models incorporating measures of visual attention: Model 2a included the main
-effect of (z-standardized) relative fixation duration and its interaction with
-group. To Model 2b we added (z-standardized) relative number of fixations and
-its interaction with group. Surprisingly, the main effect of fixation duration
-and its interaction with group in model 2a failed to reach statistical
-significance
+**In order to examine the influence of visual exploration on recall performance,
+we used a GLMM approach starting with a first model where only group assignment
+was entered. Corresponding to the ANOVA results discussed above, this model
+revealed a significant effect for group (see Table\ \@ref(tab:tblGLMM) for model
+parameters and model selection criteria). Next, we built two extended models
+incorporating measures of visual attention: Model 2a included the main effect of
+(z-standardized) relative fixation duration and its interaction with group. To
+Model 2b we added (z-standardized) relative number of fixations and its
+interaction with group. Surprisingly, model 2a including the main effect of
+fixation duration and its interaction with group in model 2a including the main
+effect of fixation duration and its interaction with group did not yield a
+better prediction of recall performance in comparison to model 1
 (`r apa_aov_mem_1.2`).
-By contrast, the main effect of number of fixations improved the prediction of
-recalled stimuli
-(`r apa_aov_mem_1.3`).
-Again, the interaction of group and number of fixations did reach significance.
-For number of fixations we tested as a last step, whether object role further
-improves the prediction of recall performance, which was not the case
-(`r apa_aov_mem_3.4`).
-Neither the main effect of object role, nor its interactions with the other
-factors reached statistical significance.**
+By contrast, model 2b including the main effect of number of fixations and its
+interaction with group improved the prediction of recalled stimuli
+(`r apa_aov_mem_1.3`)
+with a significant weight for the number of fixations. As a last step, we tested
+whether object role further improves the prediction of recall performance in
+comparison to model 2b, which was not the case
+(`r apa_aov_mem_3.4`).**
 
 ```{r tblGLMM, include = TRUE, results="asis"}
 
@@ -974,13 +982,14 @@ Figure\ \@ref(fig:FigFixPerson) A). Consequently, the ANOVA yielded a
 significant main effect of ROI, with earlier fixations of the head compared to
 the body
 **(`r apa_aov_sa_lat$fix_id`;
-$M_{lat,head} = `r m_sa_lat_head` ms$, $M_{lat,body} = `r m_sa_lat_body` ms$)**.
+$M_{lat,head} = `r m_sa_lat_head` ms$,
+$M_{lat,body} = `r m_sa_lat_body` ms$)**.
 There was neither a statistically significant main effect of instruction group
 (`r apa_aov_sa_lat$group_id`)
 nor an interaction of both factors
 (`r apa_aov_sa_lat$group_id_fix_id`).
 
-```{r FigFixPerson, include = TRUE, fig.cap = "Bar plot of the different prioritization measures for attentional orienting towards and visual exploration of the depicted person's head and body as a function of instruction group. Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
+```{r FigFixPerson, include = TRUE, fig.cap = "Bar plot of the different prioritization measures for attentional orienting towards and visual exploration of the depicted person's head and body as a function of instruction group. Note that data were aggregated across time bins for fixation duration and numbers. Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), , fig.height = 3, fig.width= 6}
 
 plot_grid(
     plt_sa_lat, plt_sa_dur,
@@ -991,14 +1000,17 @@ plot_grid(
 
 ```
 
-<!--#### Fixation duration & number-->
-<!--##### fix_id, group_id -->
-Fixation duration and numbers showed a very similar pattern with longer,
-**(`r apa_aov_sa_dur_t$fix_id`;
-$M_{dur,head} = `r m_sa_dur_head` \%$, $M_{dur,body} = `r m_sa_dur_body` \%$)**,
+<!--#### Fixation duration & number--> <!--##### fix_id, group_id --> 
+
+**In the detailed ANOVA including time bin (see Figure \ \@ref(fig:FigFixTmp)),
+fixation duration and numbers showed a very similar pattern with longer,
+(`r apa_aov_sa_dur_t$fix_id`;
+$M_{dur,head} = `r m_sa_dur_head` \%$,
+$M_{dur,body} = `r m_sa_dur_body` \%$),
 as well as more fixations
-**(`r apa_aov_sa_num_t$fix_id`;
-$M_{num,head} = `r m_sa_num_head` \%$, $M_{num,body} = `r m_sa_num_body` \%$)**,
+(`r apa_aov_sa_num_t$fix_id`;
+$M_{num,head} = `r m_sa_num_head` \%$,
+$M_{num,body} = `r m_sa_num_body` \%$),
 on the head than the body. Remarkably, the instruction group did not exhibit
 a statistically significant main effect, neither for the fixation duration
 (`r apa_aov_sa_dur_t$group_id`),
@@ -1009,35 +1021,32 @@ reach statistical significance for fixation duration
 (`r apa_aov_sa_dur_t$group_id_fix_id`)
 and fixation numbers,
 (`r apa_aov_sa_num_t$group_id_fix_id`;
-see Figure\ \@ref(fig:FigFixPerson) B & C). These findings indicate that the
-prioritization of social ROIs was unaffected by the explicit instruction to
-attend to objects depicted in the scene.
+see Figure\ \@ref(fig:FigFixPerson) B & C).**
 
 <!-- #### Temporal dynamics duration & number -->
 
-**To assess the temporal progression of effects, we analyzed fixation durations
-and numbers taking into account time (see Figure \ \@ref(fig:FigFixTmp)).
-In contrast to gaze following, we find a three-way interaction for social
-prioritization for fixation durations
+**However, the ANOVA yielded a three-way interaction of instruction group, ROI
+and time point for fixation durations
 (`r add_epsilon(apa_aov_sa_dur_t$group_id_fix_id_bin_id, gg_sa_dur_t$group_id_fix_id_bin_id)`,
 as well as for numbers of fixations
 (`r add_epsilon(apa_aov_sa_num_t$group_id_fix_id_bin_id, gg_sa_num_t$group_id_fix_id_bin_id)`).
-To follow-up the interpretation of time effects on instruction group and the
-head and body ROIs we performed separate ANOVAs for each time point.
-Interestingly, for both measures, we observed only during the first time point
-an interaction between instruction group and the head and body ROIs (duration:
+To follow-up on this result, we performed separate ANOVAs for each time point
+including instruction group and ROI as factors. Interestingly, for both
+measures, we observed a statistically significant interaction between
+instruction group and ROI only for the first time point (duration:
 `r apa_aov_sa_dur_1$group_id_fix_id`,
 number:
 `r apa_aov_sa_num_1$group_id_fix_id`).
-Pairwise t-tests for the time point reveal a difference between instruction
-group for the head region for fixation duration
+Pairwise contrasts of estimated marginal means for this interval revealed a
+significant difference between both groups for the head region for fixation
+duration
 (`r apa_emm_sa_dur_1_group_id_fix_id$free_mem_head`)
 as well as numbers of fixations
 (`r apa_emm_sa_dur_1_group_id_fix_id$free_mem_head`)
-with more and longer fixations within the free viewing group (see
-Figure\ \@ref(fig:FigFixTmp)). The fixation duration and fixation number for the
-body region did not differ between groups during the first time point (both
-$p > .1$). For all other time points follow-up ANOVAs did not yield significant
+with more and longer fixations in the free viewing group (see Figure\
+\@ref(fig:FigFixTmp)). The fixation duration and fixation number for the body
+region did not differ between groups during the first time point (both $p >
+.1$). For all other time points follow-up ANOVAs did not yield significant
 interactions between instruction group and object role, neither for fixation
 duration nor fixation number (all interactions $p > .19$, for details see the
 online supplement, Tables S8 - S12).**
@@ -1056,17 +1065,18 @@ replicated**.
 <!-- Main effects -->
 
 In detail, heads of persons in the scene were fixated earlier and explored more
-extensively as compared to body regions (and also more then the cued or uncued
-objects [^1]). Additionally, in line with @Zwickel2010, overall cued objects
-were preferred over uncued objects. They were fixated remarkably earlier, longer
-and more often. Thus, gaze following effects did not only occur with respect to
-a more thorough processing overall but were also evident in an early allocation
-of attentional resources after stimulus onset. **Additional support for the
-early prioritization comes from the investigation of temporal allocation of
-attention. Fixation for the cued and uncued object differed the most during the
-first 2 seconds (see Figure \ \@ref(fig:FigFixTmp)).**
+extensively as compared to body regions (and also more than the cued or uncued
+objects [^1]). Additionally, in line with @Zwickel2010, cued objects were
+preferred over uncued ones. They were fixated remarkably earlier, longer and
+more often. Thus, gaze following effects did not only occur with respect to a
+more thorough processing overall but were also evident in an early allocation of
+attentional resources after stimulus onset. **Additional support for such early
+prioritization was revealed in the temporal analysis of attentional exploration.
+Fixation durations and numbers differed most between the cued and uncued object
+during the first 2 s of the 10 s viewing period (see Figure \
+\@ref(fig:FigFixTmp)).**
 
-[^1]: **A direct comparison of all ROIs, e.g. head with cued object, can be found in the supplement material, Tables S13 – S15 and Figures S1 – S3.**
+[^1]: **A direct comparison of all ROIs, e.g., head with cued object, can be found in the supplementary material, Tables S13 – S15 and Figures S1 – S3.**
 
 <!-- saccacades -->
 
@@ -1074,13 +1084,13 @@ Moreover, the prioritization of the head and the preference for the cued object
 indirectly suggest a link between these two regions. To investigate this
 relationship in more detail, we examined saccades leaving the head towards the
 cued and uncued object, respectively. Saccades leaving the head were
-significantly more likely to end on the cued than on the uncued object directly
+significantly more likely to end on the cued than on the uncued object, directly
 linking fixations of the head and the cued object. Thereby, current results
 fully replicate the findings of @Zwickel2010 with a more naturalistic set of
-stimuli. As often, by using more naturalistic material experimental control is
+stimuli. As often, by using more naturalistic material, experimental control is
 reduced. We tried to minimize unsystematic effects by producing the stimuli in
-the same way as @Zwickel2010 but using real as compared to 3D rendered scenes.
-In particular, each scene was photographed four times with gaze direction an
+the same way as @Zwickel2010, but using real as compared to 3D rendered scenes.
+In particular, each scene was photographed four times with gaze direction and
 object placement being fully counterbalanced. Since four individual photographs
 of each scene were taken in the current study, we could not fully control all
 stimulus aspects. However, the full replication of the effects previously
@@ -1090,115 +1100,108 @@ scene layout and presentation.
 
 <!-- top-down -->
 
-Besides replicating previous findings, this study also aimed at extending the
-line of research by testing the robustness of gaze following against top-down
-modulations. This was achieved by instructing half of the participants to
-memorize as many details of the presented scenes as possible. Since the depicted
-human being was not relevant to this task, we expected a generally reduced
-attention towards head and body regions as well as a more systematic exploration
-pattern, potentially reducing gaze cueing effects in fixations on and saccades
-towards cued objects. Unsurprisingly the memory task that was accomplished after
-the eye tracking experiment showed that participants, who knew about the free
-recall task in advance performed better in recalling items. **Interestingly, the
-hypothesized preference for the uncued object in the explicit encoding group was
-only found for fixation numbers. Against our hypothesis, the effect did not
-reach statistical significance for fixation latencies and durations (while being
-descriptively in the hypothesized direction, see 
-Figure\ \@ref(fig:FigFixObjects) A - D). However, the temporal analysis of 
-attentional allocation indicates that the inconclusive interactions between
-group and object role most likely stems from the extended presentation duration.
-Social attention as well as gaze cueing effects in viewing behavior were mostly
-affected by the instruction during the first 4 seconds. In the first 2 seconds, fixations on the
-head differed clearly between instruction groups, with less social
-prioritization by participants in the explicit encoding group. At the same time,
-however, temporal analysis for gaze following showed strongest preference for
-the cued over the uncued object for both groups. Interestingly, viewing pattern
-differed clearly between both groups after the initial 2 seconds. Object
-prioritization was reversed during the second time point (seconds 2 - 4) in the
-explicit encoding group with more and longer fixations on the uncued object, but
-not for participants who were in the *free viewing* group. It seems that
-consistent with our hypothesis instruction induced a more systematic exploration
-of the objects in the explicit encoding group resulting in a reduction of gaze
-following but only during early presentation phases. Our results indicate a
-rather strong group effect in the first 4 seconds, especially regarding object
-role. Less clear is the picture for the measures of social attention.
-Specifically, participants in the explicit encoding group did not show reduced
-attention towards head and body regions compared to the free viewing group,
-except during the first two seconds of image presentation. At the same time,
-even in the first two seconds participants in the explicit encoding group show
-strongest preference to the head (see Figure\ \@ref(fig:FigFixTmp)).**
+Besides conceptually replicating previous findings, this study also aimed at
+extending the line of research by testing the robustness of gaze following
+against top-down modulations. This was achieved by instructing half of the
+participants to memorize as many details of the presented scenes as possible.
+Since the depicted human being was not relevant to this task, we expected a
+generally reduced attention towards head and body regions as well as a more
+systematic exploration pattern, potentially reducing gaze cueing effects in
+fixations on and saccades towards cued objects. Unsurprisingly, the memory task
+that was accomplished after the eye-tracking experiment showed that
+participants, who knew about the free recall task in advance performed better in
+recalling items. **Interestingly, the hypothesized enhanced attentional
+preference for the uncued object in the explicit encoding group was only found
+for fixation numbers. Against our hypothesis, the effect did not reach
+statistical significance for fixation latencies and durations (while being
+descriptively in the hypothesized direction, see Figure\
+\@ref(fig:FigFixObjects) A - D).**
 
-These findings indicate that the prioritization of social information is largely
-unaffected by a manipulation of goal-driven attention, although fixations on the
-head are slightly inhibited in the first two seconds. The attentional guidance
-of gaze was effective **especially in the early phase of stimulus
-presentation**, even when participants investigated the scenes with an explicit
-(non-social) task goal. **Note, however, that the increased fixation durations
-and numbers of the cued object during the last 2 seconds (in both groups) might
-indicate a adaptation to the presentation duration.** In general, this **still**
-provides support for the automaticity and reflexivity of social attentional
-processes and is in line with previous studies on gaze cueing within highly
-controlled setups [e.g., @Ristic2005; @Hayward2017], more naturalistic
-laboratory studies [e.g., @Castelhano2007; @Zwickel2010] and real-life social
-situations [e.g., @Hayward2017; @Richardson2007]. Moreover, the current results
-are consistent with recent findings of an early attention bias towards social
-information [@End2017; @Roesler2017] that seems to be relatively resistant
-against specific task instructions [@Flechsenhar2017].
+**The temporal analysis of attentional allocation furthermore indicates that
+effects of the instruction were most pronounced during early periods of picture
+viewing. In the first 2 seconds, fixations on the head differed clearly between
+instruction groups, with less social prioritization by participants in the
+explicit encoding group. In the same interval, however, both groups showed the
+largest difference in attentional exploration of cued as compared to uncued
+objects. Overall, the explicit encoding group fixated longer and more often on
+both objects than the free viewing group but cueing effects were largely
+unaffected by the explicit task with the only exception of fixation numbers
+being slightly less biased towards the cued object in the explicit encoding
+group. Although the time course of attentional exploration (see Figure\
+\@ref(fig:FigFixTmp)) seems to indicate that the encoding instruction induced a
+more systematic exploration of the objects particularly at early time points,
+the three-way interaction failed to reach statistical significance in both
+ANOVAs.**
+
+**These findings indicate that the prioritization of social information is largely
+unaffected by a manipulation of goal-driven attention, although early
+fixations on the head were slightly inhibited in the current study. The
+attentional guidance of gaze was effective especially in the early phase of
+stimulus presentation, even when participants investigated the scenes with an
+explicit (non-social) task goal.** In general, this early attentional preference
+for cued locations provides support for the automaticity and reflexivity of
+social attentional processes and is in line with previous studies on gaze cueing
+within highly controlled setups [e.g., @Ristic2005; @Hayward2017], more
+naturalistic laboratory studies [e.g., @Castelhano2007; @Zwickel2010] and
+real-life social situations [e.g., @Hayward2017; @Richardson2007]. Moreover,
+the current results are consistent with recent findings of an early attentional
+bias towards social information in general [@End2017; @Roesler2017] that seems
+to be relatively resistant against specific task instructions
+[@Flechsenhar2017].
 
 <!-- memory -->
 
-As expected participants with specific recall instructions performed better in
+As expected, participants with specific recall instructions performed better in
 the subsequent memory task. However, the contribution of the automatic
-attentional processes to memory encoding remains unclear. In particular,
-although cued objects were prioritized in the attentional exploration, **only
-the general number of fixations irrespective of object role improved the
-prediction of stimulus recall over group assignment
-(see Table\ \@ref(tab:tblGLMM)). Fixation duration did not add incremental value**. This is
-**partially in line with** studies on eye movements [e.g., @Hollingworth2002]
-and (non-social) cueing [@Schmidt2002; @Belopolsky2008] which showed that
-increased attention results in better memory performance. **However, we found
-this relationship only for number and not for the duration of fixations.**
-**Originally, we additionally expected the cued object to be better recalled
-than the uncued object [@Schmidt2002; @Belopolsky2008]**. However, another study
-showed that if certain scene details have a special meaning (e.g., by being
-central to the content of a picture story), attention does no longer predict
-memory for these details [@Kim2013]. With respect to the current study, these
-findings may indicate that both objects that were placed within reaching
+attentional processes to memory encoding remains unclear. **In particular,
+although cued objects were prioritized in the attentional exploration, only
+the general number of fixations irrespective of object role predicted stimulus
+recall across both groups (see Table\ \@ref(tab:tblGLMM)). Fixation duration did
+not add incremental value. This is partially in line with studies on eye
+movements [e.g., @Hollingworth2002] and (non-social) cueing [@Schmidt2002;
+@Belopolsky2008], which showed that increased attention results in better memory
+performance. Originally, we additionally expected the cued object to be better
+recalled than the uncued one [@Schmidt2002; @Belopolsky2008].** However, another
+study showed that if certain scene details have a special meaning (e.g., by
+being central to the content of a picture story), attention does no longer
+predict memory for these details [@Kim2013]. With respect to the current study,
+these findings may indicate that both objects that were placed within reaching
 distance of the depicted person conveyed such meaning and were therefore
 remembered with equal probability. Since we only tested for early memory
 effects, it would be very interesting to delay the memory test by at least 24h
 to examine whether memory consolidation differs between cued and uncued objects
-[@Squire1993]. **Another explanation might be that exploration time was
-sufficient to process both objects equally well. This interpretation finds
-support in the fact that the group assignment primarily affected the first
-seconds of stimulus presentation.**
+[@Squire1993]. **Another explanation for the currently observed effects might be
+that exploration time was sufficient to process both objects equally well. It
+would thus be very interesting for future studies to manipulate viewing
+durations and examine the effect of such manipulations on memory performance.**
 
 <!-- Limitations -->
 
 Although the current study has several strengths including the systematic
 generation of novel stimulus material and the large sample size, it also has
-some limitations that need to be mentioned. First, although this study shows
-that humans follow other persons' gaze implicitly in unconstrained situations,
-this was shown for situations without real interactions between humans. Research
-shows, that fixation patterns differ remarkably when a real interaction between
-persons is possible [e.g., @Hayward2017; @Laidlaw2011; for an overview see:
-@Risko2016]. However, our findings add evidence to the classic highly controlled
-laboratory approaches to social attention, yet at the same time better
-approximates ecological research [@Risko2012]. Second, one might criticize that
-we did not control for directional information from the depicted person’s body
-in contrast to the head. Earlier studies show, that body orientation is relevant
-for cueing [@Hietanen1999; @Lawson2016] and the influence of body orientation on
-the cueing effects (e.g., through peripheral vision) cannot be dissociated by
-our study design. However, our results indicate a direct link between the head
-and the cued object, as does @Zwickel2010. In fact, overall the first fixation
-of the body occurred about 1 second after first fixation on the cued object.
-Third, we used a rather long viewing time of 10 s. This time allows for a very
-detailed exploration of the depicted scene and our analyses of the time courses
-of attentional measures showed that effects of top-down instructions seemed to
-be more pronounced during the first few seconds and quickly vanished afterwards.
-Future studies should therefore either use tasks that are cognitively more
-demanding or focus on a systematic variation of viewing durations to further
-examine the automaticity of social attention and gaze following.
+some limitations. First, although this study shows that humans follow other
+persons' gaze implicitly in unconstrained situations, this was shown for
+situations without real interactions between humans. Research shows that
+fixation patterns differ remarkably when a real interaction between persons is
+possible [e.g., @Hayward2017; @Laidlaw2011; for an overview see: @Risko2016].
+However, our findings add evidence to classic highly controlled laboratory
+approaches to social attention, yet at the same time better approximates
+ecological research [@Risko2012]. Second, one might criticize that we did not
+control for directional information from the depicted person’s body in contrast
+to the head. Earlier studies show that body orientation is relevant for cueing
+[@Hietanen1999; @Lawson2016] and the influence of body orientation on the cueing
+effects (e.g., through peripheral vision) cannot be dissociated by our study
+design. However, our results indicate a direct link between the head and the
+cued object, as do the results of @Zwickel2010. In fact, overall the first
+fixation of the body occurred about 800 ms after first fixation on the cued
+object. Third, we used a rather long viewing time of 10 s. This time allows for
+a very detailed exploration of the depicted scene **and our analyses of the time
+courses of attentional measures showed that effects of top-down instructions
+seemed to be more pronounced during the first few seconds and quickly vanished
+afterwards**. Future studies should therefore either use tasks that are
+cognitively more demanding or focus on a systematic variation of viewing
+durations to further examine the automaticity of social attention and gaze
+following.
 
 <!-- Conclusio -->
 
@@ -1209,11 +1212,10 @@ previously extended to free viewing of more complex static scenes by
 @Zwickel2010, was shown to be valid in more naturalistic scenes and relatively
 robust against top-down modulation. Even when explicitly directing attention
 away from depicted individuals by making objects task-relevant, social and joint
-attention were still affected by the mere presence of a person, comparable to
-the unbiased free viewing condition, especially in the early stages of visual
-processing**. These results indicate that the mere presence of other human beings
-as well as their gaze orientation have a strong impact on attentional
-exploration.
+attention still occured occurred, and were even largely comparable to the
+unbiased free viewing condition.** These results indicate that the mere presence
+of other human beings as well as their gaze orientation have a strong impact on
+attentional exploration.
 
 \newpage
 
