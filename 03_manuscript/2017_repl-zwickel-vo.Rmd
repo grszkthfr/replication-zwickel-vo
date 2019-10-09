@@ -280,20 +280,20 @@ in the sample.**
 The experimental stimuli consisted of 26 different indoor and outdoor scenes. In
 each scene, a single individual was looking at one of two objects that were
 placed within reaching distance. **Thus, there was a total of 52 different
-objects across all scenes (see online supplement Table S1 for a complete list of
-all objects).** The direction of the gaze (left/right) and the placement of the
+objects across all scenes (see online supplement for a complete list of all
+objects).** The direction of the gaze (left/right) and the placement of the
 objects (object A and B left/right) were balanced by taking 4 photographs of
-each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an outdoor example). **Similar
-to @Zwickel2010, we did not restrict the position of the individual in the
-photograph (i.e., the person could appear in the center or more peripherally)
-such that** participants could not expect a specific spatial structure of the
-scene and the gaze cue. This created 104 unique naturalistic pictures in total.
-For each participant, a set was randomly taken from this pool containing one
-version of each scene, resulting in 26 trials. **The number of stimuli with
-leftward and rightward gaze of the depicted person, respectively, was balanced
-within each participant.** Eye movements were tracked with the corneal
-reflection method and were recorded with an EyeLink1000plus tower system at a
-sampling rate of 1000 Hz. The stimulation was controlled via Presentation®
+each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an outdoor example).
+**Similar to @Zwickel2010, we did not restrict the position of the individual in
+the photograph (i.e., the person could appear in the center or more
+peripherally) such that** participants could not expect a specific spatial
+structure of the scene and the gaze cue. This created 104 unique naturalistic
+pictures in total. For each participant, a set was randomly taken from this pool
+containing one version of each scene, resulting in 26 trials. **The number of
+stimuli with leftward and rightward gaze of the depicted person, respectively,
+was balanced within each participant.** Eye movements were tracked with the
+corneal reflection method and were recorded with an EyeLink1000plus tower system
+at a sampling rate of 1000 Hz. The stimulation was controlled via Presentation®
 (Neurobehavioral Systems). All stimuli had a resolution of 1280 x 960 pixels and
 were displayed on a 24" LG 24MB65PY-B screen (resolution: 1920 x 1200 pixels,
 display size: 516.9 x 323.1 mm) with a refresh rate of 60 Hz. The viewing
