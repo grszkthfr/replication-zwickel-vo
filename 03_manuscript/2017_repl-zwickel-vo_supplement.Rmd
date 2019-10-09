@@ -4,13 +4,24 @@ output: bookdown::word_document2
 
 ---
 
+<!--
+
+To reproduce the exact word file, change by hand:
+  add cover page and remove title
+  p and f in tables to italics
+  ges into $\hat{\eta}^2_G$
+  move tables to new page
+  
+-->
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo=FALSE, warning = FALSE)
 
-source("../../../../02_scripts/01-libraries.R")
-source("../../../../02_scripts/02-paths.R")
+source("../02_scripts/01-libraries.R")
+source("../02_scripts/02-paths.R")
 theme_set(theme_cowplot())
+
 ```
 
 ```{r load packages and data}
@@ -22,19 +33,20 @@ source(path(path_scripts_data, "rois.R"))
 
 ```
 
-# ROIs #
+## S1 Regions of Interest (ROIs) ##
 
 ```{r}
 
-source(path(path_scripts_publ, "dscr_roi.R"))
+source(path(path_scripts_analysis, "dscr_roi.R"))
 
 ```
 
-## List of all ROIs ##
+### List of all ROIs ###
 
 In our study, each scene contained two central objects. Below is the full list
-of all objects presented in the scenes. Note that objects were counter balanced
-being cued at and on which side of the image they were presented.
+of all objects presented in the scenes. Note that objects were counterbalanced
+regarding cueing (i.e., being cued or uncued) and image side (i.e., appearing on
+the left or right side of the scene).
 
 |     stim_id | 1                         | 2                |
 | :---------: | :-----------------------: | :--------------: |
@@ -65,74 +77,83 @@ being cued at and on which side of the image they were presented.
 |          25 | coffee grinder            | candle           |
 |          26 | bulb                      | flashlight       |
 
-## Descriptives ##
+### ROI size, position and distance ###
 
 Each scene contained five regions: Background, Head, Body, Cued object, Uncued
-object. For a complete overview for average ROI size in pixel, centimeter,
-visual degree, total pixel or position on image.
+object. In the following tables, a complete overview is given regarding average
+ROI size in pixels, centimeters and degrees of visual angle, as well as ROI
+position and distances between ROIs on image.
 
 ```{r tblSize, results='asis'}
 
 apa_table(
     dscr_roi %>% select(roi_id, ends_with("size")),
-    caption = "Sizes of the regions drawn into the stimuli.",
-    note = "Mean [m] and its standard deviation [sd] of the number of all pixel of a region [size]"
+    caption = "Sizes of the regions of interest in pixels.",
+    note = "Mean [m] and standard deviation [sd]."
     , align = c("l", rep("r", 2))
     , placement = "hp")
 
 ```
 
-
-
-```{r tblCm, results='asis'}
-
-apa_table(
-    dscr_roi %>% select(roi_id, ends_with("cm"))
-    , caption = "Width and height of the regions drawn into the stimuli."
-    , note = "Mean [m] and its standard deviation [sd] of the width [w] and height [h] of the regions in centimeters [cm]"
-    , align = c("l", rep("r", 4))
-    , placement = "hp")
-
-```
-
-
-
-```{r tblDg, results='asis'}
-
-apa_table(
-    dscr_roi %>% select(roi_id, ends_with("dg"))
-    , caption = "Width and height of the regions drawn into the stimuli."
-    , note = "Mean [m] and its standard deviation [sd] of the width [w] and height [h] of the regions in visual degree [dg]."
-    , align = c("l", rep("r", 4))
-    , placement = "hp")
-
-```
-
-
+&NewLine;
+&NewLine;
 
 ```{r tblPx, results='asis'}
 
 apa_table(
     dscr_roi %>% select(roi_id, ends_with("px"))
-    , caption = "Width and height of the regions drawn into the stimuli."
-    , note = "Mean [m] and its standard deviation [sd] of the width [w] and height [h] of the regions in pixels [px]."
+    , caption = "Width and height of regions of interest in pixels."
+    , note = "Mean [m] and standard deviation [sd] of the width [w] and height [h]."
     , align = c("l", rep("r", 4))
     , placement = "hp")
 
 ```
 
+&NewLine;
+&NewLine;
 
+```{r tblCm, results='asis'}
+
+apa_table(
+    dscr_roi %>% select(roi_id, ends_with("cm"))
+    , caption = "Width and height of regions of interest in centimeters on the computer screen."
+    , note = "Mean [m] and its standard deviation [sd] of the width [w] and height [h]."
+    , align = c("l", rep("r", 4))
+    , placement = "hp")
+
+```
+
+&NewLine;
+&NewLine;
+
+```{r tblDg, results='asis'}
+
+apa_table(
+    dscr_roi %>% select(roi_id, ends_with("dg"))
+    , caption = "Width and height of regions of interest in degrees of visual angle for the current viewing distance. "
+    , note = "Mean [m] and its standard deviation [sd] of the width [w] and height [h]"
+    , align = c("l", rep("r", 4))
+    , placement = "hp")
+
+```
+
+&NewLine;
+&NewLine;
 
 ```{r tblXy, results='asis'}
 
 apa_table(
-    dscr_roi %>% select(roi_id, ends_with("_x"), ends_with("_y"))
-    , caption = "Positions of the regions drawn into the stimuli."
-    , note = "Mean [m] and its standard deviation [sd] of the position [x] and [y] of the regions in the image."
-    , align = c("l", rep("r", 2))     
+    dscr_roi %>%
+      select(roi_id, ends_with("_x"), ends_with("_y")) %>%
+      filter(roi_id != "background")
+    , caption = "Positions (x- and y-coordinates) of the different regions of interest on the image in pixels relative to the top left corner."
+    , note = "Mean [m] and standard deviation [sd]."
+    , align = c("l", rep("r", 2))
     , placement = "hp")
 
 ```
+&NewLine;
+&NewLine;
 
 Distances between the head, the cued and the uncued objects.
 
@@ -140,228 +161,268 @@ Distances between the head, the cued and the uncued objects.
 
 apa_table(
     dscr_roi_dist
-    , caption = "Distance between objects (cued & uncued) and head."
-    , note = "Mean [m] and its standard deviation [sd] of the position [x] and [y] of the regions in the image."
-    , align = c("l", rep("r", 6))     
+    , caption = "Distance between objects (cued & uncued) and the head of the depicted person in pixels, centimeters and degree of visual angle."
+    , note = "Mean [m] and standard deviation [sd]."
+    , align = c("l", rep("r", 6))
     , placement = "hp")
 
 ```
 
+<P style="page-break-before: always">
+## S2 Follow-up ANOVAs on social attention ##
 
-
-# S2 Follow-up ANOVAs on social attention #
-
-In our main analysis the the three-way interaction ROI x Group x Time was
-significant. As follow-up test separate ANOVAs for each time point were 
+In our main analysis the three-way interaction of Group x ROI x Time was
+significant. As follow-up test separate ANOVAs for each time point were
 performed to reveal time specific patterns. Only the first ANOVA is reported in
-the manuscript with all relevant details due to its significance. 
-Below are all ANOVA tables for each time point.
+the manuscript with all relevant details due to the observed statistically
+significant effects including Group and ROI. Below are all ANOVA tables for each
+time point.
 
 ```{r, include=FALSE}
 
-source(path(path_scripts_publ, "aov_sa.R"))
+source(path(path_scripts_analysis, "aov_sa.R"))
 
 ```
 
 
-## time point 1: 0 - 2 seconds ##
+### time point 1: 0 - 2 seconds ###
 
 ```{r tblAov1, results='asis'}
 
 apa_table(
     aov_sa_dur_1$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+      rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI")) 
     , caption = "time point 1: 0 - 2 seconds"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
 
-## time point 2: 2 - 4 seconds ##
+### time point 2: 2 - 4 seconds ###
 
 ```{r tblAov2, results='asis'}
 
 apa_table(
     aov_sa_dur_2$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+        rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI")) 
     , caption = "time point 2: 2 - 4 seconds"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
 
-## time point 3: 4 - 6 seconds ##
+### time point 3: 4 - 6 seconds ###
 
 ```{r tblAov3, results='asis'}
 
 apa_table(
     aov_sa_dur_3$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
-    , caption = "time point 3: 4 - 6 seconds"
+rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI"))     , caption = "time point 3: 4 - 6 seconds"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
 
-## time point 4: 6 - 8 seconds ##
+### time point 4: 6 - 8 seconds ###
 
 ```{r tblAov4, results='asis'}
 
 apa_table(
     aov_sa_dur_4$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+        rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI")) 
     , caption = "time point 4: 6 - 8 seconds"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
 
-## time point 5: 8 - 10 seconds ##
+### time point 5: 8 - 10 seconds ###
 
 ```{r tblAov5, results='asis'}
 
 apa_table(
     aov_sa_dur_5$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
-    , caption = "time point 5: 8 - 10 seconds"
+rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI"))     , caption = "time point 5: 8 - 10 seconds"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
 
-# S3 All ROIs ANOVA #
+## S3 ANOVA including all ROIs  ##
 
-According to our research question we only compare gaze following (cued object vs uncued object)
-**or** social attention (head vs body) in the accompanying manuscript. 
-To compare prioritization across gaze following and social attention effects,
-an ANOVA with all ROIs can be calculated. This allows for a comparison between all ROIs.
-Below are the results for these 4 ROIs (head, body, object cued, object uncued)
-x 2 Groups (explicit encoding vs free viewing) ANOVAs.
-
+According to our research question we only compared gaze following (cued object
+vs. uncued object) **or** social attention (head vs. body) in the accompanying
+manuscript. To compare prioritization across gaze following and social attention
+effects, an ANOVA with all ROIs can be calculated. This allows for a comparison
+between all ROIs. Below are the results of 2 x 4 ANOVAs including Group
+(explicit encoding vs. free viewing) and ROI (head, body, object cued, object
+uncued). Results indicate that the head ROI was fixated earlier, longer and more
+often than any of the other ROIs.
 
 
 ```{r, include=FALSE}
 
-source(path(path_scripts_publ, "aov_all.R"))
+source(path(path_scripts_analysis, "aov_all.R"))
 
 ```
 
-## Fixation latency ##
+### Fixation latency ###
 
 ```{r tblAovAllLat, results='asis'}
 
 apa_table(
     aov_all_lat$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+      rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p<0.001 ~ "***",
+                             p<0.01  ~ "**",
+                             p<0.05 ~ "*",
+                             p<0.1 ~ ".",
+                             p>=.01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI"))
     , caption = "Fixation latency"
     , note = "MSE: mean squared error; MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
+&NewLine;
+&NewLine;
 
-```{r figAovAllLat, fig.cap = "Fixation latencies as a function of the region of interest and group. Error bars represent 95% confidence intervall.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+```{r figAovAllLat, fig.cap = "Fixation latencies as a function of the region of interest and group. Error bars represent 95% confidence interval.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
 emmip(aov_all_lat, group_id~fix_id, CIs = TRUE) +
-  scale_x_discrete(labels = c("cued", "head", "body", "uncued"))
+  scale_x_discrete(labels = c("head", "body", "cued", "uncued"),
+      name = "ROIs") +
+  scale_y_continuous(name="Fixation latency (in ms)")
 
 ```
 
-
-## Fixation duration ##
+### Fixation duration ###
 
 ```{r tblAovAllDur, results='asis'}
 
 apa_table(
     aov_all_dur$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+      rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p < 0.001 ~ "***",
+                             p < 0.01  ~ "**",
+                             p < 0.05 ~ "*",
+                             p < 0.1 ~ ".",
+                             p >= .01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI"))
     , caption = "Fixation duration"
     , note = "MSE: mean squared error; MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
+&NewLine;
+&NewLine;
 
-```{r figAovAllDur, fig.cap = "Fixation duration as a function of the region of interest and group. Error bars represent 95% confidence intervall.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+```{r figAovAllDur, fig.cap = "Fixation duration as a function of the region of interest and group. Error bars represent 95% confidence interval.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
 emmip(aov_all_dur, group_id~fix_id, CIs = TRUE) +
-  scale_x_discrete(labels = c("cued", "head", "body", "uncued"))
+  scale_x_discrete(labels = c("head", "body", "cued", "uncued"),
+      name = "ROIs") +
+  scale_y_continuous(name="Fixation duration (in %)")
 
 ```
 
-
-## Fixation number ##
+### Fixation number ###
 
 ```{r tblAovAllNum, results='asis'}
 
 apa_table(
     aov_all_num$anova_table %>%
-        rownames_to_column(var = "effect") %>% 
-        mutate(` ` = case_when(`Pr(>F)`< 0.001 ~ "***",
-                               `Pr(>F)`<0.01  ~ "**",
-                               `Pr(>F)`<0.05 ~ "*",
-                               `Pr(>F)`<0.1 ~ ".",
-                               `Pr(>F)`>= .01 ~ " "))
+      rownames_to_column(var = "effect") %>%
+      rename('p' = `Pr(>F)`) %>% 
+      mutate(` ` = case_when(p< 0.001 ~ "***",
+                               p<0.01  ~ "**",
+                               p<0.05 ~ "*",
+                               p<0.1 ~ ".",
+                               p>= .01 ~ " "),
+               effect = case_when(effect == "group_id" ~ "Group",
+                                  effect == "fix_id" ~ "ROI",
+                                  effect == "group_id:fix_id"~ "Group x ROI"))
     , caption = "Fixation number"
     , note = "MSE: mean squared error; ges: generalized eta square; * : p < .05; ** : p < .01; *** : p < .001"
-    , align = c("l", rep("r", 6), "l")     
+    , align = c("l", rep("r", 6), "l")
     , placement = "hp")
 
 ```
 
+&NewLine;
+&NewLine;
 
-```{r figAovAllNum, fig.cap = "Fixation numbers as a function of the region of interest and group. Error bars represent 95% confidence intervall.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
+```{r figAovAllNum, fig.cap = "Fixation numbers as a function of the region of interest and group. Error bars represent 95% confidence interval.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
 emmip(aov_all_num, group_id~fix_id, CIs = TRUE) +
-    scale_x_discrete(labels = c("cued", "head", "body", "uncued"))
+    scale_x_discrete(
+      labels = c("head", "body", "cued", "uncued"),
+      name = "ROIs") +
+  scale_y_continuous(name="Fixation number (in %)")
 
 ```
-
-
