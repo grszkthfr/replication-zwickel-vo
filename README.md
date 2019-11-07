@@ -1,1 +1,1 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/grszkthfr/replication-zwickel-vo/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://hub.gke.mybinder.org/user/grszkthfr-replication-zwickel-vo-ewi1p6ot/rstudio/)
