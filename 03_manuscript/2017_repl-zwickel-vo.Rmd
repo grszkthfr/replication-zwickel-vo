@@ -1215,14 +1215,10 @@ previously extended to free viewing of more complex static scenes by
 @Zwickel2010, was shown to be valid in more naturalistic scenes and relatively
 robust against top-down modulation. Even when explicitly directing attention
 away from depicted individuals by making objects task-relevant, social and joint
-<<<<<<< HEAD
-attention still occurred, and were even largely comparable to the
-=======
-attention still occurred occurred, and were even largely comparable to the
->>>>>>> 4704514aa48457b453cc8bd1e5e751aec3a86ec8
-unbiased free viewing condition. These results indicate that the mere presence
-of other human beings as well as their gaze orientation have a strong impact on
-attentional exploration.
+attention still occurred, and were even largely comparable to the unbiased free
+viewing condition. These results indicate that the mere presence of other human
+beings as well as their gaze orientation have a strong impact on attentional
+exploration.
 
 \newpage
 
