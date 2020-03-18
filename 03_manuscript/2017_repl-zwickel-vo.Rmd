@@ -1045,7 +1045,7 @@ significant difference between both groups for the head region for fixation
 duration
 (`r apa_emm_sa_dur_1_group_id_fix_id$free_mem_head`)
 as well as numbers of fixations
-(`r apa_emm_sa_dur_1_group_id_fix_id$free_mem_head`)
+(`r apa_emm_sa_num_1_group_id_fix_id$free_mem_head`)
 with more and longer fixations in the free viewing group (see Figure\
 \@ref(fig:FigFixTmp)). The fixation duration and fixation number for the body
 region did not differ between groups during the first time point (both $p >
