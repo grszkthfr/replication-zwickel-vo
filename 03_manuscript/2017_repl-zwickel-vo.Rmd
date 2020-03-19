@@ -21,8 +21,8 @@ affiliation:
 
 abstract: |
   Humans as social beings rely on information provided by conspecifics. One
-  important signal in social communication is eye gaze. The current study (*n*
-  = 93) sought to replicate and extend previous findings of attentional guidance
+  important signal in social communication is eye gaze. The current study (*n* =
+  93) sought to replicate and extend previous findings of attentional guidance
   by eye gaze in complex everyday scenes. In line with previous studies, longer,
   more and earlier fixations for objects cued by gaze compared to objects that
   were not cued were observed in free viewing conditions. To investigate how
@@ -30,14 +30,13 @@ abstract: |
   participants received a memory task that required scanning the whole scene
   instead of exclusively focusing on cued objects. Interestingly, similar gaze
   cueing effects occurred in this group. Moreover, the human beings depicted in
-  the scene received a large amount of attention, especially during early
-  phases of visual attention, even though they were irrelevant to the current
-  task. These results indicate that the mere presence of other human
-  beings as well as their gaze orientation have a strong impact on attentional
-  exploration.
-  Data and analysis available at [https://osf.io/jk9s4](https://www.osf.io/jk9s4)
+  the scene received a large amount of attention, especially during early phases
+  of visual attention, even though they were irrelevant to the current task.
+  These results indicate that the mere presence of other human beings as well as
+  their gaze orientation have a strong impact on attentional exploration.
+  Data and analysis scripts are available at [https://osf.io/jk9s4](https://www.osf.io/jk9s4)
 
-keywords          : "Gaze Cueing, Joint Attention, Social Attention, Eye-Tracking, Top-Down Control, Memory Performance"
+keywords          : "gaze cueing, joint attention, social attention, eye-tracking, top-down control, memory performance"
 wordcount         : "6456"
 
 bibliography      :
@@ -215,7 +214,7 @@ objects, an enhanced exploration of these details (i.e., more fixations and
 longer dwell times) and more saccades leaving the head towards the cued as
 compared to the uncued object. The instruction in the explicit encoding group
 was thought to induce a more systematic exploration of the presented scenes
-resulting in higher prioritization of both objects and reduced cueing effect.
+resulting in higher prioritization of both objects and reduced cueing effects.
 Furthermore, we anticipated a generally enhanced recall performance in the
 explicit encoding group. Due to the expected difference in attentional resources
 spent on the cued and uncued object in the free viewing group, memory
@@ -264,7 +263,7 @@ min_aqk <- min(df_que[df_que$subject_id!=23,]$aqk_sumscore) %>% round(2)
 ```
 
 Finally, `r complete_sample` subjects participated voluntarily. All participants
-had normal or corrected vision and were recruited via the University of
+had normal or corrected-to-normal vision and were recruited via the University of
 Würzburg's online subject pool or by blackboard. Participants received course
 credit or a financial compensation of 5€. All participants gave written informed
 consent. One participant was excluded due to problems with the eye-tracking
@@ -283,26 +282,26 @@ in the sample.
 
 The experimental stimuli consisted of 26 different indoor and outdoor scenes. In
 each scene, a single individual was looking at one of two objects that were
-placed within reaching distance. Thus, there was a total of 52 different
-objects across all scenes (see online supplement for a complete list of all
-objects). The direction of the gaze (left/right) and the placement of the
-objects (object A and B left/right) were balanced by taking 4 photographs of
-each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an outdoor example).
-Similar to @Zwickel2010, we did not restrict the position of the individual in
-the photograph (i.e., the person could appear in the center or more
-peripherally) such that participants could not expect a specific spatial
+placed within reaching distance. Thus, there was a total of 52 different objects
+across all scenes (see [online supplement](https://osf.io/b73ea/) S1 for a
+complete list of all objects). The direction of the gaze (left/right) and the
+placement of the objects (object A and B left/right) were balanced by taking 4
+photographs of each scene (see Figure\ \@ref(fig:FigExampleStimulus) for an
+outdoor example). Similar to @Zwickel2010, we did not restrict the position of
+the individual in the photograph (i.e., the person could appear in the center or
+more peripherally) such that participants could not expect a specific spatial
 structure of the scene and the gaze cue. This created 104 unique naturalistic
 pictures in total. For each participant, a set was randomly taken from this pool
 containing one version of each scene, resulting in 26 trials. The number of
 stimuli with leftward and rightward gaze of the depicted person, respectively,
 was balanced within each participant. Eye movements were tracked with the
-corneal reflection method and were recorded with an EyeLink1000plus tower system
-at a sampling rate of 1000 Hz. The stimulation was controlled via Presentation®
-(Neurobehavioral Systems). All stimuli had a resolution of 1280 x 960 pixels and
-were displayed on a 24" LG 24MB65PY-B screen (resolution: 1920 x 1200 pixels,
-display size: 516.9 x 323.1 mm) with a refresh rate of 60 Hz. The viewing
-distance amounted to 50 cm thus resulting in a visual angle of 38.03° x 28.99°
-for the photographs.
+corneal reflection method and were recorded with an EyeLink 1000plus system
+(tower mount) at a sampling rate of 1000 Hz. The stimulation was controlled via
+Presentation® (Neurobehavioral Systems). All stimuli had a resolution of 1280 x
+960 pixels and were displayed on a 24" LG 24MB65PY-B screen (resolution: 1920 x
+1200 pixels, display size: 516.9 x 323.1 mm) with a refresh rate of 60 Hz. The
+viewing distance amounted to 50 cm thus resulting in a visual angle of 38.03° x
+28.99° for the photographs.
 
 ```{r FigExampleStimulus, include = TRUE, fig.cap = "Example photographs of a single scene. Gaze direction and objects were balanced over participants. In total 104 photographs of 26 scenes were used. Please note that since we did not obtain permission for publishing the original stimuli, this image shows an example that was not used in the experiment but taken post-hoc in order to illustrate the generation of the stimulus set.", dev.args = list(bg = 'white'), , fig.height=3, fig.width= 7.5}
 
@@ -408,11 +407,11 @@ For data processing and statistical analysis, the open-source statistical
 programming language *R* [@R-base] was used with the packages *tidyverse*
 [@R-tidyverse], *knitr* [@R-knitr] and *papaja* [@R-papaja] for reproducible
 reporting. All analysis and data is available at
-[osf.io/jk9s4/](https://osf.io/jk9s4/). For the analysis of the eye-tracking
-data, EyeLink's standard configuration was used to parse eye movements into
-saccades and fixations. Saccades were defined as eye movements exceeding a
-velocity threshold of 30 °/s or an acceleration threshold of 8.000 °/s².
-Fixations were defined as time periods between saccades.
+[https://osf.io/jk9s4/](https://osf.io/jk9s4/). For the analysis of the
+eye-tracking data, EyeLink's standard configuration was used to parse eye
+movements into saccades and fixations. Saccades were defined as eye movements
+exceeding a velocity threshold of 30 °/s or an acceleration threshold of 8.000
+°/s². Fixations were defined as time periods between saccades.
 
 We determined the following regions of interest (ROI) by color coding respective
 images regions by hand using GIMP (GNU Image Manipulation Program): the cued
@@ -443,7 +442,7 @@ between the head and the relevant objects, we calculated the proportion of
 saccades that left the head region of the depicted individual and landed on the
 cued and uncued objects, respectively. In order to analyze the influence of the
 experimental manipulations on the eye-tracking data, we carried out separate
-analysis of variance (ANOVAs) including the between-subject factor instruction
+analyses of variance (ANOVAs) including the between-subject factor instruction
 group and the within-subject factor object role. ANOVAs were conducted on the
 dependent variables fixation latency and proportion of saccades from the head
 towards the object. To examine general effects of social attention, a separate
@@ -485,12 +484,13 @@ fixations had incremental value beyond group membership or interacted with
 object role in predicting recall performance.
 
 For all analyses the a priori significance level was set to $\alpha$ = .05.
-ANOVAs were computed with the package [@R-afex]. As effect sizes, generalized
-eta-square ($\hat{\eta}^2_G$) values are reported, where guidelines suggest .26
-as a large, .13 as a medium and .02 as a small effect [@Bakeman2005].
-Greenhouse-Geisser correction was applied in all repeated-measures ANOVAs
-containing more than one degree of freedom in the numerator to account for
-potential violations of the sphericity assumption [@Greenhouse1959].
+ANOVAs were computed with the package *afex* [@R-afex]. As effect sizes,
+generalized eta-square ($\hat{\eta}^2_G$) values are reported, where guidelines
+suggest .26 as a large, .13 as a medium and .02 as a small effect
+[@Bakeman2005]. Greenhouse-Geisser correction was applied in all
+repeated-measures ANOVAs containing more than one degree of freedom in the
+numerator to account for potential violations of the sphericity assumption
+[@Greenhouse1959].
 
 # Results
 
@@ -864,9 +864,8 @@ incorporating measures of visual attention: Model 2a included the main effect of
 (z-standardized) relative fixation duration and its interaction with group. To
 Model 2b we added (z-standardized) relative number of fixations and its
 interaction with group. Surprisingly, model 2a including the main effect of
-fixation duration and its interaction with group in model 2a including the main
-effect of fixation duration and its interaction with group did not yield a
-better prediction of recall performance in comparison to model 1
+fixation duration and its interaction with group did not yield a better
+prediction of recall performance in comparison to model 1
 (`r apa_aov_mem_1.2`).
 By contrast, model 2b including the main effect of number of fixations and its
 interaction with group improved the prediction of recalled stimuli
@@ -1052,7 +1051,7 @@ region did not differ between groups during the first time point (both $p >
 .1$). For all other time points follow-up ANOVAs did not yield significant
 interactions between instruction group and object role, neither for fixation
 duration nor fixation number (all interactions $p > .19$, for details see the
-online supplement, Tables S8 - S12).
+[online supplement](https://osf.io/b73ea/), Tables S8 - S12).
 
 # Discussion
 
