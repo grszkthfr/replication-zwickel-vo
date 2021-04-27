@@ -1,12 +1,9 @@
 # general
-
-.* 
 _*
 /00_projektarbeit/
-02_manuscript/2017_repl-zwickel-vo_files/*
 
-#2017_sfb-presentation/libs/
-#2017_sfb-presentation/2017_SFB_repl-zwickel-vo_files
+/2017_sfb-presentation/
+/2018_interactive-eye-gaze-poster/
 
 # Excluded data
 01_data/pre_processing/EyeLink_*
@@ -30,7 +27,8 @@ desktop.ini
 
 # R
 *.Rproj
+/2017_sfb-presentation/.Rhistory
+.Rproj.user
 
 # notes
 01_data/pre_processing/Probleme.txt
-.Rproj.user
