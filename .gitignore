@@ -1,5 +1,6 @@
 # general
 _*
+desktop.ini
 /00_projektarbeit/
 
 /2017_sfb-presentation/
@@ -10,9 +11,9 @@ _*
 01_data/pre_processing/Presentation_*
 01_data/pre_processing/Questionnaires/*
 
-03_manuscript/submissions/*
-desktop.ini
 03_manuscript/2017_repl-zwickel-vo_files/*
+!03_manuscript/2017_repl-zwickel-vo_files/example.png
+03_manuscript/submissions/*
 03_manuscript/co-authors/*
 
 # Stimuli, temporaries and renderd
