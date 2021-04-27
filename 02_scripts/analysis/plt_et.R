@@ -19,7 +19,7 @@ plt_et_dur_t <-
                        breaks = c(.10, .20, .30, .40)) +
     scale_color_manual(
             name = "ROIs",
-            labels = c("cued", "head", "body", "uncued"),
+            labels = c("head", "body", "cued", "uncued"),
             values=c(
                 object_cued = "#fdb863",
                 object_uncued = "#b2abd2",
@@ -27,7 +27,7 @@ plt_et_dur_t <-
                 body = "#abdda4")) +
     scale_shape_manual(
         name = "ROIs",
-        labels = c("cued", "head", "body", "uncued"),
+        labels = c("head", "body", "cued", "uncued"),
         values = c(16,17,2,1)) +
     facet_wrap(~group_id, nrow = 1,
                labeller = labeller(
@@ -66,7 +66,7 @@ plt_et_num_t <-
     ) +
     scale_shape_manual(
         name = "ROIs",
-        labels = c("cued", "head", "body", "uncued"),
+        labels = c("head", "body", "cued", "uncued"),
         values = c(16,17,2,1)) +
     facet_wrap(~group_id, nrow = 1,
                labeller = labeller(
