@@ -729,13 +729,13 @@ number:
 Pairwise contrasts on estimated marginal means revealed that the interaction was
 mainly driven by more fixations on the cued object than on the uncued object
 during first and last time point (first: duration:
-`r apa_emm_ja_dur_t_fix_id_bin_id$object_cued_object_uncued_X1`,
+`r apa_emm_ja_dur_t_fix_id_bin_id$X1_object_cued_object_uncued`,
 number:
-`r apa_emm_ja_num_t_fix_id_bin_id$object_cued_object_uncued_X1`,
+`r apa_emm_ja_num_t_fix_id_bin_id$X1_object_cued_object_uncued`,
 last time point: duration:
-`r apa_emm_ja_dur_t_fix_id_bin_id$object_cued_object_uncued_X5`,
+`r apa_emm_ja_dur_t_fix_id_bin_id$X5_object_cued_object_uncued`,
 number:
-`r apa_emm_ja_num_t_fix_id_bin_id$object_cued_object_uncued_X5`,
+`r apa_emm_ja_num_t_fix_id_bin_id$X5_object_cued_object_uncued`,
 with all other bins $p > .2$, see Figure\ \@ref(fig:FigFixTmp)).
 
 <!-- ##### group_id * bin_id -->
@@ -749,21 +749,21 @@ number:
 Pairwise contrasts on estimated marginal means indicate significant differences
 with longer duration and more fixations on both objects for the explicit
 encoding group during all except the second time point (first: duration:
-`r apa_emm_ja_dur_t_group_id_bin_id$free_mem_X1`,
+`r apa_emm_ja_dur_t_group_id_bin_id$X1_free_mem`,
 numbers:
-`r apa_emm_ja_num_t_group_id_bin_id$free_mem_X1`,
+`r apa_emm_ja_num_t_group_id_bin_id$X1_free_mem`,
 third: duration:
-`r apa_emm_ja_dur_t_group_id_bin_id$free_mem_X3`,
+`r apa_emm_ja_dur_t_group_id_bin_id$X3_free_mem`,
 numbers:
-`r apa_emm_ja_num_t_group_id_bin_id$free_mem_X3`,
+`r apa_emm_ja_num_t_group_id_bin_id$X3_free_mem`,
 fourth: duration:
-`r apa_emm_ja_dur_t_group_id_bin_id$free_mem_X4`,
+`r apa_emm_ja_dur_t_group_id_bin_id$X4_free_mem`,
 numbers:
-`r apa_emm_ja_num_t_group_id_bin_id$free_mem_X4`,
+`r apa_emm_ja_num_t_group_id_bin_id$X4_free_mem`,
 and last time point: duration:
-`r apa_emm_ja_dur_t_group_id_bin_id$free_mem_X5`,
+`r apa_emm_ja_dur_t_group_id_bin_id$X5_free_mem`,
 numbers:
-`r apa_emm_ja_num_t_group_id_bin_id$free_mem_X5`).
+`r apa_emm_ja_num_t_group_id_bin_id$X5_free_mem`).
 
 ```{r FigFixTmp, include = TRUE, fig.cap = "Time course of fixation durations and numbers as a function of the region of interest (ROI). Error bars represent standard errors of the mean.", dev.args = list(bg = 'white'), fig.height=3, fig.width= 7.5}
 
