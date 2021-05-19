@@ -23,8 +23,8 @@ plt_et_dur_t <-
             values=c(
                 object_cued = "#fdb863",
                 object_uncued = "#b2abd2",
-                head = "#2b83ba",
-                body = "#abdda4")) +
+                head = "#abdda4",
+                body = "#2b83ba")) +
     scale_shape_manual(
         name = "ROIs",
         labels = c("head", "body", "cued", "uncued"),
@@ -60,8 +60,8 @@ plt_et_num_t <-
         values=c(
             object_cued = "#fdb863",
             object_uncued = "#b2abd2",
-            head = "#2b83ba",
-            body = "#abdda4")#,
+            head = "#abdda4",
+            body = "#2b83ba")#,
         # background = "#000000")
     ) +
     scale_shape_manual(
